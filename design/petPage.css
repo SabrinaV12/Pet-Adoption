@@ -1,0 +1,19 @@
+.container {
+    font-family: 'Medium', 'Inter';
+}
+
+.header {
+    font-size: 16px;
+}
+
+.page {
+
+    font-size: 48px;
+
+}
+
+.banner {
+    width: 100%;
+    height: auto;
+    display: block;
+}
