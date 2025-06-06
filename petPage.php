@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hosha's Page</title>
     <link rel="stylesheet" href="design/petPage.css" />
-     <link rel="stylesheet" href="design/footer.css" />
+    <link rel="stylesheet" href="design/header.css" />
+    <link rel="stylesheet" href="design/footer.css" />
 </head>
 
 <body class="container">
