@@ -1,6 +1,7 @@
 .header {
     display: flex;
     flex-direction: column;
+    font-family: 'Medium', 'Inter';
 }
 
 .nav {
@@ -30,6 +31,15 @@
 
 .information-buttons img {
     vertical-align: middle;
+    border: 1.5px solid #5D4FC4;
+    padding: 6px 8px;
+    border-radius: 16px;
+}
+
+.auth-links {
+    border: 1.5px solid #5D4FC4;
+    padding: 8px 12px;
+    border-radius: 16px;
 }
 
 .auth-links a {
