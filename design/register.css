@@ -1,0 +1,67 @@
+.register {
+    width: 90%;
+    max-width: 400px;
+    aspect-ratio: 1 / 1;
+    margin: 50px auto;
+    border: 2px solid #5D4FC4;
+    padding: 20px;
+    border-radius: 16px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Medium', 'Inter';
+}
+
+.register form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.register input[type="tel"],
+.register input[type="text"],
+.register input[type="password"] {
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.register button {
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #5D4FC4;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register button:hover {
+    background-color: #41349D;
+}
+
+.register a {
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #41349D;
+}
+
+.help-buttons {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text {
+    margin-bottom: 0px;
+    text-decoration: none;
+    color: #41349D;
+}
