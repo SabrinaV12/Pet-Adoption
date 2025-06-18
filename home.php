@@ -14,7 +14,7 @@ require_once 'database/check_auth.php';
     <link rel="stylesheet" href="design/footer.css" />
 </head>
 
-<body>
+<body class="container">
     <?php include 'components/header.php'; ?>
 
     <?php include 'components/footer.php'; ?>
