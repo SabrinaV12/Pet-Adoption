@@ -1,6 +1,7 @@
 .container {
     font-family: 'Medium', 'Inter';
     background-color: #FFFFFF;
+
 }
 
 .header {
@@ -10,13 +11,148 @@
 .page {
 
     font-size: 48px;
-
+    position: relative;
 }
 
 .banner {
-    width: 100vw;
+    width: 100%;
     height: auto;
     display: block;
     max-width: 100%;
     object-fit: cover;
+}
+
+.banner_wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.profile_picture {
+    width: 15vw;
+    max-width: 180px;
+    min-width: 120px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 6px solid #FFFFFF;
+    object-fit: cover;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 40%);
+}
+
+.pet_details {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    margin-top: 8vw;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+    text-align: initial;
+}
+
+.main_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.main_content .small_text {
+    margin-bottom: 0;
+}
+
+.location_info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.location_info_flag {
+    height: 50px;
+    width: auto;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.location_text_block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.location_line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.location_pin_icon {
+    height: 16px;
+    width: auto;
+}
+
+.adopt_button {
+    background-color: #41349D;
+    font-size: 18px;
+    font-weight: medium;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.adopt_button:hover {
+    background-color: #352b80;
+}
+
+.adopt_button img {
+    height: 22px;
+    width: auto;
+}
+
+.details {}
+
+.big_text {
+    font-size: 5vw;
+    font-weight: 500;
+    color: #0A453A;
+    margin-top: 0;
+    margin-bottom: 4px;
+}
+
+.small_text {
+    font-size: 16px;
+    color: #404040;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+@media screen and (max-width: 768px) {
+    .pet_details {
+        margin-top: 20vw;
+    }
+
+    .big_text {
+        font-size: 7vw;
+    }
+
+    .profile_picture {
+        width: 30vw;
+        transform: translate(-50%, 50%);
+    }
 }
