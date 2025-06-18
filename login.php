@@ -1,5 +1,11 @@
+<?php
+session_start();
+require_once 'database/check_auth.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +14,20 @@
     <link rel="stylesheet" href="design/footer.css" />
     <link rel="stylesheet" href="design/login.css" />
 </head>
+
 <body>
     <?php include 'components/header.php'; ?>
 
+    <?php if (isset($_GET['success']) && $_GET['success'] == 'registered'): ?>
+        <p class="success-message">Account was successfuly created! You can now login.</p>
+    <?php endif; ?>
+
     <section class="login">
-        <form action="home.php" method="POST">
+        <form action="database/handle_login.php" method="POST">
+
+            <?php if (isset($_GET['error'])): ?>
+                <p class="error-message">Username or Password are incorrect!</p>
+            <?php endif; ?>
 
             <p class="text"> Username </p>
             <input type="text" name="username" placeholder="Enter your username" required />
@@ -24,12 +39,13 @@
         </form>
 
         <div class="help-buttons">
-        <a href="forgot.php" class="text">Forgot your password?</a>
-        <a href="register.php">Don't have an account?</a>
+            <a href="forgot.php" class="text">Forgot your password?</a>
+            <a href="register.php">Don't have an account?</a>
         </div>
 
     </section>
 
     <?php include 'components/footer.php'; ?>
 </body>
+
 </html>
