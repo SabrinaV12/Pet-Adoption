@@ -99,3 +99,44 @@
     height: 20px;
     display: block;
 }
+
+@media screen and (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .main-buttons {
+        margin: 10px 0;
+        padding-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .information-buttons {
+        margin-left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding-bottom: 10px;
+    }
+
+    .auth-links {
+        margin-top: 8px;
+        padding: 6px 10px;
+    }
+
+    .mini-navigation {
+        flex-direction: column;
+        height: auto;
+        padding: 8px;
+        gap: 6px;
+    }
+
+    .search-bar {
+        margin: 10px auto 0 auto;
+        width: 90%;
+    }
+}

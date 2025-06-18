@@ -65,3 +65,38 @@
 .socials-text {
     padding-left: 25px;
 }
+
+@media screen and (max-width: 768px) {
+    .information {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
+    }
+
+    .information-block {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .nav-list {
+        align-items: center;
+    }
+
+    .nav-list a {
+        font-size: 16px;
+    }
+
+    .socials {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .socials-text {
+        padding-left: 0;
+    }
+}
