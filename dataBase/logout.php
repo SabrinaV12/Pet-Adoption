@@ -1,6 +1,6 @@
 <?php
 
-require_once 'initDB.php';
+require_once 'db.php';
 session_start();
 
 if (isset($_COOKIE['remember_me_token'])) {

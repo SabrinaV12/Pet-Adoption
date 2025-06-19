@@ -2,14 +2,14 @@
 
 session_start();
 
-require_once 'initDB.php';
+require_once 'db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "SELECT id, email, username, password FROM User WHERE username = ?";
+    $sql = "SELECT id, email, username, hash_password FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
 
-        if (password_verify($password, $user['password'])) {
+        if (password_verify($password, $user['hash_password'])) {
 
             $_SESSION['loggedin'] = true;
             $_SESSION['user_id'] = $user['id'];

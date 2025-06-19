@@ -15,8 +15,17 @@ CREATE TABLE users (
     CHECK (phone_number REGEXP '^[0-9]{10}$')
 );
 
+CREATE TABLE IF NOT EXISTS auth_tokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    selector CHAR(24) NOT NULL,
+    hashed_validator CHAR(64) NOT NULL,
+    expires DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 
 INSERT INTO users (first_name, last_name, username, email, phone_number, hash_password)
 VALUES 
 ('Hosa', 'Hosos', 'hosa', 'hosa@hosa.com', '1234567890', 'hosaa'),
-('Fosa', 'Fosos', 'fosa', 'fosa@fosa.com', '123456789', 'fosaa');
+('Fosa', 'Fosos', 'fosa', 'fosa@fosa.com', '1234567890', 'fosaa');

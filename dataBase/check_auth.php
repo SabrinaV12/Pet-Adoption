@@ -9,7 +9,7 @@ if (isset($_COOKIE['remember_me_token'])) {
     list($selector, $validator) = explode(':', $_COOKIE['remember_me_token'], 2);
 
     if ($selector && $validator) {
-        require_once 'initDB.php';
+        require_once 'db.php';
 
         $sql = "SELECT * FROM auth_tokens WHERE selector = ? AND expires >= NOW()";
         $stmt = $conn->prepare($sql);
