@@ -2,23 +2,22 @@ CREATE TABLE IF NOT EXISTS applications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     
     address_line1 VARCHAR(100) NOT NULL,
-    address_line2 VARCHAR(100) NOT NULL,
+    address_line2 VARCHAR(100),
     postcode VARCHAR(20) NOT NULL,
-    town VARCHAR(100) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    mobile VARCHAR(20),
-    verification_code VARCHAR(10),
+    city VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
     
     has_garden ENUM('Yes', 'No') NOT NULL,
-    living_situation VARCHAR(100) NOT NULL, -- am nevoie de optiuni
-    household_setting VARCHAR(100) NOT NULL, -- am nevoie de optiuni
-    activity_level VARCHAR(100) NOT NULL, -- am nevoie de optiuni
+    living_situation TEXT NOT NULL,
+    household_setting TEXT NOT NULL,
+    activity_level INT NOT NULL CHECK (activity_level BETWEEN 1 AND 10),
     
     num_adults INT  CHECK (num_adults>=1),
     num_children INT NOT NULL,
-    youngest_child_age INT,
+    youngest_child_age INT CHECK (youngest_child_age BETWEEN 1 AND 18),
     visiting_children ENUM('Yes', 'No'),
-    visiting_children_ages INT, -- am nevoie de optiuni
+    visiting_children_ages INT CHECK (visiting_children_ages BETWEEN 1 AND 18),
+
     has_flatmates ENUM('Yes', 'No'),
 
     has_allergies TEXT NOT NULL,
