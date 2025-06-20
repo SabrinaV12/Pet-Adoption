@@ -4,6 +4,37 @@
 
 }
 
+.confirmation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.confirmation h1 {
+    align-self: center;
+    text-align: center;
+    width: 100%;
+}
+
+.confirmation p {
+    text-align: left;
+    margin: 0 0 10px 0;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.download-buttons {
+    display: flex;
+    gap: 20px;
+}
+
 .profile-button {
     background-color: #41349D;
     font-size: 18px;
