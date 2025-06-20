@@ -20,9 +20,39 @@ require_once 'database/check_auth.php';
 
     <?php include 'components/header.php'; ?>
 
-    <a href="adoptionAdress.php" class="start_button">
-        <span>Start</span>
-    </a>
+    <section class="user-information">
+        <div class="profile-card">
+
+            <div class="image-card">
+                <img src="assets/profile_head.png" alt="Poza de profil">
+            </div>
+
+            <div class="info-card">
+                <div class="info-row">
+                    <h1>Username</h1>
+                    <p>User</p>
+                </div>
+                <div class="info-row">
+                    <h1>First name</h1>
+                    <p>John</p>
+                </div>
+                <div class="info-row">
+                    <h1>Last name</h1>
+                    <p>Doe</p>
+                </div>
+                <div class="info-row">
+                    <h1>Email</h1>
+                    <p>johndoe@email.com</p>
+                </div>
+            </div>
+
+        </div>
+
+        <a href="adoptionAdress.php" class="start-button">
+            <span>Start</span>
+        </a>
+
+    </section>
 
     <?php include 'components/footer.php'; ?>
 </body>

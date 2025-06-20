@@ -4,7 +4,7 @@
 
 }
 
-.profile_button {
+.profile-button {
     background-color: #41349D;
     font-size: 18px;
     font-weight: medium;
@@ -22,6 +22,28 @@
     color: #FFFFFF;
 }
 
-.profile_button:hover {
+.profile-button:hover {
+    background-color: #352b80;
+}
+
+.download-button {
+    background-color: #41349D;
+    font-size: 18px;
+    font-weight: medium;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.download-button:hover {
     background-color: #352b80;
 }

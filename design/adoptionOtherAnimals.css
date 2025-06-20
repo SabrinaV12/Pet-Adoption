@@ -4,7 +4,67 @@
 
 }
 
-.continue_button {
+.important {
+    font-weight: 400;
+    color: #0A453A;
+    font-size: 1.5vw;
+    margin-left: 40px;
+}
+
+.animal input[type="text"] {
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.field {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.field .text {
+    flex: 1;
+    max-width: 300px;
+    font-weight: 500;
+}
+
+.field input[type="text"],
+.field select,
+.field .choice {
+    flex: 2;
+    min-width: 300px;
+}
+
+.choice {
+    flex: 1 1 300px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.continue-button {
     background-color: #41349D;
     font-size: 18px;
     font-weight: medium;
@@ -22,6 +82,28 @@
     color: #FFFFFF;
 }
 
-.continue_button:hover {
+.continue-button:hover {
     background-color: #352b80;
+}
+
+.back-button {
+    background-color: #ffffff;
+    font-size: 18px;
+    font-weight: medium;
+    border: 1.5px solid #41349D;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    text-decoration: none;
+    color: #41349D;
+}
+
+.back-button:hover {
+    background-color: #e2e2e2;
 }

@@ -18,10 +18,21 @@ require_once 'database/check_auth.php';
 <body class="container">
     <?php include 'components/header.php'; ?>
 
-    <a href="humanPage.php" class="profile_button">
-        <span>Go To My Profile</span>
-    </a>
+    <section class="confirmation">
 
+        <h1>Thanks For Submitting</h1>
+        <p>The pet's current owner will be sent a link to your profile when your application has been approved by Furry Friends.</p>
+        <p>You can go back to your profile or download your adoption request.</p>
+
+        <a href="humanPage.php" class="profile-button">
+            <span>Go To My Profile</span>
+        </a>
+
+        <a href="home.php" class="download-button">
+            <span>Download the Adoption Request</span>
+        </a>
+
+    </section>
 
     <?php include 'components/footer.php'; ?>
 </body>
