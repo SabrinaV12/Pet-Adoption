@@ -1,6 +1,21 @@
 <?php
 session_start();
 require_once 'database/check_auth.php';
+require_once 'database/db.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$application_id = $_GET['app_id'] ?? 0;
+
+//At this moment anyone who reaches the confirmation means they can download.
+if ($application_id > 0) {
+    $user_can_download = true;
+} else {
+    $user_can_download = false;
+}
 ?>
 
 <!DOCTYPE html>
@@ -24,14 +39,22 @@ require_once 'database/check_auth.php';
         <p>The pet's current owner will be sent a link to your profile when your application has been approved by Furry Friends.</p>
         <p>You can go back to your profile or download your adoption request.</p>
 
-        <a href="humanPage.php" class="profile-button">
-            <span>Go To My Profile</span>
-        </a>
+        <?php if ($user_can_download): ?>
+            <div class="buttons">
+                <div class="download-buttons">
+                    <a href="scripts/download_form.php?id=<?php echo $application_id; ?>&format=csv" class="download-button">
+                        <span>Download as Excel File</span>
+                    </a>
+                    <a href="scripts/download_form.php?id=<?php echo $application_id; ?>&format=json" class="download-button">
+                        <span>Download as JSON File</span>
+                    </a>
+                </div>
 
-        <a href="home.php" class="download-button">
-            <span>Download the Adoption Request</span>
-        </a>
-
+                <a href="humanPage.php" class="profile-button">
+                    <span>Go To My Profile</span>
+                </a>
+            </div>
+        <?php endif; ?>
     </section>
 
     <?php include 'components/footer.php'; ?>
