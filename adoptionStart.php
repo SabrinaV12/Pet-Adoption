@@ -1,6 +1,30 @@
 <?php
 session_start();
 require_once 'database/check_auth.php';
+require_once 'database/db.php';
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || !isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+$sql = "SELECT first_name, last_name, username, email FROM users WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if (!$user) {
+    session_destroy();
+    header("Location: login.php?error=user_not_found");
+    exit();
+}
+
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -30,19 +54,19 @@ require_once 'database/check_auth.php';
             <div class="info-card">
                 <div class="info-row">
                     <h1>Username</h1>
-                    <p>User</p>
+                    <p><?php echo htmlspecialchars($user['username']); ?></p>
                 </div>
                 <div class="info-row">
                     <h1>First name</h1>
-                    <p>John</p>
+                    <p><?php echo htmlspecialchars($user['first_name']); ?></p>
                 </div>
                 <div class="info-row">
                     <h1>Last name</h1>
-                    <p>Doe</p>
+                    <p><?php echo htmlspecialchars($user['last_name']); ?></p>
                 </div>
                 <div class="info-row">
                     <h1>Email</h1>
-                    <p>johndoe@email.com</p>
+                    <p><?php echo htmlspecialchars($user['email']); ?></p>
                 </div>
             </div>
 
