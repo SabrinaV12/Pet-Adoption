@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $sql_check = "SELECT id FROM User WHERE email = ? OR username = ?";
+    $sql_check = "SELECT id FROM users WHERE email = ? OR username = ?";
     $stmt_check = $conn->prepare($sql_check);
     $stmt_check->bind_param("ss", $email, $username);
     $stmt_check->execute();
@@ -30,14 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql_insert = "INSERT INTO User (username, email, password) VALUES (?, ?, ?)"; //!!!to add after the full DB: first_name, last_name, phone!!!
+    $sql_insert = "INSERT INTO users (first_name, last_name, username, email, phone_number, hash_password) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt_insert = $conn->prepare($sql_insert);
 
     if ($stmt_insert === false) {
         die("Eroare la pregatirea interogarii de inserare: " . $conn->error);
     }
 
-    $stmt_insert->bind_param("sss", $username, $email, $hashedPassword); //!!!to add after the full DB: $firstName, $lastName, $phone!!!
+    $stmt_insert->bind_param("ssssss", $firstName, $lastName, $username, $email, $phone, $hashedPassword);
+
 
     if ($stmt_insert->execute()) {
         header("location: ../login.php?success=registered");
