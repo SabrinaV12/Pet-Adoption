@@ -73,19 +73,19 @@ require_once 'database/check_auth.php';
 
   <main class="pet-list">
     <div class="pet-card">
-      <img src="assets/dog.jpg" alt="Pitter">
+      <img src="assets/Pitter.jpg" alt="Pitter">
       <h4>Pitter</h4>
       <p>Breed: Pit Bull<br>Age: 5 years<br>Size: Large</p>
       <a href="#">More Info</a>
     </div>
     <div class="pet-card">
-      <img src="assets/cat.jpg" alt="Snoopy">
+      <img src="assets/Snoopy.jpg" alt="Snoopy">
       <h4>Snoopy</h4>
       <p>Breed: Cat<br>Age: 4 years<br>Size: Small</p>
       <a href="#">More Info</a>
     </div>
     <div class="pet-card">
-      <img src="assets/capybara.jpg" alt="Balto">
+      <img src="assets/Balto.jpg" alt="Balto">
       <h4>Balto</h4>
       <p>Breed: Capybara<br>Age: 3 years<br>Size: Medium</p>
       <a href="#">More Info</a>
