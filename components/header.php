@@ -13,7 +13,7 @@
             <div class="auth-links">
                 <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
 
-                    <a href="profile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a> | <a href="database/logout.php">Logout</a>
+                    <a href="userProfile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a> | <a href="database/logout.php">Logout</a>
 
                 <?php else: ?>
 

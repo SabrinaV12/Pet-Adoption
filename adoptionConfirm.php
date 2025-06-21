@@ -50,7 +50,7 @@ if ($application_id > 0) {
                     </a>
                 </div>
 
-                <a href="humanPage.php" class="profile-button">
+                <a href="userProfile.php" class="profile-button">
                     <span>Go To My Profile</span>
                 </a>
             </div>
