@@ -25,7 +25,3 @@ CREATE TABLE IF NOT EXISTS auth_tokens (
 );
 
 
-INSERT INTO users (first_name, last_name, username, email, phone_number, hash_password)
-VALUES 
-('Hosa', 'Hosos', 'hosa', 'hosa@hosa.com', '1234567890', 'hosaa'),
-('Fosa', 'Fosos', 'fosa', 'fosa@fosa.com', '1234567890', 'fosaa');
