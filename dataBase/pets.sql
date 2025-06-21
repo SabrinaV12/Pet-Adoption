@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS pets (
     weight DECIMAL(5,2) CHECK (weight >= 0),
     height DECIMAL(5,2) CHECK (height >= 0),
     animal_type ENUM('Dog', 'Cat', 'Capybara') NOT NULL,
+    image_path VARCHAR(255),
 
     vaccinated BOOLEAN DEFAULT FALSE,
     house_trained BOOLEAN DEFAULT FALSE,
