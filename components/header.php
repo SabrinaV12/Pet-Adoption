@@ -3,7 +3,7 @@
         <a href="home.php"><img src="assets/logo.png" alt="Home" width="122" height="50" /></a>
 
         <section class="main-buttons">
-            <a href="petSearch.php">Adopt</a>
+            <a href="searchMenu.php">Adopt</a>
             <a href="careGuide.php">Care Guide</a>
             <a href="contact.php">Contact</a>
         </section>
