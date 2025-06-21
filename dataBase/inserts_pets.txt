@@ -1,0 +1,38 @@
+INSERT INTO pets (
+    name, gender, breed, age, color, weight, size, animal_type,
+    vaccinated, house_trained, neutered, microchipped, good_with_children, shots_up_to_date,
+    restrictions, recommended, adoption_date, image_path, description
+)
+VALUES (
+    'Pitter', 'Male', 'Pit Bull', 5, 'Gray', 28.5, 'Large', 'Dog',
+    TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
+    'Not suited for apartment living', 'Ideal for families with kids and a yard',
+    '2025-06-15', 'assets/Pitter.jpg',
+    'Pitter is a loyal and energetic pit bull who loves outdoor adventures. He thrives in a home with space and plenty of affection.'
+);
+
+INSERT INTO pets (
+    name, gender, breed, age, color, weight, size, animal_type,
+    vaccinated, house_trained, neutered, microchipped, good_with_children, shots_up_to_date,
+    restrictions, recommended, adoption_date, image_path, description
+)
+VALUES (
+    'Snoopy', 'Female', 'Cat', 4, 'Mix', 12, 'Small', 'Cat',
+    TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
+    'Milk', 'Fish',
+    '2025-03-12', 'assets/Snoopy.jpg',
+    'Snoopy is a calm and independent cat who enjoys quiet corners and sunbathing. She gets along well with other cats.'
+);
+
+INSERT INTO pets (
+    name, gender, breed, age, color, weight, size, animal_type,
+    vaccinated, house_trained, neutered, microchipped, good_with_children, shots_up_to_date,
+    restrictions, recommended, adoption_date, image_path, description
+)
+VALUES (
+    'Balto', 'Male', 'Capybara', 3, 'Brown', 20, 'Medium', 'Capybara',
+    FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,
+    'Sweets', 'Grass',
+    NULL, 'assets/Balto.jpg',
+    'Balto is a unique and gentle capybara who enjoys companionship. He needs a patient owner willing to give him time and space.'
+);

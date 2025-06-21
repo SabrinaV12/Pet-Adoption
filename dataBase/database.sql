@@ -9,6 +9,8 @@ CREATE TABLE users (
     email VARCHAR(100) UNIQUE NOT NULL,
     phone_number VARCHAR(10) NOT NULL,
     hash_password VARCHAR(100) NOT NULL,
+    role ENUM('user','admin') NOT NULL,
+    description TEXT,
     CHECK (first_name NOT REGEXP '[0-9]'),
     CHECK (last_name NOT REGEXP '[0-9]'),
     CHECK (email LIKE '%@%'),

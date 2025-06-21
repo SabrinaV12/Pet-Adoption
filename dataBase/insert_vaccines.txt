@@ -1,0 +1,13 @@
+INSERT INTO vaccinations (pet_id, age_in_weeks, vaccine_name) VALUES
+(1, 8, 'Rabies'),
+(1, 12, 'Parvovirus'),
+(1, 16, 'Distemper');
+
+INSERT INTO vaccinations (pet_id, age_in_weeks, vaccine_name) VALUES
+(2, 6, 'Feline Rhinotracheitis'),
+(2, 10, 'Feline Calicivirus'),
+(2, 14, 'Rabies');
+
+INSERT INTO vaccinations (pet_id, age_in_weeks, vaccine_name) VALUES
+(3, 12, 'Vitamin C Supplement'),
+(3, 20, 'Deworming Shot');

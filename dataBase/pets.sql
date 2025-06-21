@@ -22,5 +22,7 @@ CREATE TABLE IF NOT EXISTS pets (
     recommended TEXT,
     
     adopted BOOLEAN DEFAULT FALSE,
-    adoption_date DATE DEFAULT NULL
+    adoption_date DATE DEFAULT NULL,
+    
+    description TEXT
 );
