@@ -1,0 +1,64 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
+    header('location: ../../login.php');
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add a New User</title>
+    <link rel="stylesheet" href="../../design/adminForms.css">
+</head>
+
+<body>
+    <header>
+        <h1>Add a New User</h1>
+        <a href="../adminUsers.php">Back to Users List</a>
+    </header>
+    <main>
+        <form action="add_user_script.php" method="POST">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Phone Number:</label>
+                <input type="tel" id="phone_number" name="phone_number" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="user" selected>User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <button type="submit">Create User</button>
+        </form>
+    </main>
+</body>
+
+</html>
