@@ -38,11 +38,11 @@ if (!$result) {
         <?php if (isset($_GET['status'])): ?>
             <div class="status-message">
                 <?php
-                if ($_GET['status'] == 'updated') {
+                if ($_GET['status'] == 'user_updated') {
                     echo 'User details have been updated successfully!';
-                } elseif ($_GET['status'] == 'added') {
+                } elseif ($_GET['status'] == 'user_added') {
                     echo 'User has been added successfully!';
-                } elseif ($_GET['status'] == 'deleted') {
+                } elseif ($_GET['status'] == 'user_deleted') {
                     echo 'User has been deleted successfully!';
                 } elseif ($_GET['status'] == 'error') {
                     echo 'An error occurred: ' . htmlspecialchars($_GET['msg']);
