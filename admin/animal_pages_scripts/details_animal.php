@@ -1,0 +1,140 @@
+<?php
+session_start();
+require_once '../../database/db.php';
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
+    header('location: ../../login.php');
+    exit;
+}
+
+if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
+    header('Location: ../adminAnimals.php?error=invalid_id');
+    exit;
+}
+$pet_id = $_GET['id'];
+
+$sql = "SELECT * FROM pets WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $pet_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$pet = $result->fetch_assoc();
+
+if (!$pet) {
+    header('Location: ../adminAnimals.php?error=not_found');
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details for: <?php echo htmlspecialchars($pet['name']); ?></title>
+    <link rel="stylesheet" href="../../design/details_animal.css">
+</head>
+
+<body>
+    <header>
+        <h1>Details for "<?php echo htmlspecialchars($pet['name']); ?>"</h1>
+        <nav>
+            <a href="../adminAnimals.php">Back to Animals List</a>
+            <a href="edit_animal.php?id=<?php echo $pet['id']; ?>" class="edit-button">Edit This Pet</a>
+        </nav>
+    </header>
+
+    <main class="pet-details-container">
+        <div class="pet-image">
+            <?php if (!empty($pet['image_path']) && file_exists('../../' . $pet['image_path'])): ?>
+                <img src="../../<?php echo htmlspecialchars($pet['image_path']); ?>" alt="Photo of <?php echo htmlspecialchars($pet['name']); ?>">
+            <?php else: ?>
+                <img src="../../images/placeholder.png" alt="No image available"> <?php endif; ?>
+        </div>
+
+        <div class="pet-info">
+            <h2>Core Information</h2>
+            <dl>
+                <dt>Name</dt>
+                <dd><?php echo htmlspecialchars($pet['name']); ?></dd>
+
+                <dt>Animal Type</dt>
+                <dd><?php echo htmlspecialchars($pet['animal_type']); ?></dd>
+
+                <dt>Breed</dt>
+                <dd><?php echo htmlspecialchars($pet['breed']); ?></dd>
+
+                <dt>Gender</dt>
+                <dd><?php echo htmlspecialchars($pet['gender']); ?></dd>
+
+                <dt>Age</dt>
+                <dd><?php echo $pet['age']; ?></dd>
+
+                <dt>Size</dt>
+                <dd><?php echo htmlspecialchars($pet['size']); ?></dd>
+
+                <dt>Color</dt>
+                <dd><?php echo htmlspecialchars($pet['color']); ?></dd>
+
+                <dt>Weight</dt>
+                <dd><?php echo $pet['weight']; ?> kg</dd>
+
+                <dt>Height</dt>
+                <dd><?php echo $pet['height']; ?> cm</dd>
+            </dl>
+
+            <h2>Health & Behavior</h2>
+            <dl>
+                <dt>Vaccinated</dt>
+                <dd><?php echo $pet['vaccinated'] ? 'Yes' : 'No'; ?></dd>
+
+                <dt>Neutered</dt>
+                <dd><?php echo $pet['neutered'] ? 'Yes' : 'No'; ?></dd>
+
+                <dt>House Trained</dt>
+                <dd><?php echo $pet['house_trained'] ? 'Yes' : 'No'; ?></dd>
+
+                <dt>Microchipped</dt>
+                <dd><?php echo $pet['microchipped'] ? 'Yes' : 'No'; ?></dd>
+
+                <dt>Good with Children</dt>
+                <dd><?php echo $pet['good_with_children'] ? 'Yes' : 'No'; ?></dd>
+
+                <dt>Shots Up-to-Date</dt>
+                <dd><?php echo $pet['shots_up_to_date'] ? 'Yes' : 'No'; ?></dd>
+            </dl>
+
+            <h2>Description & Notes</h2>
+            <div class="description-box">
+                <strong>Description:</strong>
+                <p><?php echo nl2br(htmlspecialchars($pet['description'])); ?></p>
+            </div>
+            <div class="description-box">
+                <strong>Restrictions:</strong>
+                <p><?php echo nl2br(htmlspecialchars($pet['restrictions'])); ?></p>
+            </div>
+            <div class="description-box">
+                <strong>Recommendations:</strong>
+                <p><?php echo nl2br(htmlspecialchars($pet['recommended'])); ?></p>
+            </div>
+
+            <h2>Adoption Status</h2>
+            <dl>
+                <dt>Status</dt>
+                <dd>
+                    <?php if ($pet['adopted']): ?>
+                        <strong style="color: green;">Adopted</strong>
+                        <?php if (!empty($pet['adoption_date'])): ?>
+                            on <?php echo date('F j, Y', strtotime($pet['adoption_date'])); ?>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <strong style="color: blue;">Available for Adoption</strong>
+                    <?php endif; ?>
+                </dd>
+            </dl>
+        </div>
+    </main>
+</body>
+
+</html>

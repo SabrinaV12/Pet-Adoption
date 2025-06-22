@@ -1,0 +1,153 @@
+<?php
+session_start();
+require_once '../../database/db.php';
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
+    header('location: ../../login.php');
+    exit;
+}
+
+if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
+    header('Location: ../adminAnimals.php?error=invalid_id');
+    exit;
+}
+$pet_id = $_GET['id'];
+
+$sql = "SELECT * FROM pets WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $pet_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$pet = $result->fetch_assoc();
+
+if (!$pet) {
+    header('Location: ../adminAnimals.php?error=not_found');
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Pet: <?php echo htmlspecialchars($pet['name']); ?></title>
+    <link rel="stylesheet" href="../../design/edit_animal.css">
+</head>
+
+<body>
+    <header>
+        <h1>Edit Pet: <?php echo htmlspecialchars($pet['name']); ?></h1>
+        <a href="../adminAnimals.php">Back to Animals List</a>
+    </header>
+
+    <main>
+        <form action="edit_animal_script.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $pet['id']; ?>">
+
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($pet['name']); ?>" required>
+            </div>
+
+            <fieldset>
+                <legend>Core Details</legend>
+                <div class="form-group">
+                    <label for="animal_type">Animal Type:</label>
+                    <select id="animal_type" name="animal_type" required>
+                        <option value="Dog" <?php if ($pet['animal_type'] == 'Dog') echo 'selected'; ?>>Dog</option>
+                        <option value="Cat" <?php if ($pet['animal_type'] == 'Cat') echo 'selected'; ?>>Cat</option>
+                        <option value="Capybara" <?php if ($pet['animal_type'] == 'Capybara') echo 'selected'; ?>>Capybara</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="breed">Breed:</label>
+                    <input type="text" id="breed" name="breed" value="<?php echo htmlspecialchars($pet['breed']); ?>">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="Male" <?php if ($pet['gender'] == 'Male') echo 'selected'; ?>>Male</option>
+                        <option value="Female" <?php if ($pet['gender'] == 'Female') echo 'selected'; ?>>Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" value="<?php echo $pet['age']; ?>" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Descriptions</legend>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="5"><?php echo htmlspecialchars($pet['description']); ?></textarea>
+                </div>
+                <div class="form-group"><label for="restrictions">Restrictions:</label><textarea name="restrictions" rows="3"><?php echo htmlspecialchars($pet['restrictions']); ?></textarea></div>
+                <div class="form-group"><label for="recommended">Recommendations:</label><textarea name="recommended" rows="3"><?php echo htmlspecialchars($pet['recommended']); ?></textarea></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Physical Details</legend>
+                <div class="form-group">
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="color" value="<?php echo htmlspecialchars($pet['color']); ?>">
+                </div>
+                <div class="form-group">
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" step="0.01" id="weight" name="weight" value="<?php echo $pet['weight']; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="height">Height (cm):</label>
+                    <input type="number" step="0.01" id="height" name="height" value="<?php echo $pet['height']; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="size">Size:</label>
+                    <select id="size" name="size" required>
+                        <option value="Small" <?php if ($pet['size'] == 'Small') echo 'selected'; ?>>Small</option>
+                        <option value="Medium" <?php if ($pet['size'] == 'Medium') echo 'selected'; ?>>Medium</option>
+                        <option value="Large" <?php if ($pet['size'] == 'Large') echo 'selected'; ?>>Large</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Health & Behavior (All Checkboxes)</legend>
+                <div class="checkbox-group"><input type="checkbox" id="vaccinated" name="vaccinated" value="1" <?php echo $pet['vaccinated'] ? 'checked' : ''; ?>><label for="vaccinated">Vaccinated</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="neutered" name="neutered" value="1" <?php echo $pet['neutered'] ? 'checked' : ''; ?>><label for="neutered">Neutered</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="microchipped" name="microchipped" value="1" <?php echo $pet['microchipped'] ? 'checked' : ''; ?>><label for="microchipped">Microchipped</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="good_with_children" name="good_with_children" value="1" <?php echo $pet['good_with_children'] ? 'checked' : ''; ?>><label for="good_with_children">Good with Children</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="shots_up_to_date" name="shots_up_to_date" value="1" <?php echo $pet['shots_up_to_date'] ? 'checked' : ''; ?>><label for="shots_up_to_date">Shots Up-to-Date</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="house_trained" name="house_trained" value="1" <?php echo $pet['house_trained'] ? 'checked' : ''; ?>><label for="house_trained">House Trained</label></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Adoption Details</legend>
+                <div class="checkbox-group"><input type="checkbox" id="adopted" name="adopted" value="1" <?php echo $pet['adopted'] ? 'checked' : ''; ?>><label for="adopted">Adopted</label></div>
+                <div class="form-group">
+                    <label for="adoption_date">Adoption Date:</label>
+                    <input type="date" id="adoption_date" name="adoption_date" value="<?php echo $pet['adoption_date']; ?>">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Pet Image</legend>
+                <p>Current Image:</p>
+                <?php if (!empty($pet['image_path'])): ?>
+                    <img src="../../<?php echo htmlspecialchars($pet['image_path']); ?>" alt="Current image" width="150">
+                <?php else: ?>
+                    <p>No image currently uploaded.</p>
+                <?php endif; ?>
+                <div class="form-group">
+                    <label for="image">Upload New Image (optional, will replace the current one):</label>
+                    <input type="file" id="image" name="image">
+                </div>
+            </fieldset>
+
+            <button type="submit">Save All Changes</button>
+        </form>
+    </main>
+</body>
+
+</html>
