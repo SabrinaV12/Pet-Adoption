@@ -35,6 +35,21 @@ if (!$result) {
     </header>
 
     <main>
+        <?php if (isset($_GET['status'])): ?>
+            <div class="status-message">
+                <?php
+                if ($_GET['status'] == 'updated') {
+                    echo 'User details have been updated successfully!';
+                } elseif ($_GET['status'] == 'added') {
+                    echo 'User has been added successfully!';
+                } elseif ($_GET['status'] == 'deleted') {
+                    echo 'User has been deleted successfully!';
+                } elseif ($_GET['status'] == 'error') {
+                    echo 'An error occurred: ' . htmlspecialchars($_GET['msg']);
+                }
+                ?>
+            </div>
+        <?php endif; ?>
         <table>
             <thead>
                 <tr>
