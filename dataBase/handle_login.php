@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ]
             );
 
-            header("location: ../petPage.php");
+            header("location: ../searchMenu.php");
             exit;
         } else {
             header("location: ../login.php?error=invalid_credentials");
