@@ -6,6 +6,8 @@ $params = [];
 $types = "";
 $feedTitle = "Animals up to adoption";
 
+$conditions[] = "adopted = 0";
+
 if (!empty($_GET['type'])) {
     $placeholders = implode(',', array_fill(0, count($_GET['type']), '?'));
     $conditions[] = "animal_type IN ($placeholders)";
@@ -20,10 +22,7 @@ if (!empty($_GET['breed'])) {
     $types .= 's';
 }
 
-$sql = "SELECT * FROM pets";
-if (!empty($conditions)) {
-    $sql .= " WHERE " . implode(" AND ", $conditions);
-}
+$sql = "SELECT * FROM pets  WHERE " . implode(" AND ", $conditions);
 
 $sql .= " ORDER BY created_at DESC LIMIT 25";
 
