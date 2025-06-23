@@ -21,7 +21,6 @@ if ($application_id > 0) {
     $user_can_download = false;
 }
 
-//Now that we verified that the user has(or not) access, we can safely delete it
 unset($_SESSION['adoption']);
 ?>
 

@@ -4,30 +4,29 @@
 
         <section class="main-buttons">
             <a href="searchMenu.php">Adopt</a>
-            <a href="careGuide.php">Care Guide</a>
-            <a href="contact.php">Contact</a>
+            <a href="petRequest.php">Rehome a Pet</a>
+            <a href="about.html">About</a>
         </section>
 
         <section class="information-buttons">
             <a href="notification.php"><img src="assets/notifications.png" alt="Notifications" /></a>
-          <div class="auth-links">
-    <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-        <a href="userProfile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a>
 
-        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-            | <a href="admin/index.php" style="color: #9990DA; font-weight: bold;">Admin Panel</a>
-        <?php endif; ?>
+            <div class="auth-links">
+                <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                    <a href="userProfile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a>
 
-        | <a href="database/logout.php">Logout</a>
-    <?php else: ?>
-        <a href="login.php">Login</a> | <a href="register.php">Register</a>
-    <?php endif; ?>
-</div>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                        | <a href="admin/index.php" style="color: #9990DA; font-weight: bold;">Admin Panel</a>
+                    <?php endif; ?>
 
-
+                    | <a href="database/logout.php">Logout</a>
+                <?php else: ?>
+                    <a href="login.php">Login</a> | <a href="register.php">Register</a>
+                <?php endif; ?>
+            </div>
         </section>
-
     </nav>
+
     <section class="mini-navigation">
         <a href="home.php">Home > </a>
         <a href="petSearch.php"> Adopt </a>

@@ -105,10 +105,13 @@ function formatBoolean($val)
 
 
       <?php if ($pet['adopted']): ?>
-        <div class="adopted">Adopted on <?= htmlspecialchars($pet['adoption_date']) ?></div>
-      <?php else: ?>
-        <div class="adopted"><a href="adoptionStart.php?pet_id=<?php echo $pet['id']; ?>" class="button">Adopt</a></div>
-      <?php endif; ?>
+  <div class="adopted">Adopted on <?= htmlspecialchars($pet['adoption_date']) ?></div>
+<?php else: ?>
+  <div class="adopted">
+    <a href="adoptionStart.php?pet_id=<?= $pet['id']; ?>" class="adopt-button">Adopt</a>
+  </div>
+<?php endif; ?>
+
 
       <div class="info-cards">
         <div>Gender: <?= $pet['gender'] ?></div>
