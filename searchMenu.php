@@ -128,18 +128,19 @@ $result = $stmt->get_result();
   <main class="pet-list">
     <?php if ($result->num_rows > 0): ?>
       <?php while ($pet = $result->fetch_assoc()): ?>
-        <div class="pet-card">
-          <img src="<?php echo htmlspecialchars($pet['image_path']); ?>" alt="<?php echo htmlspecialchars($pet['name']); ?>">
-          <h4><?php echo htmlspecialchars($pet['name']); ?></h4>
-          <p>
-            Type: <?php echo htmlspecialchars($pet['animal_type']); ?><br>
-            Breed: <?php echo htmlspecialchars($pet['breed']); ?><br>
-            Age: <?php echo $pet['age']; ?> years<br>
-            Size: <?php echo htmlspecialchars($pet['size']); ?>
-          </p>
-          <a href="#">More Info</a>
-        </div>
-      <?php endwhile; ?>
+  <div class="pet-card">
+    <img src="<?php echo htmlspecialchars($pet['image_path']); ?>" alt="<?php echo htmlspecialchars($pet['name']); ?>">
+    <h4><?php echo htmlspecialchars($pet['name']); ?></h4>
+    <p>
+      Type: <?php echo htmlspecialchars($pet['animal_type']); ?><br>
+      Breed: <?php echo htmlspecialchars($pet['breed']); ?><br>
+      Age: <?php echo $pet['age']; ?> years<br>
+      Size: <?php echo htmlspecialchars($pet['size']); ?>
+    </p>
+    <a href="petPage.php?id=<?php echo $pet['id']; ?>">More Info</a>
+  </div>
+<?php endwhile; ?>
+
     <?php else: ?>
       <p>No pets match your filters.</p>
     <?php endif; ?>
