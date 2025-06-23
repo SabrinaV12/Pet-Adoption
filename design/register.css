@@ -65,3 +65,33 @@
     text-decoration: none;
     color: #41349D;
 }
+
+@media (max-width: 768px) {
+    .register {
+        width: 95%;
+        max-width: none;
+        aspect-ratio: unset;
+        padding: 16px;
+        margin: 30px auto;
+    }
+
+    .register input[type="tel"],
+    .register input[type="text"],
+    .register input[type="password"] {
+        font-size: 15px;
+    }
+
+    .register button {
+        width: 100%;
+        font-size: 15px;
+    }
+
+    .text {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .help-buttons {
+        margin-top: 24px;
+    }
+}

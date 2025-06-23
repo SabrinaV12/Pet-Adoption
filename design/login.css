@@ -64,3 +64,32 @@
     text-decoration: none;
     color: #41349D;
 }
+
+@media (max-width: 768px) {
+    .login {
+        width: 90%;
+        max-width: none;
+        aspect-ratio: unset;
+        padding: 16px;
+        margin: 30px auto;
+    }
+
+    .login button {
+        width: 100%;
+        font-size: 15px;
+    }
+
+    .login input[type="text"],
+    .login input[type="password"] {
+        font-size: 15px;
+    }
+
+    .help-buttons {
+        margin-top: 20px;
+    }
+
+    .text {
+        font-size: 14px;
+        text-align: center;
+    }
+}
