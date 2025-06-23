@@ -3,6 +3,13 @@ session_start();
 require_once 'database/check_auth.php';
 require_once 'database/db.php';
 
+$countriesResult = $conn->query("SELECT DISTINCT country FROM users WHERE country IS NOT NULL AND country != ''");
+$countiesResult = $conn->query("SELECT DISTINCT county FROM users WHERE county IS NOT NULL AND county != ''");
+
+$countries = $countriesResult->fetch_all(MYSQLI_ASSOC);
+$counties = $countiesResult->fetch_all(MYSQLI_ASSOC);
+
+
 $conditions = [];
 $params = [];
 $types = "";
@@ -44,7 +51,21 @@ if (!empty($_GET['age'])) {
   $types .= 'i';
 }
 
-$sql = "SELECT * FROM pets";
+if (!empty($_GET['country'])) {
+  $conditions[] = "users.country = ?";
+  $params[] = $_GET['country'];
+  $types .= 's';
+}
+
+if (!empty($_GET['county'])) {
+  $conditions[] = "users.county = ?";
+  $params[] = $_GET['county'];
+  $types .= 's';
+}
+
+
+
+$sql = "SELECT pets.* FROM pets JOIN users ON pets.user_id = users.id";
 if (!empty($conditions)) {
   $sql .= " WHERE " . implode(" AND ", $conditions);
 }
@@ -121,6 +142,33 @@ $result = $stmt->get_result();
           <legend>Age (max years):</legend>
           <input type="number" name="age" min="0" placeholder="e.g. 5">
         </fieldset>
+
+        <fieldset>
+  <legend>Country:</legend>
+  <select name="country">
+    <option value="">Any</option>
+    <?php foreach ($countries as $c): ?>
+      <option value="<?= htmlspecialchars($c['country']) ?>"
+        <?= (isset($_GET['country']) && $_GET['country'] === $c['country']) ? 'selected' : '' ?>>
+        <?= htmlspecialchars($c['country']) ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</fieldset>
+
+<fieldset>
+  <legend>County:</legend>
+  <select name="county">
+    <option value="">Any</option>
+    <?php foreach ($counties as $c): ?>
+      <option value="<?= htmlspecialchars($c['county']) ?>"
+        <?= (isset($_GET['county']) && $_GET['county'] === $c['county']) ? 'selected' : '' ?>>
+        <?= htmlspecialchars($c['county']) ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</fieldset>
+
 
         <button type="submit">Apply Filter</button>
 
