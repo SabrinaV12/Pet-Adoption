@@ -14,6 +14,14 @@ if (!$pet) {
     exit;
 }
 
+$userLocationQuery = $conn->prepare("SELECT country, county FROM users WHERE id = ?");
+$userLocationQuery->bind_param("i", $pet['user_id']);
+$userLocationQuery->execute();
+$userLocation = $userLocationQuery->get_result()->fetch_assoc();
+
+$country = $userLocation['country'] ?? 'Unknown';
+$county = $userLocation['county'] ?? 'Unknown';
+
 $calendarQuery = $conn->prepare("SELECT feed_date, food_type FROM feeding_calendar WHERE pet_id = ? ORDER BY feed_date");
 $calendarQuery->bind_param("i", $petId);
 $calendarQuery->execute();
@@ -82,7 +90,8 @@ function formatBoolean($val) {
       <img src="<?= $pet['image_path'] ?>" alt="<?= htmlspecialchars($pet['name']) ?>">
     </div>
     <h2><?= htmlspecialchars($pet['name']) ?></h2>
-    <p class="location">United States Of America · California</p>
+<p class="location"><?= htmlspecialchars($country) ?> · <?= htmlspecialchars($county) ?></p>
+
 
     <?php if ($pet['adoption_date']): ?>
       <div class="adopted">Adopted on <?= htmlspecialchars($pet['adoption_date']) ?></div>
@@ -185,6 +194,26 @@ function formatBoolean($val) {
   </div>
 </div>
 
+<div class="section">
+  <h3>Basic First Aid Tips for <?= htmlspecialchars($pet['animal_type']) ?>s</h3>
+  <p>
+    <?php
+      switch (strtolower($pet['animal_type'])) {
+        case 'dog':
+          echo "If your dog is injured, stay calm and assess the situation. Apply gentle pressure with a clean cloth to stop bleeding. Avoid giving human medication. Transport your dog to the vet immediately if bleeding continues or if your dog is in shock (rapid breathing, pale gums, or unresponsiveness).";
+          break;
+        case 'cat':
+          echo "For minor cuts or wounds, gently clean with lukewarm water. Use a clean towel to stop bleeding. Cats hide pain well—watch for limping, swelling, or behavioral changes. For serious injuries, broken bones, or difficulty breathing, take your cat to the vet promptly.";
+          break;
+        case 'capybara':
+          echo "Capybaras are prone to wounds and heat stress. Keep injured capybaras cool and hydrated. Clean minor wounds with saline and cover gently. Avoid loud noises and move them to a quiet, shaded area. Always consult an exotic animal vet as soon as possible.";
+          break;
+        default:
+          echo "No specific first aid information available for this animal.";
+      }
+    ?>
+  </p>
+</div>
 
   <?php include 'components/footer.php'; ?>
 </body>
