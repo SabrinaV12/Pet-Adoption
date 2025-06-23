@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Details</title>
+    <link rel="stylesheet" href="design/view_application.css">
+</head>
+<body>
 <?php
 session_start();
 require_once 'database/db.php';
@@ -21,8 +29,10 @@ if (!$application) {
 
 echo "<h1>Application for " . htmlspecialchars($application['pet_name']) . "</h1>";
 
+echo '<div class="download-buttons">';
 echo '<a href="scripts/download_form.php?id=' . $application_id . '&format=csv">Download as CSV</a>';
 echo '<a href="scripts/download_form.php?id=' . $application_id . '&format=json">Download as JSON</a>';
+echo '</div>';
 
 if ($application['status'] === 'pending') {
 ?>
