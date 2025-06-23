@@ -32,6 +32,13 @@ $vaccineQuery->bind_param("i", $petId);
 $vaccineQuery->execute();
 $vaccines = $vaccineQuery->get_result()->fetch_all(MYSQLI_ASSOC);
 
+$isOwner = isset($_SESSION['user_id']) && $_SESSION['user_id'] === $pet['user_id'];
+
+$mediaStmt = $conn->prepare("SELECT file_path, file_type FROM pet_media WHERE pet_id = ?");
+$mediaStmt->bind_param("i", $petId);
+$mediaStmt->execute();
+$mediaFiles = $mediaStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
 function formatBoolean($val) {
     return $val ? "Yes" : "No";
 }
@@ -214,6 +221,56 @@ function formatBoolean($val) {
     ?>
   </p>
 </div>
+
+<div class="section">
+  <h3>Media Gallery</h3>
+  <?php if (!empty($mediaFiles)): ?>
+    <div class="media-gallery">
+      <?php foreach ($mediaFiles as $media): ?>
+  <div class="media-item">
+    <?php if ($media['file_type'] === 'image'): ?>
+      <img src="<?= htmlspecialchars($media['file_path']) ?>" alt="Pet Photo" style="max-width: 100%; border-radius: 10px;" />
+    <?php elseif ($media['file_type'] === 'video'): ?>
+      <video controls style="max-width: 100%; border-radius: 10px;">
+        <source src="<?= htmlspecialchars($media['file_path']) ?>" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    <?php elseif ($media['file_type'] === 'audio'): ?>
+      <audio controls style="width: 100%;">
+        <source src="<?= htmlspecialchars($media['file_path']) ?>" type="audio/mpeg">
+        Your browser does not support the audio tag.
+      </audio>
+    <?php endif; ?>
+
+    <?php if ($isOwner): ?>
+      <form action="delete_pet_media.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this media file?');" style="margin-top: 10px;">
+        <input type="hidden" name="file_path" value="<?= htmlspecialchars($media['file_path']) ?>">
+        <input type="hidden" name="pet_id" value="<?= $petId ?>">
+        <button type="submit" style="background-color: #cc0000; color: white; border: none; padding: 6px 12px; border-radius: 6px;">Delete</button>
+      </form>
+    <?php endif; ?>
+  </div>
+<?php endforeach; ?>
+
+    </div>
+  <?php else: ?>
+    <p>No media files available for this pet.</p>
+  <?php endif; ?>
+</div>
+
+<?php if ($isOwner): ?>
+  <div class="section">
+    <h3>Upload Media</h3>
+    <form action="upload_pet_media.php" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="pet_id" value="<?= $petId ?>">
+      <div class="form-group">
+        <label for="media">Choose file (image, video, or audio):</label>
+        <input type="file" name="media" accept="image/*,video/*,audio/*" required>
+      </div>
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+<?php endif; ?>
 
   <?php include 'components/footer.php'; ?>
 </body>
