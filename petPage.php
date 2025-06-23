@@ -14,6 +14,14 @@ if (!$pet) {
     exit;
 }
 
+$userLocationQuery = $conn->prepare("SELECT country, county FROM users WHERE id = ?");
+$userLocationQuery->bind_param("i", $pet['user_id']);
+$userLocationQuery->execute();
+$userLocation = $userLocationQuery->get_result()->fetch_assoc();
+
+$country = $userLocation['country'] ?? 'Unknown';
+$county = $userLocation['county'] ?? 'Unknown';
+
 $calendarQuery = $conn->prepare("SELECT feed_date, food_type FROM feeding_calendar WHERE pet_id = ? ORDER BY feed_date");
 $calendarQuery->bind_param("i", $petId);
 $calendarQuery->execute();
@@ -23,6 +31,13 @@ $vaccineQuery = $conn->prepare("SELECT age_in_weeks, vaccine_name FROM vaccinati
 $vaccineQuery->bind_param("i", $petId);
 $vaccineQuery->execute();
 $vaccines = $vaccineQuery->get_result()->fetch_all(MYSQLI_ASSOC);
+
+$isOwner = isset($_SESSION['user_id']) && $_SESSION['user_id'] === $pet['user_id'];
+
+$mediaStmt = $conn->prepare("SELECT file_path, file_type FROM pet_media WHERE pet_id = ?");
+$mediaStmt->bind_param("i", $petId);
+$mediaStmt->execute();
+$mediaFiles = $mediaStmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 function formatBoolean($val) {
     return $val ? "Yes" : "No";
@@ -82,7 +97,8 @@ function formatBoolean($val) {
       <img src="<?= $pet['image_path'] ?>" alt="<?= htmlspecialchars($pet['name']) ?>">
     </div>
     <h2><?= htmlspecialchars($pet['name']) ?></h2>
-    <p class="location">United States Of America · California</p>
+<p class="location"><?= htmlspecialchars($country) ?> · <?= htmlspecialchars($county) ?></p>
+
 
     <?php if ($pet['adoption_date']): ?>
       <div class="adopted">Adopted on <?= htmlspecialchars($pet['adoption_date']) ?></div>
@@ -185,6 +201,76 @@ function formatBoolean($val) {
   </div>
 </div>
 
+<div class="section">
+  <h3>Basic First Aid Tips for <?= htmlspecialchars($pet['animal_type']) ?>s</h3>
+  <p>
+    <?php
+      switch (strtolower($pet['animal_type'])) {
+        case 'dog':
+          echo "If your dog is injured, stay calm and assess the situation. Apply gentle pressure with a clean cloth to stop bleeding. Avoid giving human medication. Transport your dog to the vet immediately if bleeding continues or if your dog is in shock (rapid breathing, pale gums, or unresponsiveness).";
+          break;
+        case 'cat':
+          echo "For minor cuts or wounds, gently clean with lukewarm water. Use a clean towel to stop bleeding. Cats hide pain well—watch for limping, swelling, or behavioral changes. For serious injuries, broken bones, or difficulty breathing, take your cat to the vet promptly.";
+          break;
+        case 'capybara':
+          echo "Capybaras are prone to wounds and heat stress. Keep injured capybaras cool and hydrated. Clean minor wounds with saline and cover gently. Avoid loud noises and move them to a quiet, shaded area. Always consult an exotic animal vet as soon as possible.";
+          break;
+        default:
+          echo "No specific first aid information available for this animal.";
+      }
+    ?>
+  </p>
+</div>
+
+<div class="section">
+  <h3>Media Gallery</h3>
+  <?php if (!empty($mediaFiles)): ?>
+    <div class="media-gallery">
+      <?php foreach ($mediaFiles as $media): ?>
+  <div class="media-item">
+    <?php if ($media['file_type'] === 'image'): ?>
+      <img src="<?= htmlspecialchars($media['file_path']) ?>" alt="Pet Photo" style="max-width: 100%; border-radius: 10px;" />
+    <?php elseif ($media['file_type'] === 'video'): ?>
+      <video controls style="max-width: 100%; border-radius: 10px;">
+        <source src="<?= htmlspecialchars($media['file_path']) ?>" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    <?php elseif ($media['file_type'] === 'audio'): ?>
+      <audio controls style="width: 100%;">
+        <source src="<?= htmlspecialchars($media['file_path']) ?>" type="audio/mpeg">
+        Your browser does not support the audio tag.
+      </audio>
+    <?php endif; ?>
+
+    <?php if ($isOwner): ?>
+      <form action="delete_pet_media.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this media file?');" style="margin-top: 10px;">
+        <input type="hidden" name="file_path" value="<?= htmlspecialchars($media['file_path']) ?>">
+        <input type="hidden" name="pet_id" value="<?= $petId ?>">
+        <button type="submit" style="background-color: #cc0000; color: white; border: none; padding: 6px 12px; border-radius: 6px;">Delete</button>
+      </form>
+    <?php endif; ?>
+  </div>
+<?php endforeach; ?>
+
+    </div>
+  <?php else: ?>
+    <p>No media files available for this pet.</p>
+  <?php endif; ?>
+</div>
+
+<?php if ($isOwner): ?>
+  <div class="section">
+    <h3>Upload Media</h3>
+    <form action="upload_pet_media.php" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="pet_id" value="<?= $petId ?>">
+      <div class="form-group">
+        <label for="media">Choose file (image, video, or audio):</label>
+        <input type="file" name="media" accept="image/*,video/*,audio/*" required>
+      </div>
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+<?php endif; ?>
 
   <?php include 'components/footer.php'; ?>
 </body>

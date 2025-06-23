@@ -76,13 +76,15 @@ if (!$user) {
         while ($pet = $petsResult->fetch_assoc()):
     ?>
       <div class="pet-card">
-        <img src="<?= htmlspecialchars($pet['image_path']) ?>" alt="<?= htmlspecialchars($pet['name']) ?>" />
-        <p><strong><?= htmlspecialchars($pet['name']) ?></strong></p>
-        <p>
-          <?= htmlspecialchars($pet['animal_type']) ?> · <?= htmlspecialchars($pet['gender']) ?> · <?= htmlspecialchars($pet['breed']) ?><br>
-          <?= htmlspecialchars($pet['age']) ?> years · <?= htmlspecialchars($pet['size']) ?>
-        </p>
-      </div>
+  <img src="<?= htmlspecialchars($pet['image_path']) ?>" alt="<?= htmlspecialchars($pet['name']) ?>" />
+  <p><strong><?= htmlspecialchars($pet['name']) ?></strong></p>
+  <p>
+    <?= htmlspecialchars($pet['animal_type']) ?> · <?= htmlspecialchars($pet['gender']) ?> · <?= htmlspecialchars($pet['breed']) ?><br>
+    <?= htmlspecialchars($pet['age']) ?> years · <?= htmlspecialchars($pet['size']) ?>
+  </p>
+  <a href="petPage.php?id=<?= $pet['id'] ?>" class="more-info-button">More Info</a>
+</div>
+
     <?php
         endwhile;
       else:

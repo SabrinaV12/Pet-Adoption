@@ -10,17 +10,21 @@
 
         <section class="information-buttons">
             <a href="notification.php"><img src="assets/notifications.png" alt="Notifications" /></a>
-            <div class="auth-links">
-                <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+          <div class="auth-links">
+    <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+        <a href="userProfile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a>
 
-                    <a href="userProfile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a> | <a href="database/logout.php">Logout</a>
+        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+            | <a href="admin/index.php" style="color: #9990DA; font-weight: bold;">Admin Panel</a>
+        <?php endif; ?>
 
-                <?php else: ?>
+        | <a href="database/logout.php">Logout</a>
+    <?php else: ?>
+        <a href="login.php">Login</a> | <a href="register.php">Register</a>
+    <?php endif; ?>
+</div>
 
-                    <a href="login.php">Login</a> | <a href="register.php">Register</a>
 
-                <?php endif; ?>
-            </div>
         </section>
 
     </nav>
