@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS pets (
     animal_type ENUM('Dog', 'Cat', 'Capybara') NOT NULL,
     image_path VARCHAR(255),
     size  ENUM('Small', 'Medium', 'Large') NOT NULL,
+    user_id INT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     vaccinated BOOLEAN DEFAULT FALSE,
     house_trained BOOLEAN DEFAULT FALSE,
@@ -24,5 +26,7 @@ CREATE TABLE IF NOT EXISTS pets (
     adopted BOOLEAN DEFAULT FALSE,
     adoption_date DATE DEFAULT NULL,
     
-    description TEXT
+    description TEXT,
+    
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );

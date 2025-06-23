@@ -140,7 +140,6 @@ $result = $stmt->get_result();
     <a href="petPage.php?id=<?php echo $pet['id']; ?>">More Info</a>
   </div>
 <?php endwhile; ?>
-
     <?php else: ?>
       <p>No pets match your filters.</p>
     <?php endif; ?>

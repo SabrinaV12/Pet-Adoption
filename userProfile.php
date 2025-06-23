@@ -1,77 +1,98 @@
 <?php
 session_start();
 require_once 'database/check_auth.php';
+require_once 'database/db.php';
+
+$userId = $_SESSION['user_id'] ?? null;
+
+if (!$userId) {
+    echo "Not logged in.";
+    exit;
+}
+
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+
+if (!$user) {
+    echo "User not found.";
+    exit;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="design/petPage.css" />
-    <link rel="stylesheet" href="design/header.css" />
-    <link rel="stylesheet" href="design/footer.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>'s Profile</title>
+  <link rel="stylesheet" href="design/petPage.css" />
+  <link rel="stylesheet" href="design/header.css" />
+  <link rel="stylesheet" href="design/footer.css" />
+  <link rel="stylesheet" href="design/userProfile.css">
 </head>
 
+<body>
 <?php include 'components/header.php'; ?>
-<link rel="stylesheet" href="design/userProfile.css">
 
 <header class="profile-header">
-    <img class="banner" src="assets/cherry.jpg" alt="Banner Image" />
-    <div class="profile-image-container">
-      <img class="profile-image" src="assets/woman.jpg" alt="Profile" />
+  <img class="banner" src="<?= htmlspecialchars($user['banner_picture']) ?>" alt="Banner Image" />
+  <div class="profile-image-container">
+    <img class="profile-image" src="<?= htmlspecialchars($user['profile_picture']) ?>" alt="Profile Picture" />
+  </div>
+  <h1 class="username"><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></h1>
+  <p class="location">
+    <?= htmlspecialchars($user['country']) ?> · <?= htmlspecialchars($user['county']) ?>
+  </p>
+</header>
+
+<main class="profile-main">
+  <section class="bio-contact">
+    <div class="bio">
+      <p><?= nl2br(htmlspecialchars($user['description'] ?: 'No bio added yet.')) ?></p>
     </div>
-    <h1 class="username">Lilly Smith</h1>
-    <p class="location">
-      <img src="assets/USA_flag.png" alt="Flag" class="flag" />
-      United States Of America · California
-    </p>
-  </header>
+    <div class="contact">
+      <h3>Contact me!</h3>
+      <ul>
+        <li>Email: <a href="mailto:<?= htmlspecialchars($user['email']) ?>"><?= htmlspecialchars($user['email']) ?></a></li>
+        <li>Phone: <?= htmlspecialchars($user['phone_number']) ?></li>
+        <li>Telegram: @<?= htmlspecialchars($user['telegram_handle']) ?></li>
+      </ul>
+    </div>
+  </section>
 
-  <main class="profile-main">
-    <section class="bio-contact">
-      <div class="bio">
-        <p>Hello! I’m Lilly and I’m 27 years old. I live with my husband and Papi (my dog). Papi has been living with us for 5 years and needs a friend and playmate. That’s why now that we have a yard, we thought of adopting a dog.</p>
+  <section class="pet-listings">
+    <h2>Pets that I have up for adoption:</h2>
+    <div class="pets-grid">
+    <?php
+      $petsStmt = $conn->prepare("SELECT * FROM pets WHERE user_id = ?");
+      $petsStmt->bind_param("i", $userId);
+      $petsStmt->execute();
+      $petsResult = $petsStmt->get_result();
+
+      if ($petsResult->num_rows > 0):
+        while ($pet = $petsResult->fetch_assoc()):
+    ?>
+      <div class="pet-card">
+        <img src="<?= htmlspecialchars($pet['image_path']) ?>" alt="<?= htmlspecialchars($pet['name']) ?>" />
+        <p><strong><?= htmlspecialchars($pet['name']) ?></strong></p>
+        <p>
+          <?= htmlspecialchars($pet['animal_type']) ?> · <?= htmlspecialchars($pet['gender']) ?> · <?= htmlspecialchars($pet['breed']) ?><br>
+          <?= htmlspecialchars($pet['age']) ?> years · <?= htmlspecialchars($pet['size']) ?>
+        </p>
       </div>
-      <div class="contact">
-        <h3>Contact me!</h3>
-        <ul>
-          <li>Email: <a href="mailto:SamantaSmith@gmail.com">SamantaSmith@gmail.com</a></li>
-          <li>Phone: 702-684-2621</li>
-          <li>Address: Las Vegas 1028 Hall Street</li>
-          <li>Telegram: @Samanta.S</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="pet-listings">
-      <h2>Pets that I have up for adoption:</h2>
-      <div class="pets-grid">
-        <div class="pet-card">
-          <img src="assets/pitter.jpg" alt="Pitter" />
-          <p><strong>Pitter</strong></p>
-          <p>California, USA<br>Male · Pit Bull<br>5 years · Large</p>
-        </div>
-        <div class="pet-card">
-          <img src="assets/snoopy.jpg" alt="Snoopy" />
-          <p><strong>Snoopy</strong></p>
-          <p>Ohio, USA<br>Male · Bull Terrier<br>4 years · Big</p>
-        </div>
-        <div class="pet-card">
-          <img src="assets/balto.jpg" alt="Balto" />
-          <p><strong>Balto</strong></p>
-          <p>Michigan, USA<br>Male · Golden Retriever<br>3 years · Large</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>&copy; 2025 FurryFriends.com</p>
-  </footer>
-
-</body>
-</html>
+    <?php
+        endwhile;
+      else:
+        echo "<p>No pets listed yet.</p>";
+      endif;
+    ?>
+    </div>
+  </section>
+</main>
 
 <?php include 'components/footer.php'; ?>
+</body>
+</html>
