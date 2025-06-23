@@ -8,6 +8,18 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || !isset($_
     exit();
 }
 
+if (isset($_GET['pet_id'])) {
+    //we delete the old data and add the new one
+    unset($_SESSION['adoption']);
+
+    $_SESSION['adoption']['pet_id'] = intval($_GET['pet_id']);
+}
+
+if (!isset($_SESSION['adoption']['pet_id'])) {
+    header('Location: searchMenu.php?error=no_pet_selected');
+    exit();
+}
+
 $user_id = $_SESSION['user_id'];
 
 $sql = "SELECT first_name, last_name, username, email FROM users WHERE id = ?";

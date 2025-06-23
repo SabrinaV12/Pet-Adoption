@@ -2,6 +2,11 @@
 session_start();
 require_once 'database/check_auth.php';
 
+if (!isset($_SESSION['adoption']['pet_id'])) {
+    header('Location: adoptionStart.php?error=session_expired_or_invalid');
+    exit();
+}
+
 $errors = $_SESSION['form_errors'] ?? [];
 $old_input = $_SESSION['old_input'] ?? [];
 

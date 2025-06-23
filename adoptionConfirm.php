@@ -3,6 +3,11 @@ session_start();
 require_once 'database/check_auth.php';
 require_once 'database/db.php';
 
+if (!isset($_SESSION['adoption']['pet_id'])) {
+    header('Location: adoptionStart.php?error=session_expired_or_invalid');
+    exit();
+}
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
@@ -10,12 +15,14 @@ if (!isset($_SESSION['user_id'])) {
 
 $application_id = $_GET['app_id'] ?? 0;
 
-//At this moment anyone who reaches the confirmation means they can download.
 if ($application_id > 0) {
     $user_can_download = true;
 } else {
     $user_can_download = false;
 }
+
+//Now that we verified that the user has(or not) access, we can safely delete it
+unset($_SESSION['adoption']);
 ?>
 
 <!DOCTYPE html>

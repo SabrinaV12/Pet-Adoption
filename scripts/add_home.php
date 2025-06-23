@@ -2,6 +2,12 @@
 
 session_start();
 
+if (!isset($_SESSION['adoption']['pet_id'])) {
+    header('Location: ../adoptionStart.php?error=session_expired_or_invalid');
+    exit();
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $errors = [];

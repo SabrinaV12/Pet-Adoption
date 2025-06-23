@@ -2,7 +2,11 @@
 session_start();
 require_once '../database/db.php';
 
-//First we validate the last page
+if (!isset($_SESSION['adoption']['pet_id'])) {
+    header('Location: ../adoptionStart.php?error=session_expired_or_invalid');
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $errors = [];
@@ -59,22 +63,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    $pet_id = $_SESSION['adoption']['pet_id'];
+    $applicant_id = $_SESSION['user_id'];
     $address_data = $_SESSION['adoption']['address'];
     $home_data = $_SESSION['adoption']['home'];
     $roommate_data = $_SESSION['adoption']['roommate'];
 
     $sql = "INSERT INTO applications (
-                address_line1, address_line2, postcode, city, phone_number,
+                pet_id, applicant_id, status, address_line1, address_line2, postcode, city, phone_number,
                 has_garden, living_situation, household_setting, activity_level,
                 num_adults, num_children, youngest_child_age, visiting_children, visiting_children_ages,
                 has_flatmates, has_allergies, has_other_animals, other_animals_info,
                 neutered, vaccinated, experience
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
 
+    $status_pending = 'pending';
+
     $stmt->bind_param(
-        "ssssssssiiisisiisssss",
+        "iisssssssssiiisisiisssss",
+        $pet_id,
+        $applicant_id,
+        $status_pending,
         $address_data['adress_1'],
         $address_data['adress_2'],
         $address_data['postcode'],
@@ -100,7 +111,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->execute()) {
         $new_application_id = $conn->insert_id;
-        unset($_SESSION['adoption']);
+
+        $pet_owner_query = $conn->prepare("SELECT user_id, name FROM pets WHERE id = ?");
+        $pet_owner_query->bind_param("i", $pet_id);
+        $pet_owner_query->execute();
+        $pet_info = $pet_owner_query->get_result()->fetch_assoc();
+        $owner_id = $pet_info['user_id'];
+        $pet_name = $pet_info['name'];
+
+        $notification_message = "You have a new adoption request for " . htmlspecialchars($pet_name) . "!";
+        $notification_link = "view_application.php?id=" . $new_application_id;
+
+        $notify_stmt = $conn->prepare("INSERT INTO notifications (user_id, message, link) VALUES (?, ?, ?)");
+        $notify_stmt->bind_param("iss", $owner_id, $notification_message, $notification_link);
+        $notify_stmt->execute();
+
         unset($_SESSION['form_errors']);
         unset($_SESSION['old_input']);
 
