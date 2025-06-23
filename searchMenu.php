@@ -137,7 +137,6 @@ $result = $stmt->get_result();
       </form>
     </aside>
 
-
     <main class="pet-list">
       <?php if ($result->num_rows > 0): ?>
         <?php while ($pet = $result->fetch_assoc()): ?>

@@ -56,9 +56,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
                 <description>
                     <![CDATA[
                 <img src="http://<?php echo $_SERVER['HTTP_HOST'] . '/' . htmlspecialchars($pet['image_path']); ?>" alt="<?php echo htmlspecialchars($pet['name']); ?>" width="200"><br>
-                <strong>Tip:</strong> <?php echo htmlspecialchars($pet['animal_type']); ?><br>
-                <strong>Vârstă:</strong> <?php echo $pet['age']; ?> ani<br>
-                <strong>Gen:</strong> <?php echo htmlspecialchars($pet['gender']); ?>
+                <strong>Type:</strong> <?php echo htmlspecialchars($pet['animal_type']); ?><br>
+                <strong>Age:</strong> <?php echo $pet['age']; ?> years<br>
+                <strong>Gender:</strong> <?php echo htmlspecialchars($pet['gender']); ?>
             ]]>
                 </description>
 
