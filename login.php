@@ -38,11 +38,6 @@ require_once 'database/check_auth.php';
             <button type="submit">Login</button>
         </form>
 
-        <div class="help-buttons">
-            <a href="forgot.php" class="text">Forgot your password?</a>
-            <a href="register.php">Don't have an account?</a>
-        </div>
-
     </section>
 
     <?php include 'components/footer.php'; ?>
