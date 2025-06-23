@@ -119,6 +119,45 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
                 </div>
             </fieldset>
 
+            <fieldset>
+  <legend>Feeding Calendar</legend>
+
+  <div class="form-group">
+    <label>Feed Date 1: <input type="date" name="feed_date[]"></label>
+    <label>Food Type 1: <input type="text" name="food_type[]"></label>
+  </div>
+
+  <div class="form-group">
+    <label>Feed Date 2: <input type="date" name="feed_date[]"></label>
+    <label>Food Type 2: <input type="text" name="food_type[]"></label>
+  </div>
+
+  <div class="form-group">
+    <label>Feed Date 3: <input type="date" name="feed_date[]"></label>
+    <label>Food Type 3: <input type="text" name="food_type[]"></label>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>Vaccinations</legend>
+
+  <div class="form-group">
+    <label>Age in weeks 1: <input type="number" name="age_in_weeks[]"></label>
+    <label>Vaccine Name 1: <input type="text" name="vaccine_name[]"></label>
+  </div>
+
+  <div class="form-group">
+    <label>Age in weeks 2: <input type="number" name="age_in_weeks[]"></label>
+    <label>Vaccine Name 2: <input type="text" name="vaccine_name[]"></label>
+  </div>
+
+  <div class="form-group">
+    <label>Age in weeks 3: <input type="number" name="age_in_weeks[]"></label>
+    <label>Vaccine Name 3: <input type="text" name="vaccine_name[]"></label>
+  </div>
+</fieldset>
+
+
             <button type="submit">Add Pet to Database</button>
         </form>
     </main>

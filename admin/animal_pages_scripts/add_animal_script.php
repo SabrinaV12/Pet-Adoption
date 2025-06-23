@@ -85,6 +85,30 @@ $stmt->bind_param(
 );
 
 if ($stmt->execute()) {
+    $pet_id = $conn->insert_id;
+
+    $feed_dates = $_POST['feed_date'];
+    $food_types = $_POST['food_type'];
+
+    $fc_stmt = $conn->prepare("INSERT INTO feeding_calendar (pet_id, feed_date, food_type) VALUES (?, ?, ?)");
+    foreach ($feed_dates as $index => $date) {
+        if (!empty($date) && !empty($food_types[$index])) {
+            $fc_stmt->bind_param("iss", $pet_id, $date, $food_types[$index]);
+            $fc_stmt->execute();
+        }
+    }
+
+    $vaccine_ages = $_POST['age_in_weeks'];
+    $vaccine_names = $_POST['vaccine_name'];
+
+    $vac_stmt = $conn->prepare("INSERT INTO vaccinations (pet_id, age_in_weeks, vaccine_name) VALUES (?, ?, ?)");
+    foreach ($vaccine_ages as $index => $age_week) {
+        if (!empty($age_week) && !empty($vaccine_names[$index])) {
+            $vac_stmt->bind_param("iis", $pet_id, $age_week, $vaccine_names[$index]);
+            $vac_stmt->execute();
+        }
+    }
+
     header("Location: ../adminAnimals.php?status=added");
     exit;
 } else {
