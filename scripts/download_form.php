@@ -14,7 +14,6 @@ if (!$application_id || !in_array($format, $allowed_formats)) {
     die("Invalid request.");
 }
 
-// At this moment we assume that the user accessed the page in a normal way
 $sql = "SELECT * FROM applications WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $application_id);
