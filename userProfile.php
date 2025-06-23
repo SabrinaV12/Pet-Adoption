@@ -38,9 +38,9 @@ if (!$user) {
 <?php include 'components/header.php'; ?>
 
 <header class="profile-header">
-  <img class="banner" src="<?= htmlspecialchars($user['banner_picture']) ?>" alt="Banner Image" />
+  <img class="banner" src="assets/<?= htmlspecialchars($user['banner_picture']) ?>" alt="Banner Image" />
   <div class="profile-image-container">
-    <img class="profile-image" src="<?= htmlspecialchars($user['profile_picture']) ?>" alt="Profile Picture" />
+    <img class="profile-image" src="assets/<?= htmlspecialchars($user['profile_picture']) ?>" alt="Profile Picture" />
   </div>
   <h1 class="username"><?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></h1>
   <p class="location">

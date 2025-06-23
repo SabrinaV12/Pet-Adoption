@@ -1,55 +1,76 @@
 <?php
 require_once 'db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$first_name = $_POST['first_name'];
+$last_name = $_POST['last_name'];
+$username = $_POST['username'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
+$password = $_POST['password'];
+$confirm_password = $_POST['confirm_password'];
 
-    $firstName = $_POST['first_name'];
-    $lastName = $_POST['last_name'];
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirm_password'];
+$country = $_POST['country'];
+$county = $_POST['county'];
+$telegram = $_POST['telegram_handle'];
+$description = $_POST['description'];
 
-    if ($password !== $confirmPassword) {
-        header("location: ../register.php?error=password_mismatch");
-        exit();
-    }
+if ($password !== $confirm_password) {
+    header("Location: ../register.php?error=password_mismatch");
+    exit;
+}
 
-    $sql_check = "SELECT id FROM users WHERE email = ? OR username = ?";
-    $stmt_check = $conn->prepare($sql_check);
-    $stmt_check->bind_param("ss", $email, $username);
-    $stmt_check->execute();
-    $result_check = $stmt_check->get_result();
+$stmt = $conn->prepare("SELECT id FROM users WHERE email = ? OR username = ?");
+$stmt->bind_param("ss", $email, $username);
+$stmt->execute();
+$stmt->store_result();
 
-    if ($result_check->num_rows > 0) {
-        header("location: ../register.php?error=email_exists");
-        exit();
-    }
-    $stmt_check->close();
+if ($stmt->num_rows > 0) {
+    $stmt->bind_result($existingId);
+    $stmt->fetch();
 
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    $sql_insert = "INSERT INTO users (first_name, last_name, username, email, phone_number, hash_password) VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt_insert = $conn->prepare($sql_insert);
-
-    if ($stmt_insert === false) {
-        die("Eroare la pregatirea interogarii de inserare: " . $conn->error);
-    }
-
-    $stmt_insert->bind_param("ssssss", $firstName, $lastName, $username, $email, $phone, $hashedPassword);
-
-
-    if ($stmt_insert->execute()) {
-        header("location: ../login.php?success=registered");
-        exit();
+    if ($existingId) {
+        header("Location: ../register.php?error=email_exists");
     } else {
-        die("Ceva nu a functionat. Va rugam incercati din nou.");
+        header("Location: ../register.php?error=username_exists");
     }
+    exit;
+}
+$stmt->close();
 
-    $stmt_insert->close();
-    $conn->close();
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+$profilePictureName = uniqid() . '_' . basename($_FILES["profile_picture"]["name"]);
+$profileTarget = "../assets/" . $profilePictureName;
+move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $profileTarget);
+
+$bannerPictureName = uniqid() . '_' . basename($_FILES["banner_picture"]["name"]);
+$bannerTarget = "../assets/" . $bannerPictureName;
+move_uploaded_file($_FILES["banner_picture"]["tmp_name"], $bannerTarget);
+
+$insert = $conn->prepare("INSERT INTO users (
+    first_name, last_name, username, email, phone_number, hash_password, role,
+    country, county, telegram_handle, profile_picture, banner_picture, description
+) VALUES (?, ?, ?, ?, ?, ?, 'user', ?, ?, ?, ?, ?, ?)");
+
+$insert->bind_param(
+    "ssssssssssss",
+    $first_name,
+    $last_name,
+    $username,
+    $email,
+    $phone,
+    $hashed_password,
+    $country,
+    $county,
+    $telegram,
+    $profilePictureName,
+    $bannerPictureName,
+    $description
+);
+
+if ($insert->execute()) {
+    header("Location: ../login.php");
+    exit;
 } else {
-    header("location: ../home.php");
-    exit();
+    echo "Error: " . $conn->error;
 }
