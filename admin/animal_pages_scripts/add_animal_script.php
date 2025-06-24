@@ -50,17 +50,23 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
     }
 }
 
+$user_id = $_SESSION['user_id'];
+
+
 $sql = "INSERT INTO pets (
-            name, gender, breed, age, color, weight, height, animal_type, size, 
+            user_id,name, gender, breed, age, color, weight, height, animal_type, size, 
             vaccinated, house_trained, neutered, microchipped, good_with_children, 
             shots_up_to_date, restrictions, recommended, description, adopted, adoption_date, image_path
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 
-$types = 'sssisddssiiiiisssssss';
+$types = 'isssisddssiiiiiisssiss';
+
+
 $stmt->bind_param(
     $types,
+    $user_id,
     $name,
     $gender,
     $breed,

@@ -20,7 +20,7 @@ $stmt->execute();
 $request = $stmt->get_result()->fetch_assoc();
 
 if (!$request) {
-    die("Cererea nu a fost găsită.");
+    die("Cererea nu a fost gasita.");
 }
 
 $user_id = $request['user_id'];
