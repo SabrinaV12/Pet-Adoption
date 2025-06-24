@@ -28,8 +28,6 @@
     </nav>
 
     <section class="mini-navigation">
-        <a href="home.php">Home > </a>
-        <a href="petSearch.php"> Adopt </a>
 
         <form class="search-bar" action="search.php" method="GET">
             <input type="text" name="query" placeholder="Search..." />
