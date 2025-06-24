@@ -5,7 +5,7 @@
         <section class="main-buttons">
             <a href="searchMenu.php">Adopt</a>
             <a href="petRequest.php">Rehome a Pet</a>
-            <a href="about.html">About</a>
+            <a href="documentatie/documentatie.html">About</a>
         </section>
 
         <section class="information-buttons">

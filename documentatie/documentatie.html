@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Pet Adoption - Specificația Cerințelor de Sistem</title>
+
+    <!-- Metadate Dublin Core -->
+    <meta name="DC.Title" content="Pet Adoption - Specificația Cerințelor de Sistem">
+    <meta name="DC.Creator" content="Burcă Sabrina-Valentina, Ilade Maria">
+    <meta name="DC.Subject" content="Specificații software, adopție animale, cerințe funcționale, sistem web">
+    <meta name="DC.Date" content="2025-06-23">
+    <meta name="DC.Language" content="ro">
+
+    <!-- Schema.org -->
+    <meta itemprop="name" content="Pet Adoption - Specificația Cerințelor de Sistem">
+    <meta itemprop="author" content="Burcă Sabrina-Valentina și Ilade Maria">
+    <meta itemprop="datePublished" content="2025-06-23">
+    <meta itemprop="about" content="Specificație de cerințe software pentru o platformă de adopție a animalelor.">
+</head>
+<body itemscope itemtype="https://schema.org/ScholarlyArticle">
+
+    <header>
+        <h1 itemprop="headline">Pet Adoption - Specificația Cerințelor de Sistem</h1>
+        <p><strong>Autori:</strong>
+            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <span itemprop="name">Burcă Sabrina-Valentina</span>
+            </span> și
+            <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <span itemprop="name">Ilade Maria</span>
+            </span>
+        </p>
+        <p><strong>Data publicării:</strong> <time datetime="2025-06-23" itemprop="datePublished">23 iunie 2025</time></p>
+    </header>
+
+    <nav>
+        <h2>Cuprins</h2>
+        <ol>
+            <li><a href="#introducere">Introducere</a></li>
+            <li><a href="#descriere-generala">Descriere Generală</a></li>
+            <li><a href="#cerinte-interfata">Cerințele Interfeței Externe</a></li>
+            <li><a href="#caracteristici-sistem">Caracteristici de Sistem</a></li>
+            <li><a href="#cerinte-nefunctionale">Alte Cerințe Ne-Funcționale</a></li>
+        </ol>
+    </nav>
+
+    <section id="introducere">
+        <h2>1. Introducere</h2>
+
+        <article id="scop">
+            <h3>1.1 Scopul</h3>
+            <p>
+                Scopul acestui document este de a prezenta cerințele software pentru proiectul <em>Pet Adoption</em>. 
+                Este o platformă web care oferă posibilitatea de a <dfn>adopta animale de companie</dfn>.
+            </p>
+            <p>
+                Domeniul de aplicare include: crearea și administrarea profilelor animalelor oferite spre adopție, un motor de căutare după <dfn>criterii</dfn> (rasă, culoare, specie etc.) și un proces de solicitare adopție.
+            </p>
+            <p>
+                Nu sunt incluse în versiunea inițială: <dfn>modul de chat</dfn> în timp real și <dfn>forumul comunității</dfn>.
+            </p>
+        </article>
+
+        <article id="conventii">
+            <h3>1.2 Convenții de Document</h3>
+            <ul>
+                <li><strong>Tipografie:</strong> 
+                    <ul>
+                        <li>Text <b>îngroșat</b> pentru elemente de interfață</li>
+                        <li>Text <i>înclinat</i> pentru termeni noi sau referințe</li>
+                    </ul>
+                </li>
+                <li><strong>Identificatori pentru cerințe:</strong> <code>F-x.x</code> pentru cerințe funcționale, iar cele nefuncționale sunt menționate în manieră directă.</li>
+                <li><strong>Roluri definite:</strong></li>
+                <ul>
+                    <li><dfn>Stăpânul</dfn>: oferă un animal spre adopție</li>
+                    <li><dfn>Utilizatorul</dfn>: dorește să adopte</li>
+                    <li><dfn>Vizitatorul</dfn>: acces limitat, neautentificat</li>
+                    <li><dfn>Admin</dfn>: control total asupra datelor</li>
+                </ul>
+            </ul>
+        </article>
+
+        <article id="audienta">
+            <h3>1.3 Audiența Țintă și Sugestii de Citire</h3>
+            <p>
+                Documentul se adresează următoarelor categorii:
+            </p>
+            <ul>
+                <li><strong>Evaluatorul</strong>: evaluează specificațiile</li>
+                <li><strong>Dezvoltatorul</strong>: ghid pentru implementare</li>
+                <li><strong>Testerul</strong>: elaborare teste de validare</li>
+            </ul>
+            <p><strong>Recomandări:</strong></p>
+            <ul>
+                <li>Evaluator – document complet</li>
+                <li>Dezvoltator și Tester – secțiunile 3, 4, 5</li>
+            </ul>
+        </article>
+
+        <article id="scop-proiect">
+            <h3>1.4 Scopul Proiectului</h3>
+            <p>
+                Actualele metode de adopție, precum social media sau anunțuri generale, nu sunt sigure. Platforma propusă va centraliza și securiza procesul de adopție pentru toate rolurile implicate.
+            </p>
+        </article>
+
+        <article id="referinte">
+            <h3>1.5 Referințe</h3>
+            <ol>
+                <li><cite><a href="https://github.com/rick4470/IEEE-SRS-Tempate">IEEE-SRS-Template</a></cite></li>
+                <li><cite><a href="https://www.figma.com/community/file/1376876963868102857/furryfriends-pet-adoption">FurryFriends Design (Figma)</a></cite></li>
+                <li><cite><a href="https://www.php.net/docs.php">PHP Documentation</a></cite></li>
+                <li><cite><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS Documentation</a></cite></li>
+                <li><cite><a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML Documentation</a></cite></li>
+                <li><cite><a href="https://www.w3schools.com/xml/xml_rss.asp">RSS Documentation</a></cite></li>
+                <li><cite><a href="https://edu.info.uaic.ro/baze-de-date/ro/index.html">SQL Documentation (UAIC)</a></cite></li>
+                <li><cite><a href="https://c4model.com/">C4 Documentation</a></cite></li>
+            </ol>
+        </article>
+    </section>
+
+    <section id="descriere-generala">
+        <h2>2. Descriere Generală</h2>
+
+        <article>
+            <h3>2.1 Perspectiva Proiectului</h3>
+            <p>Site-ul de Pet Adoption este un produs nou, de sine stătător, conceput și dezvoltat de la zero. Nu este o versiune îmbunătățită sau o înlocuire a unui alt sistem existent. Este o alternativă mai sigură și specializată la platformele generale de anunțuri sau grupurile sociale pentru adopții de animale.</p>
+            <p>Proiectul oferă un spațiu digital exclusiv dedicat interacțiunii dintre stăpân și potențialul adoptator, într-un mediu sigur și controlat.</p>
+            <p><strong>Diagrama de context (C4 - nivel 1):</strong></p>
+            <img src="C4/Nivel 1.png" alt="Diagrama de context C4 - nivel 1" width="800">
+        </article>
+
+        <article>
+            <h3>2.2 Funcțiile Proiectului</h3>
+            <ul>
+                <li><strong>Managementul Conturilor:</strong>
+                    <ul>
+                        <li>Crearea unui cont nou</li>
+                        <li>Autentificare utilizatori existenți</li>
+                    </ul>
+                </li>
+                <li><strong>Funcționalități pentru Stăpân:</strong>
+                    <ul>
+                        <li>Creare și publicare anunț de adopție</li>
+                        <li>Vizualizare și gestionare aplicații</li>
+                    </ul>
+                </li>
+                <li><strong>Funcționalități pentru Utilizator:</strong>
+                    <ul>
+                        <li>Căutare și filtrare anunțuri</li>
+                        <li>Vizualizare animale</li>
+                        <li>Aplicare prin formular</li>
+                    </ul>
+                </li>
+                <li><strong>Funcționalități pentru Admin:</strong>
+                    <ul>
+                        <li>Administrare conturi</li>
+                        <li>Administrare anunțuri</li>
+                    </ul>
+                </li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>2.3 Clasele și Caracteristicile Utilizatorului</h3>
+            <p>Proiectul identifică patru clase principale de utilizatori, fiecare cu caracteristici și nevoi diferite:</p>
+            <ul>
+                <li><strong>Stăpân:</strong> utilizator autenticat, nivel tehnic mediu, responsabil cu publicarea anunțurilor și gestionarea cererilor de adopție.</li>
+                <li><strong>Utilizator:</strong> doritor de adopție, nivel tehnic redus-medie, caută, filtrează și aplică pentru adopții.</li>
+                <li><strong>Admin:</strong> super-utilizator cu acces deplin, nivel tehnic ridicat, gestionează întregul sistem.</li>
+                <li><strong>Vizitator:</strong> neautentificat, nivel tehnic scăzut, are acces doar la vizualizarea anunțurilor.</li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>2.4 Mediul de Operare</h3>
+            <p><strong>Server:</strong> dezvoltare locală cu <abbr title="Apache, MySQL, PHP, Perl">XAMPP</abbr>, incluzând Apache, PHP și MySQL. Permite testare controlată și replicare a mediului de producție.</p>
+            <p><strong>Client:</strong> browser web modern (Chrome, Firefox, Safari, Edge). Aplicația este responsive și optimizată pentru toate dispozitivele.</p>
+        </article>
+
+        <article>
+            <h3>2.5 Constrângerile de Implementare și Design</h3>
+            <ul>
+                <li><strong>Back-End:</strong> PHP</li>
+                <li><strong>Front-End:</strong> HTML5, CSS, fără framework-uri complexe</li>
+                <li><strong>Bază de date:</strong> MySQL</li>
+                <li><strong>Server:</strong> Apache</li>
+            </ul>
+            <p><strong>Design:</strong> responsive, conform ghidului de stil (referința 2).</p>
+            <p><strong>Limba:</strong> exclusiv engleză</p>
+            <p><strong>Securitate:</strong> parolele vor fi stocate cu <code>password_hash()</code>, iar datele validate și sanitizate pentru a preveni <abbr title="SQL Injection">SQLi</abbr> și <abbr title="Cross-Site Scripting">XSS</abbr>.</p>
+            <p><strong>Control versiuni:</strong> Git</p>
+        </article>
+
+        <article>
+            <h3>2.6 Documentația Utilizatorului</h3>
+            <p>Ghidaj contextual în interfață: texte explicative, etichete intuitive, mesaje de eroare clare.</p>
+        </article>
+
+        <article>
+            <h3>2.7 Presupuneri și Dependențe</h3>
+            <p><strong>Presupuneri:</strong></p>
+            <ul>
+                <li>Utilizatorii oferă informații corecte și au competențe digitale de bază</li>
+                <li>Accesul la internet și suport pentru HTML5/CSS</li>
+            </ul>
+            <p><strong>Dependențe:</strong></p>
+            <ul>
+                <li>Apache, PHP, MySQL, XAMPP</li>
+                <li>Furnizor de hosting și sistem DNS funcțional</li>
+            </ul>
+        </article>
+    </section>
+
+    <section id="cerinte-interfata">
+        <h2>3. Cerințele Interfeței Externe</h2>
+
+        <article>
+            <h3>3.1 Interfețele Utilizatorului</h3>
+            <p>Aplicația oferă o interfață web intuitivă, modernă și adaptabilă, proiectată pentru ușurință în utilizare atât pentru utilizatori cât și pentru administratori.</p>
+            <p><strong>Principii Generale:</strong></p>
+            <ul>
+                <li><strong>Consistență Vizuală:</strong> paletă de culori unitară (#9990DA), fonturi moderne (Arial, Segoe UI), design coerent.</li>
+                <li><strong>Layout Standard:</strong> Header, Conținut Principal, Footer.</li>
+                <li><strong>Responsive Design:</strong> Complet responsiv, rearanjare sub 768px.</li>
+            </ul>
+            <p><strong>Componente Standard:</strong></p>
+            <ul>
+                <li><strong>Header:</strong> Logo, navigare (Home, Adopt, Rehome a Pet, About), butoane în funcție de sesiune (Login/Register, Profil, Logout, Admin Panel).</li>
+                <li><strong>Sidebar / Filtre:</strong> Checkboxes, dropdown-uri pentru căutare detaliată.</li>
+                <li><strong>Carduri animale:</strong> Imagine, detalii, buton „More Info”.</li>
+                <li><strong>Formulare:</strong> Adăugare animal, cerere adopție, login, editare profil.</li>
+                <li><strong>Footer:</strong> Linkuri utile și informații legale.</li>
+            </ul>
+            <p><strong>Exemple de Ecrane:</strong></p>
+            <ul>
+                <li>Pagina Căutare: <code>searchMenu.php</code></li>
+                <li>Pagina Detalii Animal: <code>petPage.php?id=...</code></li>
+                <li>Panou Admin: <code>admin/animal_pages_scripts/admin_pet_requests.php</code></li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>3.2 Interfețele Hardware</h3>
+            <p>Aplicația este web-based și nu necesită hardware special. Funcționează pe:</p>
+            <ul>
+                <li><strong>Client:</strong> orice browser modern (Chrome, Firefox, Safari, Edge)</li>
+                <li><strong>Server:</strong> PHP + MySQL (Apache/Nginx)</li>
+            </ul>
+            <p>Nu există interacțiuni cu hardware specializat (camere, senzori etc.).</p>
+        </article>
+
+        <article>
+            <h3>3.3 Interfețele Software</h3>
+            <p>Aplicația interacționează cu următoarele componente:</p>
+            <ul>
+                <li><strong>Server Web:</strong> Apache/Nginx</li>
+                <li><strong>PHP:</strong> rularea aplicației (recomandat PHP 8+)</li>
+                <li><strong>MySQL/MariaDB:</strong> baza de date</li>
+                <li><strong>Librării PHP:</strong> mysqli, password_hash(), password_verify()</li>
+                <li><strong>CSS extern:</strong> fișiere CSS pe pagini (ex: design/petPage.css)</li>
+                <li><strong>Feed RSS:</strong> generare fișier XML cu <code>rss.php</code></li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>3.4 Interfețele de Comunicare</h3>
+            <p>Comunicarea se face prin protocoale standard:</p>
+            <ul>
+                <li><strong>HTTP/HTTPS:</strong> pentru comunicarea client-server</li>
+                <li><strong>POST/GET:</strong> metode pentru trimiterea datelor</li>
+                <li><strong>Email (opțional):</strong> notificări de aprobare / respingere cerere</li>
+                <li><strong>Notificări interne:</strong> salvate în baza de date și afișate utilizatorului</li>
+            </ul>
+            <p>Aplicația este compatibilă cu rețele LAN/WAN și internet public. Nu depinde de protocoale industriale.</p>
+        </article>
+    </section>
+
+    <section id="caracteristici-sistem">
+        <h2>4. Caracteristici de Sistem</h2>
+        <p>Acest sistem oferă funcționalități pentru a facilita adopția animalelor printr-o platformă web, unde utilizatorii pot căuta animale, trimite cereri de adopție, adăuga animale spre adopție și gestiona profilul personal. Mai jos sunt descrise cele mai relevante caracteristici funcționale.</p>
+
+        <article>
+            <h3>4.1 Funcționalitate: Căutare și Filtrare a Animalelor</h3>
+            <p><strong>Descriere și Prioritate:</strong> Permite utilizatorilor să vizualizeze animale disponibile și să aplice filtre. Prioritate: Înaltă</p>
+            <p><strong>Stimulus / Răspuns:</strong></p>
+            <ul>
+                <li>Stimulus: accesare pagină de căutare → Răspuns: afișare listă animale și filtru</li>
+                <li>Stimulus: selectare criterii → Răspuns: actualizare listă rezultate</li>
+            </ul>
+            <p><strong>Cerințe Funcționale:</strong></p>
+            <ul>
+                <li>[F-1.1] Afișare listă animale disponibile</li>
+                <li>[F-1.2] Filtrare după tip, rasă, culoare, vârstă, mărime, sex, țară, județ</li>
+                <li>[F-1.3] Actualizare imediată după aplicare filtre</li>
+                <li>[F-1.4] Redirecționare la pagina de detalii</li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>4.2 Funcționalitate: Trimitere Cerere de Adopție</h3>
+            <p><strong>Descriere și Prioritate:</strong> Permite trimiterea de cereri de adopție. Prioritate: Înaltă</p>
+            <p><strong>Stimulus / Răspuns:</strong></p>
+            <ul>
+                <li>Stimulus: clic pe „Adoptă” → Răspuns: afișare formular</li>
+                <li>Stimulus: trimitere formular → Răspuns: salvare cerere, notificare admin</li>
+            </ul>
+            <p><strong>Cerințe Funcționale:</strong></p>
+            <ul>
+                <li>[F-2.1] Doar utilizatori autentificați pot trimite cereri</li>
+                <li>[F-2.2] Cererea salvată cu status „pending”</li>
+                <li>[F-2.3] Notificare pentru admin</li>
+                <li>[F-2.4] Mesaj de confirmare pentru utilizator</li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>4.3 Funcționalitate: Adăugare Animal spre Adopție</h3>
+            <p><strong>Descriere și Prioritate:</strong> Permite adăugarea de animale. Prioritate: Medie</p>
+            <p><strong>Stimulus / Răspuns:</strong></p>
+            <ul>
+                <li>Stimulus: accesare formular → Răspuns: afișare formular complet</li>
+                <li>Stimulus: completare și trimitere → Răspuns: salvare cerere și notificare admin</li>
+            </ul>
+            <p><strong>Cerințe Funcționale:</strong></p>
+            <ul>
+                <li>[F-3.1] Formular cu detalii generale, sănătate, imagine, vaccinuri, calendar alimentar</li>
+                <li>[F-3.2] Validare și salvare în pet_requests</li>
+                <li>[F-3.3] Notificare către admin</li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>4.4 Funcționalitate: Administrare Cereri</h3>
+            <p><strong>Descriere și Prioritate:</strong> Adminii gestionează cereri. Prioritate: Înaltă</p>
+            <p><strong>Stimulus / Răspuns:</strong></p>
+            <ul>
+                <li>Stimulus: accesare panou notificări → Răspuns: afișare cereri</li>
+                <li>Stimulus: clic pe „Approve” / „Deny” → Răspuns: actualizare status, notificare utilizator</li>
+            </ul>
+            <p><strong>Cerințe Funcționale:</strong></p>
+            <ul>
+                <li>[F-4.1] Vizualizare cereri în așteptare</li>
+                <li>[F-4.2] Aprobare / respingere cerere</li>
+                <li>[F-4.3] Notificare utilizator</li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>4.5 Funcționalitate: Autentificare și Autorizare</h3>
+            <p><strong>Descriere și Prioritate:</strong> Autentificare utilizatori și control acces. Prioritate: Înaltă</p>
+            <p><strong>Stimulus / Răspuns:</strong></p>
+            <ul>
+                <li>Stimulus: introducere username și parolă → Răspuns: validare și creare sesiune</li>
+            </ul>
+            <p><strong>Cerințe Funcționale:</strong></p>
+            <ul>
+                <li>[F-5.1] Autentificare și înregistrare</li>
+                <li>[F-5.2] Verificare parolă cu password_verify</li>
+                <li>[F-5.3] Acces doar la conținut propriu</li>
+                <li>[F-5.4] Acces admin la panou de control</li>
+            </ul>
+        </article>
+    </section>
+
+    <section id="cerinte-nefunctionale">
+        <h2>5. Alte Cerințe Ne-Funcționale</h2>
+
+        <article>
+            <h3>5.1 Cerințe de Performanță</h3>
+            <ul>
+                <li>Timp de răspuns maxim: 2 secunde pentru 95% dintre cereri.</li>
+                <li>Încărcare completă a paginilor: sub 3 secunde (conexiune 100Mbps).</li>
+                <li>Baza de date: minim 100 conexiuni simultane fără impact negativ.</li>
+                <li>Sistemul suportă 500 cereri/minut fără degradare vizibilă.</li>
+            </ul>
+            <p><strong>Raționament:</strong> Performanța ridicată este esențială pentru o experiență fluentă și scalabilitate viitoare.</p>
+        </article>
+
+        <article>
+            <h3>5.2 Cerințe de Siguranță</h3>
+            <ul>
+                <li>Blocarea fișierelor periculoase în upload (ex: .exe, .js).</li>
+                <li>Mesaj prietenos în caz de eșec al bazei de date, fără informații sensibile.</li>
+                <li>Validare și igienizare completă a datelor introduse de utilizator.</li>
+                <li>Confirmare suplimentară pentru acțiuni critice.</li>
+                <li>Respectarea OWASP și standardelor GDPR/UE relevante.</li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>5.3 Cerințe de Securitate</h3>
+            <ul>
+                <li>Autentificare: utilizator + parolă (hashuită cu bcrypt).</li>
+                <li>Protejarea paginilor sensibile prin autentificare și verificare permisiuni.</li>
+                <li>Parolele nu se transmit sau stochează în clar.</li>
+                <li>Protecție date sensibile la nivel de administrare.</li>
+                <li>Apărare împotriva: CSRF, XSS, SQLi.</li>
+                <li>Accesul la conturile admin este restricționat și auditat.</li>
+                <li>Recomandare: conformitate cu ISO/IEC 27001.</li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>5.4 Atributele de Calitate ale Software-ului</h3>
+            <ul>
+                <li><strong>Disponibilitate:</strong> minim 99% uptime.</li>
+                <li><strong>Usability:</strong> interfață clară, intuitivă pentru utilizatori non-tehnici.</li>
+                <li><strong>Flexibilitate:</strong> arhitectură extensibilă fără modificări majore.</li>
+                <li><strong>Portabilitate:</strong> compatibil cu PHP 8+ și MySQL 5.7+.</li>
+                <li><strong>Testabilitate:</strong> cod modular, ușor de testat unitar și integrat.</li>
+                <li><strong>Interoperabilitate:</strong> export RSS, CSV, JSON.</li>
+            </ul>
+        </article>
+
+        <article>
+            <h3>5.5 Reguli de Business</h3>
+            <ul>
+                <li>Numai utilizatorii autentificați pot posta sau aplica la adopție.</li>
+                <li>Adminii pot aproba/respinge anunțuri de adopție.</li>
+                <li>Fiecare utilizator poate vizualiza doar cererile proprii.</li>
+                <li>Un animal poate fi marcat o singură dată ca „adoptat”.</li>
+                <li>O cerere de adopție este unică per utilizator/animal.</li>
+                <li>Adminii primesc notificări la cereri noi de adopție.</li>
+            </ul>
+        </article>
+    </section>
+
+
+    <footer>
+        <hr>
+        <p>&copy; <time datetime="2025">2025</time> Burcă Sabrina-Valentina & Ilade Maria</p>
+    </footer>
+</body>
