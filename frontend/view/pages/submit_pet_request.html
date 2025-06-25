@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Pet for Adoption</title>
+    <link rel="stylesheet" href="/assets/styles/petRequest.css">
+</head>
+<body>
+    <h1>Submit a Pet for Adoption</h1>
+    <form action="/api/handle_pet_request.php" method="POST">
+        <label>Name: <input type="text" name="name" required></label>
+        <label>Gender:
+            <select name="gender">
+                <option>Male</option>
+                <option>Female</option>
+            </select>
+        </label>
+        <label>Breed: <input type="text" name="breed"></label>
+        <label>Age: <input type="number" name="age" required></label>
+        <label>Color: <input type="text" name="color"></label>
+        <label>Weight (kg): <input type="number" step="0.01" name="weight"></label>
+        <label>Height (cm): <input type="number" step="0.01" name="height"></label>
+        <label>Animal Type:
+            <select name="animal_type">
+                <option>Dog</option>
+                <option>Cat</option>
+                <option>Capybara</option>
+            </select>
+        </label>
+        <label>Size:
+            <select name="size">
+                <option>Small</option>
+                <option>Medium</option>
+                <option>Large</option>
+            </select>
+        </label>
+
+        <fieldset>
+            <legend>Checks</legend>
+            <label><input type="checkbox" name="vaccinated"> Vaccinated</label>
+            <label><input type="checkbox" name="house_trained"> House Trained</label>
+            <label><input type="checkbox" name="neutered"> Neutered</label>
+            <label><input type="checkbox" name="microchipped"> Microchipped</label>
+            <label><input type="checkbox" name="good_with_children"> Good with children</label>
+            <label><input type="checkbox" name="shots_up_to_date"> Shots up to date</label>
+        </fieldset>
+
+        <label>Description: <textarea name="description"></textarea></label>
+        <label>Restrictions: <textarea name="restrictions"></textarea></label>
+        <label>Recommended: <textarea name="recommended"></textarea></label>
+
+        <h3>Feeding Calendar</h3>
+        <div id="feeding-calendar">
+            <input type="date" name="feed_date[]" placeholder="Feed Date">
+            <input type="text" name="food_type[]" placeholder="Food Type">
+        </div>
+
+        <h3>Vaccinations</h3>
+        <div id="vaccinations">
+            <input type="number" name="age_in_weeks[]" placeholder="Age in weeks">
+            <input type="text" name="vaccine_name[]" placeholder="Vaccine Name">
+        </div>
+
+        <button type="submit">Submit Request</button>
+    </form>
+</body>
+</html>

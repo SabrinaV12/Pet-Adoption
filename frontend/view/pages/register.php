@@ -1,24 +1,19 @@
-<?php
-session_start();
-require_once 'database/check_auth.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Create a new account</title>
-  <link rel="stylesheet" href="design/header.css" />
-  <link rel="stylesheet" href="design/footer.css" />
-  <link rel="stylesheet" href="design/register.css" />
+  <link rel="stylesheet" href="/assets/styles/header.css" />
+  <link rel="stylesheet" href="/assets/styles/footer.css" />
+  <link rel="stylesheet" href="/assets/styles/register.css" />
 </head>
 
 <body>
-<?php include 'components/header.php'; ?>
+<?php include __DIR__ . '/../components/header.php'; ?>
 
 <section class="register">
-  <form action="database/handle_register.php" method="POST" enctype="multipart/form-data">
+  <form action="/api/handle_register.php" method="POST" enctype="multipart/form-data">
     <?php if (isset($_GET['error'])): ?>
       <p class="error-message">
         <?php
@@ -45,7 +40,7 @@ require_once 'database/check_auth.php';
     <input type="tel" name="phone" placeholder="Enter your phone number" required />
 
     <p class="text"> Bio </p>
-<textarea name="description" placeholder="Tell us something about yourself" rows="5" required></textarea>
+    <textarea name="description" placeholder="Tell us something about yourself" rows="5" required></textarea>
 
     <p class="text"> Country </p>
     <input type="text" name="country" placeholder="Enter your country" required />
@@ -72,10 +67,10 @@ require_once 'database/check_auth.php';
   </form>
 
   <div class="help-buttons">
-    <a href="login.php">Already have an account?</a>
+    <a href="/login">Already have an account?</a>
   </div>
 </section>
 
-<?php include 'components/footer.php'; ?>
+<?php include __DIR__ . '/../components/footer.php'; ?>
 </body>
 </html>

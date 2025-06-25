@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/assets/styles/header.css" />
+  <link rel="stylesheet" href="/assets/styles/footer.css" />
+  <link rel="stylesheet" href="/assets/styles/login.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <div id="success-message" class="success-message" style="display:none;">
+    Account was successfully created! You can now login.
+  </div>
+
+  <section class="login">
+    <form action="/api/handle_login.php" method="POST">
+      <div id="error-message" class="error-message" style="display:none;">
+        Username or Password are incorrect!
+      </div>
+
+      <p class="text"> Username </p>
+      <input type="text" name="username" placeholder="Enter your username" required />
+
+      <p class="text"> Password </p>
+      <input type="password" name="password" placeholder="Enter your password" required />
+
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+    fetch('/components/header.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('header-placeholder').innerHTML = html);
+
+    fetch('/components/footer.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'registered') {
+      document.getElementById('success-message').style.display = 'block';
+    }
+    if (urlParams.get('error')) {
+      document.getElementById('error-message').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

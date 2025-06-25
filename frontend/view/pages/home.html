@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="/assets/styles/header.css" />
+    <link rel="stylesheet" href="/assets/styles/footer.css" />
+</head>
+<body class="container">
+    <div id="header-placeholder"></div>
+
+    <main>
+        <h1>Welcome to the Pet Adoption Platform</h1>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        fetch('/components/header.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('header-placeholder').innerHTML = html);
+
+        fetch('/components/footer.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+    </script>
+</body>
+</html>
