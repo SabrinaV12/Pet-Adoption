@@ -1,0 +1,251 @@
+=================================================
+Pet Adoption - Specificația Cerințelor de Sistem
+=================================================
+
+Autori: Burcă Sabrina-Valentina și Ilade Maria
+
+-------
+Cuprins
+-------
+1. Introducere
+2. Descriere Generală
+3. Cerințele Interfeței Externe
+4. Caracteristici de Sistem
+5. Alte Cerințe Ne-Funcționale
+
+--------------
+1. Introducere
+--------------
+1.1 Scopul
+Scopul acestui document este de a prezenta cerințele software pentru proiectul Pet Adoption. 
+Documentul acoperă specificațiile pentru întregul sistem, fiind o platformă web care oferă posibilitatea de a adopta animale de companie.
+Domeniul de aplicare include următoarele funcționalități principale: crearea și administrarea profilelor pentru animalele date la adopție de către stăpânul inițial, un motor de căutare a animalelor după diverse criterii(rasă, culoare, specie, etc.) și un proces prin care utilizatorul poate cere să adopte un animal de companie. 
+Următoarele funcționalități sunt considerate în afara domeniului de aplicare pentru versiunea inițială a proiectului: un modul de chat în timp real între utilizatori și adăposturi, un forum de blog pentru comunitate. 
+
+1.2 Convenții de Document
+Acest document utilizează o serie de convenții pentru a asigura o prezentare clară și consistentă a informațiilor.
+Convenții Tipografice: 
+- textul <b>îngroșat</b> va fi utilizat pentru a evidenția elemente de interfață pe care utilizatorul interacționează, precum butoane sau meniuri 
+- text <i>înclinat</i> pentru termeni noi sau pentru a face referire la alte secțiuni ale documentului.
+
+Identificatori pentru Cerințe: pentru fiecare cerință din acest document, vom eticheta cu câte un identificator unic: CF-xx, pentru cerințele funcționale și CNF-xx, pentru cerințele nefuncționale.
+
+Rolurile Utilizatorilor: în acest document, avem următoarele roluri:
+- stăpânul, care oferă un animal spre adopție
+- utilizatorul, care dorește să adopte un animal
+- vizitatorul, care nu este autentificat și are acces limitat la vizualizare
+- adminul care acces la tot site-ul și poate manipula datele din site.
+
+1.3 Audiența Țintă și Sugestii de Citire
+Acest document este destinat mai multor tipuri de cititori, fiecare având interese specifice în ceea ce privește ciclul de viață al proiectului:
+- Evaluatorul: pentru a evalua gradul de înțelegere a problemei, completitudinea și corectitudinea specificațiilor.
+- Dezvoltatorul: ca referință principală și ghid tehnic pentru implementarea funcționalităților site-ului.
+- Testerul: pentru a elabora planuri și cazuri de test menite să valideze corectitudinea implementării.
+
+Sugestii de Citire:
+- pentru evaluator se recomandă parcurgerea integrală a documentului
+- pentru dezvoltator și tester este recomandată parcurgerea secțiunilor 3, 4 și 5 pentru o înțelegere mai clară a implementării.
+
+1.4 Scopul Proiectului
+Din diverse motive, mulți stăpâni doresc să își ajute animalele de companie să găsească un adăpost nou. Folosind metode populare precum site-uri de anunțuri și social media nu sunt mereu sigure și poate aduce spre riscul de a alege un nou stăpân nepotrivit. Alteori, persoanele care doresc să adopte nu au un loc centralizat și de încredere unde să caute.
+Din acest motiv, am decis să creăm o platformă de adopție care este structurat astfel încât și stăpânii, dar și utilizatorii să aibă o experiență cât mai sigură. 
+
+1.5 Referințe
+Următoarele resurse au fost folosite în realizarea acestui document și proiect:
+- (1): IEEE-SRS-Template: https://github.com/rick4470/IEEE-SRS-Tempate
+- (2): Design Helper: https://www.figma.com/community/file/1376876963868102857/furryfriends-pet-adoption
+- (3): PHP Documentation: https://www.php.net/docs.php
+- (4): CSS Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS
+- (5): HTML Documentation: https://developer.mozilla.org/en-US/docs/Web/HTML
+- (6): RSS Documentation: https://www.w3schools.com/xml/xml_rss.asp
+- (7): SQL Documentation: https://edu.info.uaic.ro/baze-de-date/ro/index.html
+- (8): C4 Documentation: "C4/"
+
+---------------------
+2. Descriere Generală
+---------------------
+2.1 Perspectiva Proiectului
+Site-ul de Pet Adoption este un produs nou, de sine stătător, conceput și dezvoltat de la zero în cadrul acestui proiect.
+Nu reprezintă o versiune nouă a unui produs existent și nu înlocuiește un sistem software specific.
+Este o alternativă a platformelor generale de anunțuri sau a grupurilor de social media utilizate în prezent pentru a adopta animale de companie.
+
+Proiectul abordează limitările platformelor generale de anunțuri în privința adopțiilor de animale, oferind un mediu sigur si structurat exclusiv interacțiunii dintre stăpân și utilizator.
+Funcționează independent și nu este un component al unui sistem mai mare.
+
+Diagrama de mai jos prezintă contextul sistemului, conform nivelului 1 din modelul C4: 
+
+*insert image here in versiunea finala html*
+
+2.2 Funcțiile Proiectului
+Managementul Conturilor:
+- Crearea unui cont nou pentru persoanele care vor să folosească site-ul
+- Autentificarea utilizatorilor existenți
+
+Funcționalități pentru Stăpân:
+- Crearea și publicarea unui anunț nou de adopție, cu detalii despre animal
+- Vizualizarea și gestionarea aplicațiilor primite pentru animalele sale
+
+Funcționalități pentru Utilizator:
+- Căutarea și filtrarea anunțurilor de adopție
+- Vizualizarea paginilor animalelor
+- Inițierea procesului de adopție prin completarea unui formular de aplicare.
+
+Funcționalități pentru Admin:
+- Administrarea conturilor de utilizatori
+- Administrarea anunțurilor publicate
+
+2.3 Clasele și Caracteristicile Utilizatorului
+Site-ul de Pet Adoption va fi utilizată de mai multe clase de utilizatori, fiecare cu propriile caracteristici, privilegii și nevoi.
+Identificarea acestora este esențială pentru a proiecta o experiență de utilizare eficientă și țintită.
+
+Clasa Stăpân:
+- Este un utilizator autentificat care dorește să găsească un nou cămin pentru unul sau mai multe animale de companie.
+- Nivelul lui tehnic este mediu. Interfața destinată lor este simplă și intuitivă în procesul de creare a unui anunț.
+- Crează anunțul și verifică cererile de adopție primite.
+- Fără stăpâni, platforma își pierde scopul.
+
+Clasa Utilizator:
+- Este un utilizator autentificat care dorește să adopte un animal de companie.
+- Nivelul lui tehnic este scăzut spre mediu. Procesul de căutare, filtrare și aplicare trebuie să fie rapid și eficient.
+- Caută anunțuri, completează și trimite formularul de adopție.
+- Fără utilizator, stăpânii nu au cui să ofere animalele.
+
+Clasa Admin:
+- Este un utilizator cu privilegii superioare responsabil cu menținerea sănătății și integrității platformei.
+- Nivelul lui tehnic este ridicat. Înțelege funcționarea sistemului în detaliu.
+- Are un panou de administrare prin care gestionează conturile tuturor utilizatorilor și a animalelor.
+- Este esențial pentru operarea pe termen lung a site-ului.
+
+Clasa Vizitator:
+- Este o persoană care accesează site-ul fără a se autentifica. Scopul este de a-l convinge să devină un utilizator.
+- Nivelul lui tehnic este scăzut.
+- Vizualizează anunțurile, dar nu poate aplica pentru adopție.
+- Este esențial pentru a atrage viitori utilizatori.
+
+2.4 Mediul de Operare
+Site-ul de Pet Adoption este o platformă web standard, proiectată să funcționeze într-un mediu client-server. 
+Cerințele pentru fiecare componentă a acestui mediu sunt detaliate mai jos.
+
+Server:
+- Pentru a asigura consistența între faza de dezvoltare și cea de producție, dezvoltarea și testarea inițială a platformei se realizează într-un mediu local, furnizat de pachetul software XAMPP.
+- Acesta include următoarele componente, aliniate cu cerințele mediului de producție:
+* Server Web: Apache
+* Sisteme de Baze de Date: MySQL
+* Mediu de Execuție: PHP
+- Utilizarea XAMPP permite dezvoltarea rapidă și testarea funcționalităților într-un mediu controlat înainte de implementarea pe serverul de producție.
+
+Client:
+- Partea de client a aplicației este accesată de utilizatori prin intermediul unui browser web.
+- Nu există cerințe hardware sau de sistem de operare specifice, cu excepția de a rula un browser modern:
+* Google Chrome
+* Mozilla Firefox
+* Apple Safari
+* Microsoft Edge
+- Aplicația va fi proiectată folosind principii de "responsive design" pentru a asigura o coexistență pașnică și o afișare corectă pe o gamă largă de dispozitive, de la desktop-uri la telefoane mobile.
+
+
+2.5 Constrângerile de Implementare și Design
+Dezvoltarea proiectului se va supune următoarelor constrângeri și decizii tehnologice pre-stabilite, care vor ghida procesul de implementare:
+- Back-End: Aplicația va fi dezvoltată exclusiv folosind limbajul de programare PHP.
+- Front-End: Interfața cu utilizatorul va fi construită folosind HTML5 și CSS. Nu se vor utiliza framework-uri front-end complexe.
+- Baza de Date: Sistemul va utiliza o bază de date relațională, implementată în MySQL.
+- Server Web: Aplicația va fi proiectată pentru a rula pe un server web Apache.
+
+Constrângeri de Design și interfață:
+- Toate paginile aplicației trebuie să fie responsive și să se adapteze la ecrane de desktop, tabletă și mobil.
+- Design-ul vizual al componentelor se va inspira din ghidul de stil referențiat (2).
+
+Constrângeri de Limbă și Localizare:
+- Interfața utilizatorului, inclusiv toate textele, etichetele și mesajele de eroare va fi exclusiv în limba engleză.
+
+Constrângeri de Securitate:
+- Toate parolele utilizatorilor trebuie stocate în baza de date folosind "password_hash()".
+- Toate datele primite de la utilizatori trebuie validate și sanitizate pe server pentru a preveni atacuri de tip SQL Injection și Cross-Site Scripting (XSS).
+
+Constrângeri de Dezvoltare:
+- Codul sursă al proiectului va fi gestionat folosind un sistem de control al versiunilor, Git.
+
+2.6 Documentația Utilizatorului
+Pentru a asigura o experiență de utilizare pozitivă și pentru a facilita acomodarea utilizatorilor noi cu platforma, următoarele componente de documentație vor fi livrate: sistemul va oferi ghidaj contextual direct în interfața grafică. Acesta va consta în texte ajutătoare în câmpurile de formular, etichete descriptive și mesaje de eroare.
+
+2.7 Presupuneri și Dependențe
+Presupuneri:
+- Utilizatori:
+* vor furniza informații corecte și oneste despre ei și despre animalele lor.
+* au un nivel minim de competențe digitale pentru a naviga o aplicație web.
+* au o conexiune stabilă la internet.
+
+- Mediu:
+* mediul de producție va fi configurat similar cu mediul de dezvoltare XAMPP.
+* browserele web ale utilizatorilor vor avea suportul pt HTML5 și CSS.
+
+Dependențe:
+- Software:
+* depinde fundamental de funcționarea corectă a stack-ului tehnologic: Apache, PHP și MySQL.
+* dezvoltarea locală depinde de pachetul software XAMPP.
+
+- Infrastructură:
+* depinde de un furnizor de servicii de hosting web pentru a fi online și accesibil.
+* funcționarea corectă a sistemului DNS.
+
+----------------------------------
+3. Cerințele Interfeței Externe
+----------------------------------
+3.1 Interfețele Utilizatorului
+În această secțiune vom descrie caracteristicile logice și vizuale ale interfeței grafice pe care utilizatorii vor interacționa direct:
+
+- Principii Generale:
+* Consistență Vizuală: Toate interfețele vor urma ghidul de stil definit în referința (2), pentru a asigura o experiență unitară în ceea ce privește culorile, tipografia și stilul componentelor.
+* Layout Standard: Majoritatea paginilor vor respecta o structură comună, formată dintr-un Header, o zonă de Conținut Principal și un Footer.
+* Responsive Design: Interfața va fi proiectată conform principiilor de responsive design, adaptându-se automat la diferite rezoluții de ecran (desktop, tabletă, mobil). 
+
+- Componente Standard:
+* Header: Va fi vizibil pe toate paginile și va conține logo-ul aplicației, meniul principal de navigare și butoanele de "Login" și "Register" pentru vizitatori sau buton spre profilul lor pentru cei autentificați și buton de "Admin Panel" pentru administrator.
+* Meniu de Navigare: Va oferi link-uri rapide către secțiunile principale: "Home", "Adopt", "Rehome a Pet", "About".
+* Footer: Va conține link-uri utile, precum "Adopt" și "Rehome a Pet".
+
+- Exemplu Ecrane:
+* Pagina de Căutare: Permite utilizatorilor să caute animale folosind filtre. **INSERT SCREENSHOT HERE**
+* Pagina Animalului: Utilizatorul vizualizează detalii despre animal și dacă e disponibil de adoptat să înceapă și procesul de adopție. **SCREENSHOT**
+
+3.2 Interfețele Hardware
+Site-ul de Pet Adoption este o platformă web standard, care rulează în întregime în contextul unui browser web pe partea de client și pe un server web standard pe partea de server.
+Ca atare, software-ul nu interacționează direct cu nicio componentă hardware specifică a sistemului.
+
+3.3 Interfețele Software
+
+
+3.4 Interfețele de Comunicare
+
+
+------------------
+4. Caracteristici de Sistem
+------------------
+This template illustrates organizing the functional requirements for the product by system features, the major services provided by the product. You may prefer to organize this section by use case, mode of operation, user class, object class, functional hierarchy, or combinations of these, whatever makes the most logical sense for your product.
+
+4.1 System Feature 1
+Don’t really say “System Feature 1.” State the feature name in just a few words. 4.1.1 Description and Priority Provide a short description of the feature and indicate whether it is of High, Medium, or Low priority. You could also include specific priority component ratings, such as benefit, penalty, cost, and risk (each rated on a relative scale from a low of 1 to a high of 9). 4.1.2 Stimulus/Response Sequences List the sequences of user actions and system responses that stimulate the behavior defined for this feature. These will correspond to the dialog elements associated with use cases. 4.1.3 Functional Requirements Itemize the detailed functional requirements associated with this feature. These are the software capabilities that must be present in order for the user to carry out the services provided by the feature, or to execute the use case. Include how the product should respond to anticipated error conditions or invalid inputs. Requirements should be concise, complete, unambiguous, verifiable, and necessary. Use “TBD” as a placeholder to indicate when necessary information is not yet available.
+
+Each requirement should be uniquely identified with a sequence number or a meaningful tag of some kind.
+
+4.2 System Feature 2 (and so on)
+
+--------------------------------
+5. Alte Cerințe Non-Funcționale
+--------------------------------
+5.1 Cerințe de Performanță
+If there are performance requirements for the product under various circumstances, state them here and explain their rationale, to help the developers understand the intent and make suitable design choices. Specify the timing relationships for real time systems. Make such requirements as specific as possible. You may need to state performance requirements for individual functional requirements or features.
+
+5.2 Cerințe de Siguranță
+Specify those requirements that are concerned with possible loss, damage, or harm that could result from the use of the product. Define any safeguards or actions that must be taken, as well as actions that must be prevented. Refer to any external policies or regulations that state safety issues that affect the product’s design or use. Define any safety certifications that must be satisfied.
+
+5.3 Cerințe de Securitate
+Specify any requirements regarding security or privacy issues surrounding use of the product or protection of the data used or created by the product. Define any user identity authentication requirements. Refer to any external policies or regulations containing security issues that affect the product. Define any security or privacy certifications that must be satisfied.
+
+5.4 Atributele de Calitate ale Software-ului
+Specify any additional quality characteristics for the product that will be important to either the customers or the developers. Some to consider are: adaptability, availability, correctness, flexibility, interoperability, maintainability, portability, reliability, reusability, robustness, testability, and usability. Write these to be specific, quantitative, and verifiable when possible. At the least, clarify the relative preferences for various attributes, such as ease of use over ease of learning.
+
+5.5 Reguli de Business
+List any operating principles about the product, such as which individuals or roles can perform which functions under specific circumstances. These are not functional requirements in themselves, but they may imply certain functional requirements to enforce the rules.
+
+Other Requirements
