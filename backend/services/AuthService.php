@@ -2,20 +2,21 @@
 
 require_once __DIR__ . '/../repositories/UserRepository.php';
 
-class AuthService {
+class AuthService
+{
     private $userRepo;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->userRepo = new UserRepository();
     }
 
-    public function login($username, $password) {
-        $user = $this->userRepo->findByUsername($username);
+    public function login($username, $password): ?bool
+    {
+        $user = $this->userRepo->getUserByUsername($username);
 
-        if (!$user) return false;
-
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
+        if (password_verify($password, $user->hash_password)) {
+            $_SESSION['user_id'] = $user->id;
             return true;
         }
 

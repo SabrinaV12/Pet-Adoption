@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-require_once '../../backend/controllers/HomepageController.php';
-require_once '../../backend/controllers/ConfirmationController.php';
-require_once '../../backend/controllers/LoginController.php';
+// require_once __DIR__ . '../../backend/controllers/HomepageController.php';
+// require_once __DIR__ . '../../backend/controllers/ConfirmationController.php';
+// require_once __DIR__ . '../../backend/controllers/LoginController.php';
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -23,11 +23,13 @@ switch ($uri) {
         $controller = new LoginController();
         $controller->showLoginForm();
         break;
+
     case '/notifications':
         $controller = new NotificationController();
         $controller->showUserNotifications();
         break;
-     case '/pet':
+
+    case '/pet':
         $petId = isset($_GET['id']) ? intval($_GET['id']) : 0;
         $controller = new PetController();
         $controller->showPetProfile($petId);
