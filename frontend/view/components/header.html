@@ -12,7 +12,7 @@
             <a href="notification.php"><img src="assets/notifications.png" alt="Notifications" /></a>
 
             <div class="auth-links">
-                <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                <!-- <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                     <a href="userProfile.php"><?php echo htmlspecialchars($_SESSION['username']); ?></a>
 
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
@@ -22,7 +22,7 @@
                     | <a href="database/logout.php">Logout</a>
                 <?php else: ?>
                     <a href="login.php">Login</a> | <a href="register.php">Register</a>
-                <?php endif; ?>
+                <?php endif; ?> -->
             </div>
         </section>
     </nav>
