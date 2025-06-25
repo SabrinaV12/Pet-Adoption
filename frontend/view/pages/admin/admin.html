@@ -1,11 +1,11 @@
-<?php
+<!-- <?php
 session_start();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
     header('location: ../login.php');
     exit;
 }
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,18 +14,18 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel Control</title>
-    <link rel="stylesheet" href="../design/adminIndex.css">
+    <link rel="stylesheet" href="../../styles/adminIndex.css">
 </head>
 
 <body>
-    <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
+    <h1>Welcome, <!-- <?php echo htmlspecialchars($_SESSION['username']); ?> -->!</h1>
     <p>This is the control panel for administrators.</p>
 
     <nav>
         <ul>
-            <li><a href="adminAnimals.php">Manage Animals</a></li>
-            <li><a href="adminUsers.php">Manage Users</a></li>
-            <li><a href="../database/logout.php">Logout</a></li>
+            <li><a href="adminAnimals.html">Manage Animals</a></li>
+            <li><a href="adminUsers.html">Manage Users</a></li>
+            <li><a href="../../../../backend/services/logout.php">Logout</a></li>
         </ul>
     </nav>
 

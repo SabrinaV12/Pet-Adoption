@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start();
 require_once '../../database/db.php';  // două nivele sus din admin/animal_pages_scripts
 
@@ -19,10 +19,11 @@ if (!$request) {
     echo "Cererea nu a fost găsită.";
     exit;
 }
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
     <meta charset="UTF-8">
     <title>Cerere Adopție</title>
@@ -59,7 +60,8 @@ if (!$request) {
             gap: 20px;
         }
 
-        .approve, .reject {
+        .approve,
+        .reject {
             padding: 12px 20px;
             border-radius: 8px;
             text-decoration: none;
@@ -76,35 +78,52 @@ if (!$request) {
         }
     </style>
 </head>
+
 <body>
 
-<?php if (isset($_GET['status'])): ?>
-    <div style="padding: 15px; margin: 20px; border: 2px solid #9990DA; background-color: #f1f0ff; border-radius: 8px; color: #41349D;">
+    <!-- <?php if (isset($_GET['status'])): ?>
+    <div
+        style="padding: 15px; margin: 20px; border: 2px solid #9990DA; background-color: #f1f0ff; border-radius: 8px; color: #41349D;">
         <?php 
             if ($_GET['status'] === 'approve') echo "✅ Cererea a fost aprobată și animalul a fost adăugat.";
             elseif ($_GET['status'] === 'reject') echo "❌ Cererea a fost respinsă.";
         ?>
     </div>
-<?php endif; ?>
+    <?php endif; ?> -->
 
 
-<div class="container">
-    <h2>Cerere Adăugare Animal</h2>
+    <div class="container">
+        <h2>Cerere Adăugare Animal</h2>
 
-    <div class="row"><strong>Nume:</strong> <?= htmlspecialchars($request['name']) ?></div>
-    <div class="row"><strong>Specie:</strong> <?= htmlspecialchars($request['animal_type']) ?></div>
-    <div class="row"><strong>Vârstă:</strong> <?= $request['age'] ?> ani</div>
-    <div class="row"><strong>Gen:</strong> <?= $request['gender'] ?></div>
-    <div class="row"><strong>Greutate:</strong> <?= $request['weight'] ?> kg</div>
-    <div class="row"><strong>Înălțime:</strong> <?= $request['height'] ?> cm</div>
-    <div class="row"><strong>Descriere:</strong> <?= nl2br(htmlspecialchars($request['description'])) ?></div>
+        <!-- <div class="row"><strong>Nume:</strong>
+            <?= htmlspecialchars($request['name']) ?>
+        </div>
+        <div class="row"><strong>Specie:</strong>
+            <?= htmlspecialchars($request['animal_type']) ?>
+        </div>
+        <div class="row"><strong>Vârstă:</strong>
+            <?= $request['age'] ?> ani
+        </div>
+        <div class="row"><strong>Gen:</strong>
+            <?= $request['gender'] ?>
+        </div>
+        <div class="row"><strong>Greutate:</strong>
+            <?= $request['weight'] ?> kg
+        </div>
+        <div class="row"><strong>Înălțime:</strong>
+            <?= $request['height'] ?> cm
+        </div>
+        <div class="row"><strong>Descriere:</strong>
+            <?= nl2br(htmlspecialchars($request['description'])) ?>
+        </div> -->
 
-    <div class="buttons">
-<a href="../../handle_pet_request.php?id=<?= $requestId ?>&action=approve" class="approve">Aprobă</a>
-<a href="../../handle_pet_request.php?id=<?= $requestId ?>&action=reject" class="reject">Respinge</a>
-        
-</div>
-</div>
+        <div class="buttons">
+            <!-- <a href="../../handle_pet_request.php?id=<?= $requestId ?>&action=approve" class="approve">Aprobă</a>
+            <a href="../../handle_pet_request.php?id=<?= $requestId ?>&action=reject" class="reject">Respinge</a> -->
+
+        </div>
+    </div>
 
 </body>
+
 </html>

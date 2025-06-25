@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start();
 require_once 'database/check_auth.php';
 require_once 'database/db.php';
@@ -22,7 +22,7 @@ if ($application_id > 0) {
 }
 
 unset($_SESSION['adoption']);
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,33 +37,36 @@ unset($_SESSION['adoption']);
 </head>
 
 <body class="container">
-    <?php include 'components/header.php'; ?>
+    <!-- <?php include 'components/header.php'; ?> -->
 
     <section class="confirmation">
 
         <h1>Thanks For Submitting</h1>
-        <p>The pet's current owner will be sent a link to your profile when your application has been approved by Furry Friends.</p>
+        <p>The pet's current owner will be sent a link to your profile when your application has been approved by Furry
+            Friends.</p>
         <p>You can go back to your profile or download your adoption request.</p>
 
-        <?php if ($user_can_download): ?>
-            <div class="buttons">
-                <div class="download-buttons">
-                    <a href="scripts/download_form.php?id=<?php echo $application_id; ?>&format=csv" class="download-button">
-                        <span>Download as Excel File</span>
-                    </a>
-                    <a href="scripts/download_form.php?id=<?php echo $application_id; ?>&format=json" class="download-button">
-                        <span>Download as JSON File</span>
-                    </a>
-                </div>
-
-                <a href="userProfile.php" class="profile-button">
-                    <span>Go To My Profile</span>
+        <!-- <?php if ($user_can_download): ?>
+        <div class="buttons">
+            <div class="download-buttons">
+                <a href="scripts/download_form.php?id=<?php echo $application_id; ?>&format=csv"
+                    class="download-button">
+                    <span>Download as Excel File</span>
+                </a>
+                <a href="scripts/download_form.php?id=<?php echo $application_id; ?>&format=json"
+                    class="download-button">
+                    <span>Download as JSON File</span>
                 </a>
             </div>
-        <?php endif; ?>
+
+            <a href="userProfile.php" class="profile-button">
+                <span>Go To My Profile</span>
+            </a>
+        </div>
+        <?php endif; ?> -->
     </section>
 
-    <?php include 'components/footer.php'; ?>
+    <!-- <?php include 'components/footer.php'; ?> -->
 </body>
 
 </html>

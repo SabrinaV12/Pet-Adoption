@@ -1,19 +1,19 @@
-<?php
-session_start();
-require_once '../database/db.php';
+<!-- <?php
+        session_start();
+        require_once '../database/db.php';
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
-    header('location: ../login.php');
-    exit;
-}
+        if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
+            header('location: ../login.php');
+            exit;
+        }
 
-$sql = "SELECT id, username, email, role FROM users ORDER BY id ASC";
-$result = $conn->query($sql);
+        $sql = "SELECT id, username, email, role FROM users ORDER BY id ASC";
+        $result = $conn->query($sql);
 
-if (!$result) {
-    die("Query error: " . $conn->error);
-}
-?>
+        if (!$result) {
+            die("Query error: " . $conn->error);
+        }
+        ?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,13 +29,15 @@ if (!$result) {
     <header>
         <h1>Manage Users</h1>
         <nav>
-            <a href="index.php">Back to Admin's Main Menu</a>
-            <a href="user_pages_scripts/add_user.php" style="background-color: #28a745; color: white; padding: 10px; border-radius: 5px; text-decoration: none;">+ Add a New User</a>
+            <a href="admin.html">Back to Admin's Main Menu</a>
+            <a href="user_pages/add_user.html"
+                style="background-color: #28a745; color: white; padding: 10px; border-radius: 5px; text-decoration: none;">+
+                Add a New User</a>
         </nav>
     </header>
 
     <main>
-        <?php if (isset($_GET['status'])): ?>
+        <!-- <?php if (isset($_GET['status'])): ?>
             <div class="status-message">
                 <?php
                 if ($_GET['status'] == 'user_updated') {
@@ -49,7 +51,7 @@ if (!$result) {
                 }
                 ?>
             </div>
-        <?php endif; ?>
+        <?php endif; ?> -->
         <table>
             <thead>
                 <tr>
@@ -61,7 +63,7 @@ if (!$result) {
                 </tr>
             </thead>
             <tbody>
-                <?php if ($result->num_rows > 0): ?>
+                <!-- <?php if ($result->num_rows > 0): ?>
                     <?php while ($user = $result->fetch_assoc()): ?>
                         <tr>
                             <td><?php echo $user['id']; ?></td>
@@ -79,7 +81,7 @@ if (!$result) {
                     <tr>
                         <td colspan="5">No users found in the database.</td>
                     </tr>
-                <?php endif; ?>
+                <?php endif; ?> -->
             </tbody>
         </table>
     </main>

@@ -1,10 +1,10 @@
-<?php
+<!-- <?php
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
     header('location: ../../login.php');
     exit;
 }
-?>
+?> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,10 +17,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
 <body>
     <header>
         <h1>Add a New User</h1>
-        <a href="../adminUsers.php">Back to Users List</a>
+        <a href="../adminUsers.html">Back to Users List</a>
     </header>
     <main>
-        <form action="add_user_script.php" method="POST">
+        <form action="../../../../../backend/services/add_user_script.php" method="POST">
             <div class="form-group">
                 <label for="first_name">First Name:</label>
                 <input type="text" id="first_name" name="first_name" required>

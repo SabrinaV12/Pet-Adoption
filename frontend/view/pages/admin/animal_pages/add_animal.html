@@ -1,11 +1,11 @@
-<?php
+<!-- <?php
 session_start();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
     header('location: ../../login.php');
     exit;
 }
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,11 +20,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
 <body>
     <header>
         <h1>Add a New Pet</h1>
-        <a href="../adminAnimals.php">Back to Animals List</a>
+        <a href="../adminAnimals.html">Back to Animals List</a>
     </header>
 
     <main>
-        <form action="add_animal_script.php" method="POST" enctype="multipart/form-data">
+        <form action="add_animal_script.html" method="POST" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -88,23 +88,32 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
                     <label for="description">Description:</label>
                     <textarea id="description" name="description" rows="5"></textarea>
                 </div>
-                <div class="form-group"><label for="restrictions">Restrictions:</label><textarea name="restrictions" rows="3"></textarea></div>
-                <div class="form-group"><label for="recommended">Recommendations:</label><textarea name="recommended" rows="3"></textarea></div>
+                <div class="form-group"><label for="restrictions">Restrictions:</label><textarea name="restrictions"
+                        rows="3"></textarea></div>
+                <div class="form-group"><label for="recommended">Recommendations:</label><textarea name="recommended"
+                        rows="3"></textarea></div>
             </fieldset>
 
             <fieldset>
                 <legend>Health & Behavior</legend>
-                <div class="checkbox-group"><input type="checkbox" id="vaccinated" name="vaccinated" value="1"><label for="vaccinated">Vaccinated</label></div>
-                <div class="checkbox-group"><input type="checkbox" id="neutered" name="neutered" value="1"><label for="neutered">Neutered</label></div>
-                <div class="checkbox-group"><input type="checkbox" id="microchipped" name="microchipped" value="1"><label for="microchipped">Microchipped</label></div>
-                <div class="checkbox-group"><input type="checkbox" id="good_with_children" name="good_with_children" value="1"><label for="good_with_children">Good with Children</label></div>
-                <div class="checkbox-group"><input type="checkbox" id="shots_up_to_date" name="shots_up_to_date" value="1"><label for="shots_up_to_date">Shots Up-to-Date</label></div>
-                <div class="checkbox-group"><input type="checkbox" id="house_trained" name="house_trained" value="1"><label for="house_trained">House Trained</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="vaccinated" name="vaccinated" value="1"><label
+                        for="vaccinated">Vaccinated</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="neutered" name="neutered" value="1"><label
+                        for="neutered">Neutered</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="microchipped" name="microchipped"
+                        value="1"><label for="microchipped">Microchipped</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="good_with_children" name="good_with_children"
+                        value="1"><label for="good_with_children">Good with Children</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="shots_up_to_date" name="shots_up_to_date"
+                        value="1"><label for="shots_up_to_date">Shots Up-to-Date</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="house_trained" name="house_trained"
+                        value="1"><label for="house_trained">House Trained</label></div>
             </fieldset>
 
             <fieldset>
                 <legend>Adoption Details</legend>
-                <div class="checkbox-group"><input type="checkbox" id="adopted" name="adopted" value="1"><label for="adopted">Adopted</label></div>
+                <div class="checkbox-group"><input type="checkbox" id="adopted" name="adopted" value="1"><label
+                        for="adopted">Adopted</label></div>
                 <div class="form-group">
                     <label for="adoption_date">Adoption Date:</label>
                     <input type="date" id="adoption_date" name="adoption_date">
@@ -120,42 +129,42 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
             </fieldset>
 
             <fieldset>
-  <legend>Feeding Calendar</legend>
+                <legend>Feeding Calendar</legend>
 
-  <div class="form-group">
-    <label>Feed Date 1: <input type="date" name="feed_date[]"></label>
-    <label>Food Type 1: <input type="text" name="food_type[]"></label>
-  </div>
+                <div class="form-group">
+                    <label>Feed Date 1: <input type="date" name="feed_date[]"></label>
+                    <label>Food Type 1: <input type="text" name="food_type[]"></label>
+                </div>
 
-  <div class="form-group">
-    <label>Feed Date 2: <input type="date" name="feed_date[]"></label>
-    <label>Food Type 2: <input type="text" name="food_type[]"></label>
-  </div>
+                <div class="form-group">
+                    <label>Feed Date 2: <input type="date" name="feed_date[]"></label>
+                    <label>Food Type 2: <input type="text" name="food_type[]"></label>
+                </div>
 
-  <div class="form-group">
-    <label>Feed Date 3: <input type="date" name="feed_date[]"></label>
-    <label>Food Type 3: <input type="text" name="food_type[]"></label>
-  </div>
-</fieldset>
+                <div class="form-group">
+                    <label>Feed Date 3: <input type="date" name="feed_date[]"></label>
+                    <label>Food Type 3: <input type="text" name="food_type[]"></label>
+                </div>
+            </fieldset>
 
-<fieldset>
-  <legend>Vaccinations</legend>
+            <fieldset>
+                <legend>Vaccinations</legend>
 
-  <div class="form-group">
-    <label>Age in weeks 1: <input type="number" name="age_in_weeks[]"></label>
-    <label>Vaccine Name 1: <input type="text" name="vaccine_name[]"></label>
-  </div>
+                <div class="form-group">
+                    <label>Age in weeks 1: <input type="number" name="age_in_weeks[]"></label>
+                    <label>Vaccine Name 1: <input type="text" name="vaccine_name[]"></label>
+                </div>
 
-  <div class="form-group">
-    <label>Age in weeks 2: <input type="number" name="age_in_weeks[]"></label>
-    <label>Vaccine Name 2: <input type="text" name="vaccine_name[]"></label>
-  </div>
+                <div class="form-group">
+                    <label>Age in weeks 2: <input type="number" name="age_in_weeks[]"></label>
+                    <label>Vaccine Name 2: <input type="text" name="vaccine_name[]"></label>
+                </div>
 
-  <div class="form-group">
-    <label>Age in weeks 3: <input type="number" name="age_in_weeks[]"></label>
-    <label>Vaccine Name 3: <input type="text" name="vaccine_name[]"></label>
-  </div>
-</fieldset>
+                <div class="form-group">
+                    <label>Age in weeks 3: <input type="number" name="age_in_weeks[]"></label>
+                    <label>Vaccine Name 3: <input type="text" name="vaccine_name[]"></label>
+                </div>
+            </fieldset>
 
 
             <button type="submit">Add Pet to Database</button>
