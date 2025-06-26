@@ -15,24 +15,18 @@ class UserRepository
 
     public function getUserById($id): ?User
     {
-        // Folosim `SELECT *` dar vom lega fiecare coloană manual
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = ?");
         $stmt->bind_param("i", $id);
 
-
-        // PAS 1: Execută statement-ul (acesta lipsea)
         $stmt->execute();
 
-        // PAS 2: Stochează rezultatul pentru a elibera conexiunea
         $stmt->store_result();
 
-        // Dacă nu găsim utilizatorul, returnăm null
         if ($stmt->num_rows === 0) {
             $stmt->close();
             return null;
         }
 
-        // PAS 3: Legăm TOATE coloanele din `SELECT *` de variabile PHP, în ordinea din tabelă
         $stmt->bind_result(
             $db_id,
             $db_first_name,
@@ -51,11 +45,9 @@ class UserRepository
         );
 
 
-        // PAS 4: Preluează datele în variabilele de mai sus
         $stmt->fetch();
         $stmt->close();
 
-        // PAS 5: Creează obiectul User folosind variabilele
         return new User(
             $db_id,
             $db_profile_picture,
@@ -76,20 +68,16 @@ class UserRepository
 
     public function getUserByUsername($username): ?User
     {
-        // Aplicăm exact același model sigur și aici
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
         if ($stmt === false) {
-            // Tratează eroarea la preparare
             error_log('Prepare failed: ' . $this->conn->error);
             return null;
         }
 
 
-        // PAS 1: Execută
         $stmt->execute();
 
-        // PAS 2: Stochează
         $stmt->store_result();
 
         if ($stmt->num_rows === 0) {
@@ -98,7 +86,6 @@ class UserRepository
             return null;
         }
 
-        // PAS 3: Leagă variabilele (aceeași listă ca mai sus)
         $stmt->bind_result(
             $db_id,
             $db_first_name,
@@ -117,12 +104,9 @@ class UserRepository
         );
 
 
-
-        // PAS 4: Preia datele
         $stmt->fetch();
         $stmt->close();
 
-        // PAS 5: Returnează obiectul
         return new User(
             $db_id,
             $db_profile_picture,
@@ -141,8 +125,6 @@ class UserRepository
         );
     }
 
-    // Am corectat și această funcție pentru când vei avea nevoie de ea.
-    // Aceasta returnează un array de rezultate, deci folosim o buclă `while`.
     public function getPetsByUser($userId): array
     {
         $pets = [];
@@ -152,12 +134,10 @@ class UserRepository
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            // Aici trebuie să legi coloanele din tabela `pets`
-            // Exemplu: $stmt->bind_result($pet_id, $pet_name, $pet_age, ...);
+            //De pus comenzile de luat animalele dupa stapan
 
-            // Folosim `while` pentru a itera prin toate animalele găsite
             while ($stmt->fetch()) {
-                // Creezi un array sau un obiect Pet pentru fiecare rând
+                //De a face un array cu toate detaliile despre animale
                 $pets[] = [
                     // 'id' => $pet_id,
                     // 'name' => $pet_name,
@@ -169,5 +149,43 @@ class UserRepository
 
         $stmt->close();
         return $pets;
+    }
+
+    public function getAllUsers(): array
+    {
+        $users = [];
+        $stmt = $this->conn->prepare("SELECT * FROM users ORDER BY id ASC");
+
+        if ($stmt === false) {
+            error_log('Prepare failed: ' . $this->conn->error);
+            return [];
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $users[] = new User(
+                    $row['id'],
+                    $row['profile_picture'],
+                    $row['first_name'],
+                    $row['last_name'],
+                    $row['username'],
+                    $row['email'],
+                    $row['phone_number'],
+                    $row['hash_password'],
+                    $row['description'],
+                    $row['role'],
+                    $row['county'],
+                    $row['country'],
+                    $row['telegram_handle'],
+                    $row['banner_picture']
+                );
+            }
+        }
+
+        $stmt->close();
+        return $users;
     }
 }

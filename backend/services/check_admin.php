@@ -2,10 +2,8 @@
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Exception;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
-use UnexpectedValueException;
 
 class JwtService
 {
