@@ -12,14 +12,19 @@ class AuthService
     }
 
     public function login($username, $password): ?User
-    {
-        $user = $this->userRepo->getUserByUsername($username);
+{
+    $user = $this->userRepo->getUserByUsername($username);
 
-        if (password_verify($password, $user->hash_password)) {
-            $_SESSION['user_id'] = $user->id;
-            return $user;
-        }
-
-        return null;
+    if (!$user) {
+        return null; // Or throw an exception, or return an error message
     }
+
+    if (password_verify($password, $user->hash_password)) {
+        $_SESSION['user_id'] = $user->id;
+        return $user;
+    }
+
+    return null;
+}
+
 }
