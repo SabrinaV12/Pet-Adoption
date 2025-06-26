@@ -17,8 +17,10 @@ loginForm.addEventListener('submit', async (event) => {
         const result = await response.json();
 
         if (result.success) {
+            window.location.href = '../pages/home.html';
             document.getElementById('success-message').textContent = result.message || 'Login successful!';
             document.getElementById('success-message').style.display = 'block';
+
         } else {
             document.getElementById('error-message').textContent = result.message || 'Username or Password are incorrect!';
             document.getElementById('error-message').style.display = 'block';

@@ -25,28 +25,26 @@ const AuthAPI = {
         }
     },
 
-    // TO BE ADDED!!!!!!!
+    logout: async () => {
+        try {
+            const response = await fetch('http://localhost/Pet_Adoption/backend/controllers/LogoutController.php', { // Point to your backend /api/logout
+                method: 'POST',
+                credentials: 'include'
+            });
 
-    // logout: async () => {
-    //     try {
-    //         const response = await fetch('http://localhost/api/logout', { // Point to your backend /api/logout
-    //             method: 'POST',
-    //             credentials: 'include'
-    //         });
-
-    //         if (response.ok) {
-    //             console.log('Logout successful from backend.');
-    //             return true;
-    //         } else {
-    //             const errorData = await response.json();
-    //             console.error('Logout failed:', response.status, errorData.message);
-    //             return false;
-    //         }
-    //     } catch (error) {
-    //         console.error('Network error during logout:', error);
-    //         return false;
-    //     }
-    // }
+            if (response.ok) {
+                console.log('Logout successful from backend.');
+                return true;
+            } else {
+                const errorData = await response.json();
+                console.error('Logout failed:', response.status, errorData.message);
+                return false;
+            }
+        } catch (error) {
+            console.error('Network error during logout:', error);
+            return false;
+        }
+    }
 };
 
 
@@ -77,27 +75,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             authLinksDiv.appendChild(document.createTextNode(' | '));
             const logoutLink = document.createElement('a');
-            logoutLink.href = '#'; // TO BE ADDED
             logoutLink.textContent = 'Logout';
             logoutLink.addEventListener('click', async (e) => {
                 e.preventDefault();
                 const success = await AuthAPI.logout();
                 if (success) {
+
                     renderAuthLinks(null);
+                    window.location.href = '../pages/login.html';
                 }
             });
             authLinksDiv.appendChild(logoutLink);
 
         } else {
             const loginLink = document.createElement('a');
-            loginLink.href = 'login.php';
+            loginLink.href = 'login.html';
             loginLink.textContent = 'Login';
             authLinksDiv.appendChild(loginLink);
 
             authLinksDiv.appendChild(document.createTextNode(' | '));
 
             const registerLink = document.createElement('a');
-            registerLink.href = 'register.php';
+            registerLink.href = 'register.html';
             registerLink.textContent = 'Register';
             authLinksDiv.appendChild(registerLink);
         }
