@@ -12,16 +12,16 @@
 </head>
 
 <body>
-  <?php include __DIR__ . '/../components/header.php'; ?>
+  <div id="header-placeholder"></div>
 
   <div class="container">
     <aside class="sidebar">
       <h3>Filters</h3>
       <form method="GET" action="">
         <legend>Choose a pet:</legend>
-          <label><input type="checkbox" name="type[]" value="Dog"> Dog</label><br>
-          <label><input type="checkbox" name="type[]" value="Cat"> Cat</label><br>
-          <label><input type="checkbox" name="type[]" value="Capybara"> Capybara</label><br>
+        <label><input type="checkbox" name="type[]" value="Dog"> Dog</label><br>
+        <label><input type="checkbox" name="type[]" value="Cat"> Cat</label><br>
+        <label><input type="checkbox" name="type[]" value="Capybara"> Capybara</label><br>
         </fieldset>
 
         <fieldset>
@@ -64,39 +64,39 @@
 
         <fieldset>
 
-        <fieldset>
-          <legend>Country:</legend>
-          <select name="country">
-            <option value="">Any</option>
-            <?php foreach ($countries as $c): ?>
-              <option value="<?= htmlspecialchars($c['country']) ?>" <?= (isset($_GET['country']) && $_GET['country'] === $c['country']) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($c['country']) ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </fieldset>
+          <fieldset>
+            <legend>Country:</legend>
+            <select name="country">
+              <option value="">Any</option>
+              <?php foreach ($countries as $c): ?>
+                <option value="<?= htmlspecialchars($c['country']) ?>" <?= (isset($_GET['country']) && $_GET['country'] === $c['country']) ? 'selected' : '' ?>>
+                  <?= htmlspecialchars($c['country']) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </fieldset>
 
-        <fieldset>
-          <legend>County:</legend>
-          <select name="county">
-            <option value="">Any</option>
-            <?php foreach ($counties as $c): ?>
-              <option value="<?= htmlspecialchars($c['county']) ?>" <?= (isset($_GET['county']) && $_GET['county'] === $c['county']) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($c['county']) ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </fieldset>
+          <fieldset>
+            <legend>County:</legend>
+            <select name="county">
+              <option value="">Any</option>
+              <?php foreach ($counties as $c): ?>
+                <option value="<?= htmlspecialchars($c['county']) ?>" <?= (isset($_GET['county']) && $_GET['county'] === $c['county']) ? 'selected' : '' ?>>
+                  <?= htmlspecialchars($c['county']) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </fieldset>
 
-        <button type="submit">Apply Filter</button>
+          <button type="submit">Apply Filter</button>
 
-        <div class="rss-link-container" style="margin-bottom: 20px; text-align: right;">
-          <?php $query_string = http_build_query($_GET); ?>
-          <a href="/rss.php?<?php echo $query_string; ?>" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg" alt="RSS Feed" style="width: 24px; height: 24px; vertical-align: middle;">
-            Subscribe to this search
-          </a>
-        </div>
+          <div class="rss-link-container" style="margin-bottom: 20px; text-align: right;">
+            <?php $query_string = http_build_query($_GET); ?>
+            <a href="/rss.php?<?php echo $query_string; ?>" target="_blank">
+              <img src="https://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg" alt="RSS Feed" style="width: 24px; height: 24px; vertical-align: middle;">
+              Subscribe to this search
+            </a>
+          </div>
       </form>
     </aside>
 
@@ -121,7 +121,10 @@
     </main>
   </div>
 
-  <?php include __DIR__ . '/../components/footer.php'; ?>
+  <div id="footer-placeholder"></div>
+
+  <script src="../../controller/footerController.js"></script>
+  <script src="../../controller/headerController.js"></script>
 </body>
 
 </html>
