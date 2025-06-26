@@ -99,7 +99,7 @@ class RegisterController
                 case 'file_upload_error':
                     $statusCode = 500;
                     break;
-            }
+                }
 
             http_response_code($statusCode);
             echo json_encode(['message' => $errorMessage]);
