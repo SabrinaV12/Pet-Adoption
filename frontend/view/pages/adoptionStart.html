@@ -54,7 +54,7 @@ $conn->close();
 <body class="container">
 
 
-    <!-- <?php include 'components/header.php'; ?> -->
+    <div id="header-placeholder"></div>
 
     <section class="user-information">
         <div class="profile-card">
@@ -98,7 +98,17 @@ $conn->close();
 
     </section>
 
-    <!-- <?php include 'components/footer.php'; ?> -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        fetch('../components/header.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('header-placeholder').innerHTML = html);
+
+        fetch('../components/footer.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+    </script>
 </body>
 
 </html>

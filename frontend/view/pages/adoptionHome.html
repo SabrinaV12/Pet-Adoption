@@ -27,7 +27,8 @@ unset($_SESSION['old_input']);
 </head>
 
 <body class="container">
-    <!-- <?php include 'components/header.php'; ?> -->
+
+    <div id="header-placeholder"></div>
 
     <section class="add-house">
         <p class="important">Please note, all these details must be completed in order to apply for pet adoption.</p>
@@ -124,8 +125,17 @@ unset($_SESSION['old_input']);
 
     </section>
 
+    <div id="footer-placeholder"></div>
 
-    <!-- <?php include 'components/footer.php'; ?> -->
+    <script>
+        fetch('../components/header.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('header-placeholder').innerHTML = html);
+
+        fetch('../components/footer.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+    </script>
 </body>
 
 </html>

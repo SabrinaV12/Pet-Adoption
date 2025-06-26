@@ -1,0 +1,48 @@
+.body {
+    font-family: Arial, sans-serif;
+    background: #f9f9ff;
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 2px solid #9990DA;
+    border-radius: 12px;
+}
+
+h2 {
+    color: #41349D;
+}
+
+.row {
+    margin: 10px 0;
+}
+
+.row strong {
+    color: #555;
+}
+
+.buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+}
+
+.approve,
+.reject {
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+}
+
+.approve {
+    background: #28a745;
+}
+
+.reject {
+    background: #dc3545;
+}

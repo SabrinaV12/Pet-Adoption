@@ -1,11 +1,13 @@
 <?php
 session_start();
 
-// require_once __DIR__ . '../../backend/controllers/HomepageController.php';
-// require_once __DIR__ . '../../backend/controllers/ConfirmationController.php';
-// require_once __DIR__ . '../../backend/controllers/LoginController.php';
+require_once __DIR__ . '/../controllers/HomeController.php';
+require_once __DIR__ . '/../controllers/ConfirmationController.php';
+require_once __DIR__ . '/../controllers/LoginController.php';
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = explode("/Pet_Adoption/backend/public/index.php", $uri, 2)[1];
+echo $uri;
 
 switch ($uri) {
     case '/':

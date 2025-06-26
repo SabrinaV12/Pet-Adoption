@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link rel="stylesheet" href="/assets/styles/header.css" />
-  <link rel="stylesheet" href="/assets/styles/footer.css" />
-  <link rel="stylesheet" href="/assets/styles/login.css" />
+  <link rel="stylesheet" href="../styles/header.css" />
+  <link rel="stylesheet" href="../styles/footer.css" />
+  <link rel="stylesheet" href="../styles/login.css" />
 </head>
+
 <body>
   <div id="header-placeholder"></div>
 
@@ -16,7 +18,7 @@
   </div>
 
   <section class="login">
-    <form action="/api/handle_login.php" method="POST">
+    <form action="http://localhost/Pet_Adoption/backend/controllers/LoginController.php" method="POST">
       <div id="error-message" class="error-message" style="display:none;">
         Username or Password are incorrect!
       </div>
@@ -32,13 +34,13 @@
   </section>
 
   <div id="footer-placeholder"></div>
-
+  <script src="../../controller/loginController.js"></script>
   <script>
-    fetch('/components/header.html')
+    fetch('../components/header.html')
       .then(res => res.text())
       .then(html => document.getElementById('header-placeholder').innerHTML = html);
 
-    fetch('/components/footer.html')
+    fetch('../components/footer.html')
       .then(res => res.text())
       .then(html => document.getElementById('footer-placeholder').innerHTML = html);
 
@@ -51,4 +53,5 @@
     }
   </script>
 </body>
+
 </html>

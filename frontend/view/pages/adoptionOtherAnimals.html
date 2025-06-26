@@ -27,7 +27,8 @@ unset($_SESSION['old_input']);
 </head>
 
 <body class="container">
-    <!-- <?php include 'components/header.php'; ?> -->
+
+    <div id="header-placeholder"></div>
 
     <section class="animal">
 
@@ -161,7 +162,17 @@ unset($_SESSION['old_input']);
 
     </section>
 
-    <!-- <?php include 'components/footer.php'; ?> -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        fetch('../components/header.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('header-placeholder').innerHTML = html);
+
+        fetch('../components/footer.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+    </script>
 </body>
 
 </html>

@@ -37,7 +37,8 @@ unset($_SESSION['adoption']);
 </head>
 
 <body class="container">
-    <!-- <?php include 'components/header.php'; ?> -->
+
+    <div id="header-placeholder"></div>
 
     <section class="confirmation">
 
@@ -66,7 +67,17 @@ unset($_SESSION['adoption']);
         <?php endif; ?> -->
     </section>
 
-    <!-- <?php include 'components/footer.php'; ?> -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        fetch('../components/header.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('header-placeholder').innerHTML = html);
+
+        fetch('../components/footer.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('footer-placeholder').innerHTML = html);
+    </script>
 </body>
 
 </html>

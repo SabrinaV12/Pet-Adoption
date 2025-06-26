@@ -6,6 +6,14 @@ body {
   color: #333;
 }
 
+.add-button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
 header {
   background-color: #9990DA;
   color: white;
@@ -57,7 +65,8 @@ table {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
+th,
+td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -91,7 +100,13 @@ td span {
 }
 
 @media (max-width: 768px) {
-  table, thead, tbody, th, td, tr {
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
     display: block;
   }
 
@@ -104,7 +119,7 @@ td span {
     background-color: #fff;
     padding: 10px;
     border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   td {

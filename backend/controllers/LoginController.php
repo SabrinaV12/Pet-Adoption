@@ -14,18 +14,23 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
-        require_once '../../backend/database/check_auth.php';
-        readfile('../../frontend/view/login.html');
+        readfile(__DIR__ . '/../../frontend/view/login.html');
         break;
 
     case 'POST':
         try {
             require_once __DIR__ . "/../services/AuthService.php";
+            header("Access-Control-Allow-Origin: http://localhost:5500");
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+            header("Access-Control-Allow-Headers: Content-Type, Authorization");
+            header("Access-Control-Allow-Credentials: true");
 
-            header("Content-Type: application/json");
-            $input = json_decode(file_get_contents('php://input'), true);
-            $username = $input['username'] ?? null;
-            $password = $input['password'] ?? null;
+            if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+                http_response_code(204); // No Content
+                exit();
+            }
+            $username = $_POST['username'] ?? null;
+            $password = $_POST['password'] ?? null;
 
             if (!$username || !$password) {
                 http_response_code(400);
@@ -43,18 +48,14 @@ switch ($method) {
             }
 
             if ($user) {
-                $secret_key = "SECRET_KEY";
-                // $issuer_claim = "YOUR_DOMAIN.com";
-                // $audience_claim = "YOUR_DOMAIN.com";
+                $secret_key = $_ENV['JWT_SECRET'] ?? "SECRET_KEY";
                 $issuedat_claim = time();
-                $notbefore_claim = $issuedat_claim;
-                $expire_claim = $issuedat_claim + 3600;
-
+                $expire_claim = $issuedat_claim + (86400 * 7);
                 $payload = [
-                    // "iss" => $issuer_claim,
-                    // "aud" => $audience_claim,
+                    // "iss" => "YOUR_DOMAIN.com", 
+                    // "aud" => "YOUR_DOMAIN.com", 
                     "iat" => $issuedat_claim,
-                    "nbf" => $notbefore_claim,
+                    "nbf" => $issuedat_claim,
                     "exp" => $expire_claim,
                     "data" => [
                         "id" => $user->id,
@@ -65,11 +66,21 @@ switch ($method) {
 
                 $jwt = JWT::encode($payload, $secret_key, 'HS256');
 
-                http_response_code(200);
-                echo json_encode([
-                    'message' => 'Login successful.',
-                    'jwt' => $jwt
+                setcookie('jwt', $jwt, [
+                    'expires' => $expire_claim,
+                    'path' => '/',
+                    'secure' => false,
+                    'httponly' => true,
+                    'samesite' => 'Lax',
+                    'domain' => 'localhost'
                 ]);
+
+                http_response_code(200);
+
+                echo json_encode([
+                    'message' => 'Login successful.'
+                ]);
+
                 exit;
             } else {
                 http_response_code(401);
