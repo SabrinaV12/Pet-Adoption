@@ -36,7 +36,7 @@ class AdminUserController
 
         $jwt_token = $this->checkAdminService->getBearerToken();
         try {
-            // $jwt_data = $this->checkAdminService->verifyAdminToken($jwt_token);
+            $jwt_data = $this->checkAdminService->verifyAdminToken($jwt_token);
             http_response_code(200);
 
             echo json_encode($users);

@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Firebase\JWT\ExpiredException;
@@ -47,13 +49,8 @@ class JwtService
 
     public function getBearerToken(): ?string
     {
-        $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
 
-        if ($authHeader) {
-            if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-                return $matches[1];
-            }
-        }
-        return null;
+        $jwt = $_COOKIE['jwt'];
+        return $jwt ?? null;
     }
 }
