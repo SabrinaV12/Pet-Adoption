@@ -15,15 +15,11 @@
 
   <section class="register">
     <form action="/api/handle_register.php" method="POST" enctype="multipart/form-data">
-      <?php if (isset($_GET['error'])): ?>
+      
         <p class="error-message">
-          <?php
-          if ($_GET['error'] == 'password_mismatch') echo "The passwords don't match!";
-          if ($_GET['error'] == 'email_exists') echo 'This email is already used!';
-          if ($_GET['error'] == 'username_exists') echo 'This username is already used!';
-          ?>
+          
         </p>
-      <?php endif; ?>
+      
 
       <p class="text"> First Name </p>
       <input type="text" name="first_name" placeholder="Enter your first name" required />

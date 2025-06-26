@@ -68,11 +68,11 @@
             <legend>Country:</legend>
             <select name="country">
               <option value="">Any</option>
-              <?php foreach ($countries as $c): ?>
-                <option value="<?= htmlspecialchars($c['country']) ?>" <?= (isset($_GET['country']) && $_GET['country'] === $c['country']) ? 'selected' : '' ?>>
-                  <?= htmlspecialchars($c['country']) ?>
+              
+                <option value="" >
+                  
                 </option>
-              <?php endforeach; ?>
+              
             </select>
           </fieldset>
 
@@ -80,19 +80,19 @@
             <legend>County:</legend>
             <select name="county">
               <option value="">Any</option>
-              <?php foreach ($counties as $c): ?>
-                <option value="<?= htmlspecialchars($c['county']) ?>" <?= (isset($_GET['county']) && $_GET['county'] === $c['county']) ? 'selected' : '' ?>>
-                  <?= htmlspecialchars($c['county']) ?>
+              
+                <option value="" >
+                  
                 </option>
-              <?php endforeach; ?>
+              
             </select>
           </fieldset>
 
           <button type="submit">Apply Filter</button>
 
           <div class="rss-link-container" style="margin-bottom: 20px; text-align: right;">
-            <?php $query_string = http_build_query($_GET); ?>
-            <a href="/rss.php?<?php echo $query_string; ?>" target="_blank">
+            
+            <a href="/rss.php?" target="_blank">
               <img src="https://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg" alt="RSS Feed" style="width: 24px; height: 24px; vertical-align: middle;">
               Subscribe to this search
             </a>
@@ -101,23 +101,23 @@
     </aside>
 
     <main class="pet-list">
-      <?php if ($result->num_rows > 0): ?>
-        <?php while ($pet = $result->fetch_assoc()): ?>
+      
+        
           <div class="pet-card">
-            <img src="<?= htmlspecialchars($pet['image_path']); ?>" alt="<?= htmlspecialchars($pet['name']); ?>">
-            <h4><?= htmlspecialchars($pet['name']); ?></h4>
+            <img src="" alt="">
+            <h4></h4>
             <p>
-              Type: <?= htmlspecialchars($pet['animal_type']); ?><br>
-              Breed: <?= htmlspecialchars($pet['breed']); ?><br>
-              Age: <?= $pet['age']; ?> years<br>
-              Size: <?= htmlspecialchars($pet['size']); ?>
+              Type: <br>
+              Breed: <br>
+              Age:  years<br>
+              Size: 
             </p>
-            <a href="/petPage.php?id=<?= $pet['id']; ?>">More Info</a>
+            <a href="/petPage.php?id=">More Info</a>
           </div>
-        <?php endwhile; ?>
-      <?php else: ?>
+        
+      
         <p>No pets match your filters.</p>
-      <?php endif; ?>
+      
     </main>
   </div>
 

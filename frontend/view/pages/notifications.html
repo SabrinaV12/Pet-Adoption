@@ -16,21 +16,19 @@
     <div class="notifications-container">
         <h1>My Notifications</h1>
 
-        <?php if (count($notifications) > 0): ?>
-            <?php foreach ($notifications as $notification): ?>
-                <?php
-                $status_class = ($notification['is_read'] == 0) ? 'unread' : 'read';
-                ?>
-                <a href="<?= htmlspecialchars($notification['link']) ?>" class="notification <?= $status_class ?>">
-                    <?= htmlspecialchars($notification['message']) ?>
+        
+            
+                
+                <a href="" class="notification ">
+                    
                     <span class="notification-time">
-                        <?= date('d M Y, H:i', strtotime($notification['created_at'])) ?>
+                        
                     </span>
                 </a>
-            <?php endforeach; ?>
-        <?php else: ?>
+            
+        
             <p>No new notifications.</p>
-        <?php endif; ?>
+        
     </div>
 
     <div id="footer-placeholder"></div>
