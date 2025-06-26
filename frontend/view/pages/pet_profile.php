@@ -39,7 +39,7 @@
 </head>
 
 <body>
-  <?php include __DIR__ . '/../components/header.php'; ?>
+  <div id="header-placeholder"></div>
 
   <div class="banner" style="background-image: url('<?= $pet['image_path'] ?>');"></div>
   <div class="profile-container">
@@ -111,21 +111,21 @@
     <div class="section">
       <h3>Feeding Calendar</h3>
       <?php
-        $year = date('Y');
-        $month = date('m');
-        $monthFeedings = array_filter($feedings, fn($f) => date('Y-m', strtotime($f['feed_date'])) === "$year-$month");
-        $feedingMap = [];
-        foreach ($monthFeedings as $f) {
-          $day = date('j', strtotime($f['feed_date']));
-          $feedingMap[$day] = $f['food_type'];
-        }
-        $firstDay = date('N', strtotime("$year-$month-01"));
-        $daysInMonth = date('t');
+      $year = date('Y');
+      $month = date('m');
+      $monthFeedings = array_filter($feedings, fn($f) => date('Y-m', strtotime($f['feed_date'])) === "$year-$month");
+      $feedingMap = [];
+      foreach ($monthFeedings as $f) {
+        $day = date('j', strtotime($f['feed_date']));
+        $feedingMap[$day] = $f['food_type'];
+      }
+      $firstDay = date('N', strtotime("$year-$month-01"));
+      $daysInMonth = date('t');
       ?>
       <div class="calendar">
         <div class="calendar-header"><?= date('F Y') ?></div>
         <div class="calendar-grid">
-          <?php foreach (['Mo','Tu','We','Th','Fr','Sa','Su'] as $dow): ?>
+          <?php foreach (['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'] as $dow): ?>
             <div class="day-name"><?= $dow ?></div>
           <?php endforeach; ?>
           <?php for ($i = 1; $i < $firstDay; $i++): ?>
@@ -149,19 +149,19 @@
       <h3>Basic First Aid Tips for <?= htmlspecialchars($pet['animal_type']) ?>s</h3>
       <p>
         <?php
-          switch (strtolower($pet['animal_type'])) {
-            case 'dog':
-              echo "If your dog is injured...";
-              break;
-            case 'cat':
-              echo "For minor cuts or wounds...";
-              break;
-            case 'capybara':
-              echo "Capybaras are prone to wounds...";
-              break;
-            default:
-              echo "No specific first aid information available.";
-          }
+        switch (strtolower($pet['animal_type'])) {
+          case 'dog':
+            echo "If your dog is injured...";
+            break;
+          case 'cat':
+            echo "For minor cuts or wounds...";
+            break;
+          case 'capybara':
+            echo "Capybaras are prone to wounds...";
+            break;
+          default:
+            echo "No specific first aid information available.";
+        }
         ?>
       </p>
     </div>
@@ -215,6 +215,10 @@
     <?php endif; ?>
   </div>
 
-  <?php include __DIR__ . '/../components/footer.php'; ?>
+  <div id="footer-placeholder"></div>
+
+  <script src="../../controller/footerController.js"></script>
+  <script src="../../controller/headerController.js"></script>
 </body>
+
 </html>

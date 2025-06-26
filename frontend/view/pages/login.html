@@ -35,23 +35,9 @@
 
   <div id="footer-placeholder"></div>
   <script src="../../controller/loginController.js"></script>
-  <script>
-    fetch('../components/header.html')
-      .then(res => res.text())
-      .then(html => document.getElementById('header-placeholder').innerHTML = html);
+  <script src="../../controller/footerController.js"></script>
+  <script src="../../controller/headerController.js"></script>
 
-    fetch('../components/footer.html')
-      .then(res => res.text())
-      .then(html => document.getElementById('footer-placeholder').innerHTML = html);
-
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('success') === 'registered') {
-      document.getElementById('success-message').style.display = 'block';
-    }
-    if (urlParams.get('error')) {
-      document.getElementById('error-message').style.display = 'block';
-    }
-  </script>
 </body>
 
 </html>

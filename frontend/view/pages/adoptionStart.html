@@ -100,15 +100,9 @@ $conn->close();
 
     <div id="footer-placeholder"></div>
 
-    <script>
-        fetch('../components/header.html')
-            .then(res => res.text())
-            .then(html => document.getElementById('header-placeholder').innerHTML = html);
+    <script src="../../controller/footerController.js"></script>
+    <script src="../../controller/headerController.js"></script>
 
-        fetch('../components/footer.html')
-            .then(res => res.text())
-            .then(html => document.getElementById('footer-placeholder').innerHTML = html);
-    </script>
 </body>
 
 </html>
