@@ -1,22 +1,22 @@
 <?php
 
-require_once __DIR__ . '/../repositories/UserRepository.php';
+require_once __DIR__ . '/../repositories/PetRepository.php';
 require_once __DIR__ . '/../services/check_admin.php';
 
-class AdminUserController
+class AdminPetController
 {
-    private $userRepository;
+    private $petRepository;
     private $checkAdminService;
 
     public function __construct()
     {
-        $this->userRepository = new UserRepository();
+        $this->petRepository = new PetRepository();
         $this->checkAdminService = new JwtService();
     }
 
-    public function showUserListAsApi()
+    public function showPetsListAsApi()
     {
-        $users = $this->userRepository->getAllUsers();
+        $users = $this->petRepository->getAllPets();
 
         header('Content-Type: application/json');
         header("Access-Control-Allow-Origin: http://localhost:5500");
@@ -48,5 +48,5 @@ class AdminUserController
     }
 }
 
-$controller = new AdminUserController();
-$controller->showUserListAsApi();
+$controller = new AdminPetController();
+$controller->showPetsListAsApi();
