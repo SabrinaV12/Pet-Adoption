@@ -11,15 +11,15 @@ class AuthService
         $this->userRepo = new UserRepository();
     }
 
-    public function login($username, $password): ?bool
+    public function login($username, $password): ?User
     {
         $user = $this->userRepo->getUserByUsername($username);
 
         if (password_verify($password, $user->hash_password)) {
             $_SESSION['user_id'] = $user->id;
-            return true;
+            return $user;
         }
 
-        return false;
+        return null;
     }
 }

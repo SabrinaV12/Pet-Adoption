@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../database/db.php';
-require_once __DIR__ . '../models/user.php';
+require_once __DIR__ . '/database/db.php';
+require_once __DIR__ . '/../models/user.php';
 
 class RegisterRepository
 {
@@ -34,8 +34,8 @@ class RegisterRepository
     public function createUser(User $data): void
     {
         $stmt = $this->conn->prepare("INSERT INTO users (
-            first_name, last_name, username, email, phone, description,
-            country, county, telegram_handle, profile_picture, banner_picture, password_hash
+            first_name, last_name, username, email, phone_number, description,
+            country, county, telegram_handle, profile_picture, banner_picture, hash_password
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         $stmt->bind_param(

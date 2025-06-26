@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../repositories/RegisterRepository.php';
-require_once __DIR__ . '../models/user.php';
+require_once __DIR__ . '/../models/user.php';
 class RegisterService
 {
     private $repo;
@@ -12,7 +12,7 @@ class RegisterService
     }
 
     // TODO: schimba $data intrun DTO
-    public function register(array $data, array $files): void
+    public function register(array $data, array $files): User
     {
 
         if ($data['password'] !== $data['confirm_password']) {
@@ -48,6 +48,8 @@ class RegisterService
         );
 
         $this->repo->createUser($userData);
+
+        return $userData;
     }
 
     private function uploadFile(array $file, string $type): string
