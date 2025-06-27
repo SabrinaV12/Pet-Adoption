@@ -10,18 +10,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+require_once __DIR__ . '/../repositories/database/db.php';
 require_once __DIR__ . '/../repositories/SearchRepository.php';
+
 session_start();
 
-$repository = new SearchRepository();
+$conn = Database::getConnection();
+
+$repository = new SearchRepository($conn);
+
 $filters = $_GET;
+
+if (isset($filters['type[]'])) {
+    $filters['type'] = $filters['type[]'];
+    unset($filters['type[]']);
+}
+
 $result = $repository->getFilteredPets($filters);
 
 header('Content-Type: application/json');
-
-$result = $repository->getFilteredPets($_GET);
-
-echo json_encode(array_values($result)); 
-
+echo json_encode(array_values($result));
 exit;

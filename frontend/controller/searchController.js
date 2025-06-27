@@ -30,8 +30,8 @@ async function loadPets(filters = {}) {
             petCard.classList.add('pet-card');
 
             const imageUrl = pet.image_path
-    ? `http://localhost/Pet_Adoption/frontend/view/${pet.image_path}`
-    : `http://localhost/Pet_Adoption/frontend/view/assets/default-pet.jpg`;
+    ? `http://localhost/Pet_Adoption/public/uploads/profile/${pet.image_path}`
+    : `http://localhost/Pet_Adoption/public/uploads/profile/default-pet.jpg`;
 
             petCard.innerHTML = `
                 <img src="${imageUrl}" alt="${pet.name}" style="width: 100%; height: auto;" />
