@@ -1,6 +1,3 @@
-// frontend/public/js/headerController.js
-
-// This "model" part abstracts the API calls
 const AuthAPI = {
     getUser: async () => {
         try {
