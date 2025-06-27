@@ -9,17 +9,19 @@
 </head>
 
 <body>
-    <h1>Welcome, <!-- <?php echo htmlspecialchars($_SESSION['username']); ?> -->!</h1>
+    <h1 id="admin_username">Welcome, !</h1>
     <p>This is the control panel for administrators.</p>
 
     <nav>
         <ul>
             <li><a href="adminAnimals.html">Manage Animals</a></li>
             <li><a href="adminUsers.html">Manage Users</a></li>
-            <li><a href="../../../../backend/services/logout.php">Logout</a></li>
+            <li><a id='logout_link'>Logout</a></li>
         </ul>
     </nav>
-
+    <script src="../../../controller/adminController.js"></script>
 </body>
+
+
 
 </html>
