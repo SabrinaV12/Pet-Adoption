@@ -2,14 +2,17 @@
 
 require_once __DIR__ . '/../repositories/PetRequestRepository.php';
 
-class PetRequestService {
+class PetRequestService
+{
     private $repo;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->repo = new PetRequestRepository();
     }
 
-    public function submitRequest(array $data, int $userId): void {
+    public function submitRequest(array $data, int $userId): void
+    {
         $basicData = [
             'name' => $data['name'],
             'gender' => $data['gender'],
@@ -42,8 +45,8 @@ class PetRequestService {
         }
 
         $admins = $this->repo->getAdmins();
-        $link = "/admin/animal_pages_scripts/admin_pet_requests.php?id=$requestId";
-        $message = "A fost trimisă o nouă cerere de adopție.";
+        $link = "/admin/animal_pages/pet_requests.php?id=$requestId";
+        $message = "A new adoption application has been submitted.";
 
         foreach ($admins as $admin) {
             $this->repo->notifyAdmin($admin['id'], $message, $link);

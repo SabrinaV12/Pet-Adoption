@@ -30,8 +30,6 @@ class RegisterController
                 $this->showRegisterForm();
                 break;
             case 'POST':
-                // Note: Your current implementation uses $_POST and $_FILES, which is typical for
-                // 'multipart/form-data' submissions, not 'application/json'. This is perfectly fine.
                 $this->registerUser($_POST, $_FILES);
                 break;
             default:
@@ -99,7 +97,7 @@ class RegisterController
                 case 'file_upload_error':
                     $statusCode = 500;
                     break;
-                }
+            }
 
             http_response_code($statusCode);
             echo json_encode(['message' => $errorMessage]);
