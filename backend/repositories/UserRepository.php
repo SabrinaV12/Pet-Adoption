@@ -188,4 +188,79 @@ class UserRepository
         $stmt->close();
         return $users;
     }
+
+    public function updateUser(User $user): bool
+    {
+        $sql = "UPDATE users SET 
+                    first_name = ?, 
+                    last_name = ?, 
+                    username = ?, 
+                    email = ?, 
+                    phone_number = ?, 
+                    role = ?, 
+                    description = ?, 
+                    country = ?, 
+                    county = ?, 
+                    telegram_handle = ?,
+                    profile_picture = ?,
+                    banner_picture = ?";
+
+        $types = "ssssssssssss";
+
+        $params = [
+            $user->getFirstName(),
+            $user->getLastName(),
+            $user->getUsername(),
+            $user->getEmail(),
+            $user->getPhoneNumber(),
+            $user->getRole(),
+            $user->getDescription(),
+            $user->getCountry(),
+            $user->getCounty(),
+            $user->getTelegramHandle(),
+            $user->getProfilePicture(),
+            $user->getBannerPicture()
+        ];
+
+        if (!empty($user->getHashPassword())) {
+            $sql .= ", hash_password = ?";
+            $types .= "s";
+            $params[] = $user->getHashPassword();
+        }
+
+        $sql .= " WHERE id = ?";
+        $types .= "i";
+        $params[] = $user->getId();
+
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            error_log('Prepare failed: ' . $this->conn->error);
+            return false;
+        }
+
+        $stmt->bind_param($types, ...$params);
+
+        $success = $stmt->execute();
+        $stmt->close();
+
+        return $success;
+    }
+
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM users WHERE id = ?";
+
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            error_log('Prepare failed: ' . $this->conn->error);
+            return false;
+        }
+
+        $stmt->bind_param("i", $id);
+
+        $success = $stmt->execute();
+        $stmt->close();
+
+        return $success;
+    }
 }
