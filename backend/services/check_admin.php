@@ -49,7 +49,6 @@ class JwtService
 
     public function getBearerToken(): ?string
     {
-
         $jwt = $_COOKIE['jwt'];
         return $jwt ?? null;
     }
