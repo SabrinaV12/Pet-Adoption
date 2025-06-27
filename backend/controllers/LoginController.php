@@ -14,7 +14,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
-        readfile(__DIR__ . '/../../frontend/view/login.html');
+        readfile(__DIR__ . '/../../frontend/view/pages/login.html');
         break;
 
     case 'POST':

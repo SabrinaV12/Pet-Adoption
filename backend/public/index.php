@@ -1,13 +1,32 @@
 <?php
-session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("Access-Control-Allow-Origin: http://localhost:5500");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+    header("Access-Control-Allow-Credentials: true");
+    http_response_code(200);
+    exit();
+}
+
+header("Access-Control-Allow-Origin: http://localhost:5500");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+header("Access-Control-Allow-Credentials: true");
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 require_once __DIR__ . '/../controllers/HomeController.php';
 require_once __DIR__ . '/../controllers/ConfirmationController.php';
 require_once __DIR__ . '/../controllers/LoginController.php';
+require_once __DIR__ . '/../controllers/NotificationController.php';
+require_once __DIR__ . '/../controllers/PetController.php';
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode("/Pet_Adoption/backend/public/index.php", $uri, 2)[1];
-echo $uri;
 
 switch ($uri) {
     case '/':
@@ -29,7 +48,7 @@ switch ($uri) {
     case '/notifications':
         $controller = new NotificationController();
         $controller->showUserNotifications();
-        break;
+        exit();
 
     case '/pet':
         $petId = isset($_GET['id']) ? intval($_GET['id']) : 0;

@@ -1,7 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../database/db.php';
-require_once __DIR__ . '/../database/check_auth.php';
+require_once __DIR__ . '/../repositories/database/db.php';
 
 class PetController {
     public function showPetProfile($petId) {
