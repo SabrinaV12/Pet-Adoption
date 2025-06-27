@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search</title>
-  <link rel="stylesheet" href="/assets/styles/petPage.css" />
-  <link rel="stylesheet" href="/assets/styles/header.css" />
-  <link rel="stylesheet" href="/assets/styles/footer.css" />
-  <link rel="stylesheet" href="/assets/styles/searchMenu.css">
+  <link rel="stylesheet" href="../styles/petPage.css" />
+  <link rel="stylesheet" href="../styles/header.css" />
+  <link rel="stylesheet" href="../styles/footer.css" />
+  <link rel="stylesheet" href="../styles/searchMenu.css">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
   <div class="container">
     <aside class="sidebar">
       <h3>Filters</h3>
-      <form method="GET" action="">
+      <form method="GET" action="" class="search-form">
         <legend>Choose a pet:</legend>
         <label><input type="checkbox" name="type[]" value="Dog"> Dog</label><br>
         <label><input type="checkbox" name="type[]" value="Cat"> Cat</label><br>
@@ -100,23 +100,7 @@
       </form>
     </aside>
 
-    <main class="pet-list">
-      
-        
-          <div class="pet-card">
-            <img src="" alt="">
-            <h4></h4>
-            <p>
-              Type: <br>
-              Breed: <br>
-              Age:  years<br>
-              Size: 
-            </p>
-            <a href="/petPage.php?id=">More Info</a>
-          </div>
-        
-      
-        <p>No pets match your filters.</p>
+    <main class="pet-list" id="results">
       
     </main>
   </div>
@@ -125,6 +109,8 @@
 
   <script src="../../controller/footerController.js"></script>
   <script src="../../controller/headerController.js"></script>
+  <script src="../../controller/searchController.js"></script>
+
 </body>
 
 </html>

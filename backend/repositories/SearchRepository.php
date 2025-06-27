@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../database/db.php';
+require_once __DIR__ . '/database/db.php';
 
 class SearchRepository {
     private $conn;
@@ -21,69 +21,75 @@ class SearchRepository {
     }
 
     public function getFilteredPets(array $filters) {
-        $conditions = [];
-        $params = [];
-        $types = "";
+    $conditions = [];
+    $params = [];
+    $types = "";
 
-        if (!empty($filters['type'])) {
-            $placeholders = implode(',', array_fill(0, count($filters['type']), '?'));
-            $conditions[] = "animal_type IN ($placeholders)";
-            $params = array_merge($params, $filters['type']);
-            $types .= str_repeat('s', count($filters['type']));
-        }
-
-        if (!empty($filters['breed'])) {
-            $conditions[] = "breed = ?";
-            $params[] = $filters['breed'];
-            $types .= 's';
-        }
-
-        if (!empty($filters['color'])) {
-            $conditions[] = "color = ?";
-            $params[] = $filters['color'];
-            $types .= 's';
-        }
-
-        if (!empty($filters['gender'])) {
-            $conditions[] = "gender = ?";
-            $params[] = $filters['gender'];
-            $types .= 's';
-        }
-
-        if (!empty($filters['size'])) {
-            $conditions[] = "size = ?";
-            $params[] = $filters['size'];
-            $types .= 's';
-        }
-
-        if (!empty($filters['age'])) {
-            $conditions[] = "age <= ?";
-            $params[] = $filters['age'];
-            $types .= 'i';
-        }
-
-        if (!empty($filters['country'])) {
-            $conditions[] = "users.country = ?";
-            $params[] = $filters['country'];
-            $types .= 's';
-        }
-
-        if (!empty($filters['county'])) {
-            $conditions[] = "users.county = ?";
-            $params[] = $filters['county'];
-            $types .= 's';
-        }
-
-        $sql = "SELECT pets.* FROM pets JOIN users ON pets.user_id = users.id";
-        if (!empty($conditions)) {
-            $sql .= " WHERE " . implode(" AND ", $conditions);
-        }
-
-        $stmt = $this->conn->prepare($sql);
-        if (!empty($params)) {
-            $stmt->bind_param($types, ...$params);
-        }
-        $stmt->execute();
-        return $stmt->get_result();
+    if (!empty($filters['type'])) {
+        $placeholders = implode(',', array_fill(0, count($filters['type']), '?'));
+        $conditions[] = "animal_type IN ($placeholders)";
+        $params = array_merge($params, $filters['type']);
+        $types .= str_repeat('s', count($filters['type']));
     }
+
+    if (!empty($filters['breed'])) {
+        $conditions[] = "breed = ?";
+        $params[] = $filters['breed'];
+        $types .= 's';
+    }
+
+    if (!empty($filters['color'])) {
+        $conditions[] = "color = ?";
+        $params[] = $filters['color'];
+        $types .= 's';
+    }
+
+    if (!empty($filters['gender'])) {
+        $conditions[] = "gender = ?";
+        $params[] = $filters['gender'];
+        $types .= 's';
+    }
+
+    if (!empty($filters['size'])) {
+        $conditions[] = "size = ?";
+        $params[] = $filters['size'];
+        $types .= 's';
+    }
+
+    if (!empty($filters['age'])) {
+        $conditions[] = "age <= ?";
+        $params[] = $filters['age'];
+        $types .= 'i';
+    }
+
+    if (!empty($filters['country'])) {
+        $conditions[] = "users.country = ?";
+        $params[] = $filters['country'];
+        $types .= 's';
+    }
+
+    if (!empty($filters['county'])) {
+        $conditions[] = "users.county = ?";
+        $params[] = $filters['county'];
+        $types .= 's';
+    }
+
+    $sql = "SELECT pets.* FROM pets JOIN users ON pets.user_id = users.id";
+    if (!empty($conditions)) {
+        $sql .= " WHERE " . implode(" AND ", $conditions);
+    }
+
+    $stmt = $this->conn->prepare($sql);
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $pets = $result->fetch_all(MYSQLI_ASSOC);
+
+    return $pets;
+}
+
 }
