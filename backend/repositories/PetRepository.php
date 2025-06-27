@@ -110,4 +110,21 @@ class PetRepository
         $stmt->close();
         return $pets;
     }
+
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM pets WHERE id = ?";
+
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            error_log('Prepare failed: ' . $this->conn->error);
+            return false;
+        }
+
+        $stmt->bind_param("i", $id);
+        $success = $stmt->execute();
+        $stmt->close();
+
+        return $success;
+    }
 }

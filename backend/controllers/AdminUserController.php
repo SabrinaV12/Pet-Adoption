@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/../services/AdminUserService.php';
 require_once __DIR__ . '/../services/check_admin.php';
-require_once __DIR__ . '/../repositories/UserRepository.php';
 
 class AdminUserController
 {
