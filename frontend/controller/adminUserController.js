@@ -41,7 +41,7 @@ function displayStatusMessage() {
 
 async function fetchAndPopulateUsers() {
     const tbody = document.getElementById('user-table-body');
-    const controllerUrl = 'http://localhost/Pet_Adoption/backend/controllers/AdminUserController.php';
+    const controllerUrl = 'http://localhost/Pet_Adoption/backend/api/index.php/admin/user/';
 
     try {
         const response = await fetch(controllerUrl, { credentials: 'include' });
@@ -66,7 +66,7 @@ async function deleteUser(userId) {
         return;
     }
 
-    const controllerUrl = 'http://localhost/Pet_Adoption/backend/controllers/AdminUserController.php';
+    const controllerUrl = 'http://localhost/Pet_Adoption/backend/api/index.php/admin/user/';
 
     try {
         const response = await fetch(controllerUrl, {

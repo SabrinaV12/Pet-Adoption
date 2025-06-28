@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../services/AdminPetService.php';
-require_once __DIR__ . '/../services/check_admin.php';
+require_once __DIR__ . '/../services/JwtService.php';
 
 class AdminPetController
 {
@@ -30,7 +30,7 @@ class AdminPetController
         }
 
         try {
-            $jwt_token = $this->checkAdminService->getBearerToken();
+            $jwt_token = $this->checkAdminService->getToken();
             $this->checkAdminService->verifyAdminToken($jwt_token);
         } catch (Exception $e) {
             http_response_code(401);

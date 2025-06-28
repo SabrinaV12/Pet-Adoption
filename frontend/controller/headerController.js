@@ -1,7 +1,7 @@
 const AuthAPI = {
     getUser: async () => {
         try {
-            const response = await fetch('http://localhost/Pet_Adoption/backend/controllers/AuthController.php', { // Point to your backend /api/user/me
+            const response = await fetch('http://localhost/Pet_Adoption/backend/api/index.php/auth/me', { // Point to your backend /api/user/me
                 method: 'GET',
                 credentials: 'include'
             });
@@ -24,7 +24,7 @@ const AuthAPI = {
 
     logout: async () => {
         try {
-            const response = await fetch('http://localhost/Pet_Adoption/backend/controllers/LogoutController.php', { // Point to your backend /api/logout
+            const response = await fetch('http://localhost/Pet_Adoption/backend/api/index.php/auth/logout', { // Point to your backend /api/logout
                 method: 'POST',
                 credentials: 'include'
             });

@@ -21,34 +21,10 @@ class RegisterController
         $this->userService = new UserRepository();
     }
 
-    public function handleRequest()
+    public function registerUser($postData, $fileData)
     {
-        $method = $_SERVER['REQUEST_METHOD'];
-
-        switch ($method) {
-            case 'GET':
-                $this->showRegisterForm();
-                break;
-            case 'POST':
-                $this->registerUser($_POST, $_FILES);
-                break;
-            default:
-                header("Content-Type: application/json");
-                http_response_code(405);
-                echo json_encode(['message' => 'Method Not Allowed']);
-                break;
-        }
-    }
-
-    private function showRegisterForm()
-    {
-        readfile('../../frontend/view/pages/register.html');
-    }
-
-    private function registerUser($postData, $fileData)
-    {
-        header("Content-Type: application/json");
-
+        // echo $postData;
+        // echo $fileData;
         try {
             $newUser = $this->registerService->register($postData, $fileData);
             $newUser1 = $this->userService->getUserByUsername($newUser->username);
@@ -104,6 +80,3 @@ class RegisterController
         }
     }
 }
-
-$controller = new RegisterController();
-$controller->handleRequest();

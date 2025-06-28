@@ -127,4 +127,74 @@ class PetRepository
 
         return $success;
     }
+
+    public function findPetsByCriteria(array $filters): array
+    {
+        $conditions = [];
+        $params = [];
+        $types = "";
+
+        // Default condition for the RSS feed
+        $conditions[] = "adopted = 0";
+
+        if (!empty($filters['type'])) {
+            $placeholders = implode(',', array_fill(0, count($filters['type']), '?'));
+            $conditions[] = "animal_type IN ($placeholders)";
+            $params = array_merge($params, $filters['type']);
+            $types .= str_repeat('s', count($filters['type']));
+        }
+
+        if (!empty($filters['breed'])) {
+            $conditions[] = "breed = ?";
+            $params[] = $filters['breed'];
+            $types .= 's';
+        }
+
+        $sql = "SELECT * FROM pets WHERE " . implode(" AND ", $conditions);
+        $sql .= " ORDER BY created_at DESC LIMIT 25";
+
+        $stmt = $this->conn->prepare($sql);
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pets = [];
+
+        if ($result->num_rows > 0) {
+            while ($petData = $result->fetch_assoc()) {
+                $pets[] = new Pet(
+                    $petData['id'],
+                    $petData['name'],
+                    $petData['breed'],
+                    $petData['gender'],
+                    $petData['age'],
+                    $petData['color'],
+                    $petData['weight'],
+                    $petData['height'],
+                    $petData['animal_type'],
+                    $petData['image_path'],
+                    $petData['size'],
+                    $petData['vaccinated'],
+                    $petData['house_trained'],
+                    $petData['neutered'],
+                    $petData['microchipped'],
+                    $petData['good_with_children'],
+                    $petData['shots_up_to_date'],
+                    $petData['restrictions'],
+                    $petData['recommended'],
+                    $petData['adopted'],
+                    $petData['adoption_date'],
+                    $petData['description'],
+                    $petData['user_id'],
+                    $petData['created_at']
+                );
+            }
+        }
+
+        $stmt->close();
+        return $pets;
+    }
 }

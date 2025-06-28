@@ -8,7 +8,7 @@ loginForm.addEventListener('submit', async (event) => {
     const formData = new FormData(loginForm);
 
     try {
-        const response = await fetch('http://localhost/Pet_Adoption/backend/controllers/LoginController.php', {
+        const response = await fetch('http://localhost/Pet_Adoption/backend/api/index.php/auth/login', {
             method: 'POST',
             body: formData,
             credentials: 'include'

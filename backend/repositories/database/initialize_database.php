@@ -7,7 +7,7 @@ $database = 'pet_adopt';
 $conn = new mysqli($host, $user, $password);
 
 if ($conn->connect_error) {
-    die("Conexiune eșuată: " . $conn->connect_error);
+    die("Conexiune esuata: " . $conn->connect_error);
 }
 
 $sql = "CREATE DATABASE IF NOT EXISTS $database";
@@ -138,7 +138,7 @@ $queries = [
         FOREIGN KEY (pet_id) REFERENCES pets(id)
     )",
 
-     "CREATE TABLE IF NOT EXISTS notifications (
+    "CREATE TABLE IF NOT EXISTS notifications (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT NOT NULL,
         message VARCHAR(255) NOT NULL,
@@ -148,7 +148,7 @@ $queries = [
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )",
 
-     "CREATE TABLE IF NOT EXISTS pet_requests (
+    "CREATE TABLE IF NOT EXISTS pet_requests (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
         gender ENUM('Male', 'Female') NOT NULL,
@@ -201,4 +201,3 @@ foreach ($queries as $query) {
 echo "Tabelele au fost create cu succes.";
 
 $conn->close();
-?>

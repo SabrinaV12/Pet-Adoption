@@ -1,34 +1,19 @@
 <?php
-class LoginController
-{
-    public function showLoginForm() {}
-}
 
 require_once __DIR__ . '/../../vendor/autoload.php';
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../"); //TO MOVE ON INDEX.PHP!!!
 $dotenv->load();
 
 use Firebase\JWT\JWT;
 
-$method = $_SERVER['REQUEST_METHOD'];
+require_once __DIR__ . "/../services/AuthService.php";
 
-switch ($method) {
-    case 'GET':
-        readfile(__DIR__ . '/../../frontend/view/pages/login.html');
-        break;
-
-    case 'POST':
+class LoginController
+{
+    public function login()
+    {
         try {
-            require_once __DIR__ . "/../services/AuthService.php";
-            header("Access-Control-Allow-Origin: http://localhost:5500");
-            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-            header("Access-Control-Allow-Headers: Content-Type, Authorization");
-            header("Access-Control-Allow-Credentials: true");
-
-            if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-                http_response_code(204); // No Content
-                exit();
-            }
             $username = $_POST['username'] ?? null;
             $password = $_POST['password'] ?? null;
 
@@ -91,10 +76,5 @@ switch ($method) {
             http_response_code(500);
             echo json_encode(['message' => 'An error occurred during the login process.', 'error' => $e->getMessage()]);
         }
-        break;
-
-    default:
-        http_response_code(405);
-        echo json_encode(['message' => 'Method Not Allowed']);
-        break;
+    }
 }

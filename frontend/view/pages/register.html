@@ -14,12 +14,10 @@
   <div id="header-placeholder"></div>
 
   <section class="register">
-    <form action="http://localhost/Pet_Adoption/backend/controllers/RegisterController.php" method="POST" enctype="multipart/form-data">
-      
-        <p class="error-message">
-          
-        </p>
-      
+    <form id="register_form">
+
+      <p class="error-message" id="error-message" style="display: none;"></p>
+      <p class="success-message" id="success-message" style="display: none;"></p>
 
       <p class="text"> First Name </p>
       <input type="text" name="first_name" placeholder="Enter your first name" required />
@@ -70,6 +68,7 @@
 
   <div id="footer-placeholder"></div>
 
+  <script src="../../controller/registerController.js"></script>
   <script src="../../controller/footerController.js"></script>
   <script src="../../controller/headerController.js"></script>
 </body>

@@ -35,7 +35,7 @@ async function initializeUserDetailsPage() {
     }
 
     try {
-        const response = await fetch(`http://localhost/Pet_Adoption/backend/controllers/AdminUserDetailsController.php?id=${userId}`, {
+        const response = await fetch(`http://localhost/Pet_Adoption/backend/api/index.php/admin/user/details?id=${userId}`, {
             credentials: 'include' //for sending auth cookies/tokens
         });
 

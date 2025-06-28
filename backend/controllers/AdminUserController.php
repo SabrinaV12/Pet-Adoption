@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../services/AdminUserService.php';
-require_once __DIR__ . '/../services/check_admin.php';
+require_once __DIR__ . '/../services/JwtService.php';
 
 class AdminUserController
 {
@@ -14,45 +14,7 @@ class AdminUserController
         $this->checkAdminService = new JwtService();
     }
 
-    public function handleRequest()
-    {
-        header('Content-Type: application/json');
-        header("Access-Control-Allow-Origin: http://localhost:5500");
-        header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
-        header("Access-Control-Allow-Headers: Content-Type, Authorization");
-        header("Access-Control-Allow-Credentials: true");
-
-        $method = $_SERVER['REQUEST_METHOD'];
-
-        if ($method === 'OPTIONS') {
-            http_response_code(204); // No Content
-            exit();
-        }
-
-        try {
-            $jwt_token = $this->checkAdminService->getBearerToken();
-            $this->checkAdminService->verifyAdminToken($jwt_token);
-        } catch (Exception $e) {
-            http_response_code(401); // Unauthorized
-            echo json_encode(['success' => false, 'message' => 'Authentication failed: ' . $e->getMessage()]);
-            exit();
-        }
-
-        switch ($method) {
-            case 'GET':
-                $this->handleGet();
-                break;
-            case 'DELETE':
-                $this->handleDelete();
-                break;
-            default:
-                http_response_code(405);
-                echo json_encode(['success' => false, 'message' => 'Method not allowed.']);
-                break;
-        }
-    }
-
-    private function handleGet()
+    public function handleGet()
     {
         try {
             $users = $this->userService->getAllUsers();
@@ -64,7 +26,7 @@ class AdminUserController
         }
     }
 
-    private function handleDelete()
+    public function handleDelete()
     {
         $data = json_decode(file_get_contents('php://input'));
 
@@ -94,6 +56,3 @@ class AdminUserController
         }
     }
 }
-
-$controller = new AdminUserController();
-$controller->handleRequest();
