@@ -19,8 +19,6 @@ require_once __DIR__ . '/../repositories/SearchRepository.php';
 
 session_start();
 
-$conn = Database::getConnection();
-
 $repository = new SearchRepository($conn);
 
 $filters = $_GET;
