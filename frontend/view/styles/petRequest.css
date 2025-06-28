@@ -36,6 +36,7 @@ label {
 input[type="text"],
 input[type="number"],
 input[type="date"],
+input[type="file"],
 select,
 textarea {
   padding: 10px;
@@ -78,12 +79,58 @@ h3 {
 #vaccinations {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 }
 
-#feeding-calendar input,
-#vaccinations input {
-  width: 100%;
+.feeding-entry,
+.vaccination-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.feeding-entry input,
+.vaccination-entry input {
+  flex: 1;
+  min-width: 180px;
+}
+
+button#add-feeding,
+button#add-vaccination {
+  align-self: flex-start;
+  background-color: #9990DA;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(153, 144, 218, 0.4);
+}
+
+button#add-feeding:hover,
+button#add-vaccination:hover {
+  background-color: #7c71c2;
+  transform: translateY(-1px);
+}
+
+.remove-entry {
+  background-color: #b67fd9;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(182, 127, 217, 0.3);
+}
+
+.remove-entry:hover {
+  background-color: #a45ccf;
+  transform: translateY(-1px);
 }
 
 button[type="submit"] {
@@ -108,5 +155,15 @@ button[type="submit"]:hover {
 
   fieldset {
     padding: 15px;
+  }
+
+  .feeding-entry,
+  .vaccination-entry {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .remove-entry {
+    width: 100%;
   }
 }

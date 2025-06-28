@@ -1,0 +1,152 @@
+document.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(window.location.search);
+  const petId = params.get("pet_id");
+
+  if (!petId) {
+    alert("No pet ID provided.");
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost/Pet_Adoption/backend/services/get_pet_profile.php?pet_id=${petId}`);
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.error || "Failed to load pet data");
+
+    const container = document.querySelector(".profile-container");
+    if (!container) return;
+
+    document.title = `${data.pet.name}'s Profile`;
+
+    const header = container.querySelector("h2");
+    if (header) header.textContent = data.pet.name;
+
+    const location = container.querySelector(".location");
+    if (location) location.textContent = `${data.location.country ?? ''} · ${data.location.county ?? ''}`;
+
+    const banner = document.querySelector(".banner");
+    const profileImg = container.querySelector(".profile-pic img");
+
+    if (data.pet.image_path) {
+      if (banner) banner.style.backgroundImage = `url('${data.pet.image_path}')`;
+      if (profileImg) profileImg.src = data.pet.image_path;
+    }
+
+    const adoptedBlocks = container.querySelectorAll(".adopted");
+    if (data.pet.adopted) {
+      if (adoptedBlocks[0]) adoptedBlocks[0].textContent = `Adopted on ${data.pet.adoption_date}`;
+      if (adoptedBlocks[1]) adoptedBlocks[1].style.display = "none";
+    } else {
+      if (adoptedBlocks[0]) adoptedBlocks[0].style.display = "none";
+      const adoptLink = adoptedBlocks[1]?.querySelector("a");
+      if (adoptLink) adoptLink.href = `/adoptionStart.php?pet_id=${petId}`;
+    }
+
+    const infoCards = container.querySelector(".info-cards");
+    if (infoCards) {
+      infoCards.innerHTML = `
+        <div>Gender: ${data.pet.gender}</div>
+        <div>Breed: ${data.pet.breed}</div>
+        <div>Age: ${data.pet.age} years</div>
+        <div>Color: ${data.pet.color}</div>
+        <div>Weight: ${data.pet.weight} kg</div>
+        <div>Animal: ${data.pet.animal_type}</div>
+      `;
+    }
+
+    const checksBox = container.querySelector(".checks-box");
+    if (checksBox) {
+      checksBox.innerHTML = `
+        <div>Can live with children: ${data.pet.good_with_children ? "Yes" : "No"}</div>
+        <div>Vaccinated: ${data.pet.vaccinated ? "Yes" : "No"}</div>
+        <div>House-Trained: ${data.pet.house_trained ? "Yes" : "No"}</div>
+        <div>Neutered: ${data.pet.neutered ? "Yes" : "No"}</div>
+        <div>Shots up to date: ${data.pet.shots_up_to_date ? "Yes" : "No"}</div>
+        <div>Microchipped: ${data.pet.microchipped ? "Yes" : "No"}</div>
+      `;
+    }
+
+    const storyBox = container.querySelector(".description-box");
+    if (storyBox) {
+      const storyHeading = storyBox.querySelector("h3");
+      const storyText = storyBox.querySelector("p");
+
+      if (storyHeading) storyHeading.textContent = `${data.pet.name}'s Story`;
+      if (storyText) storyText.textContent = data.pet.description;
+    }
+
+    const sectionEls = container.querySelectorAll(".section");
+    if (sectionEls.length >= 4) {
+      const restrictionsEl = sectionEls[0].querySelector("p");
+      const recommendedEl = sectionEls[1].querySelector("p");
+      const vaccineSection = sectionEls[2];
+      const firstAidEl = sectionEls[3].querySelector("p");
+
+      if (restrictionsEl) restrictionsEl.textContent = data.pet.restrictions;
+      if (recommendedEl) recommendedEl.textContent = data.pet.recommended;
+      if (firstAidEl) firstAidEl.textContent = data.pet.first_aid || "Always consult your vet for emergency advice.";
+
+      const vaccineTable = vaccineSection.querySelector("table");
+      if (vaccineTable && Array.isArray(data.vaccines)) {
+        data.vaccines.forEach(vac => {
+          const row = document.createElement("tr");
+          row.innerHTML = `<td>${vac.age_in_weeks}</td><td>${vac.vaccine_name}</td>`;
+          vaccineTable.appendChild(row);
+        });
+      }
+    }
+
+    const calendarHeader = container.querySelector(".calendar-header");
+    const calendarGrid = container.querySelector(".calendar-grid");
+    if (calendarHeader) calendarHeader.textContent = "Feeding Days";
+    if (calendarGrid && Array.isArray(data.feedings)) {
+      calendarGrid.innerHTML = "";
+      data.feedings.forEach(feed => {
+        const day = document.createElement("div");
+        day.className = "day feeding";
+        day.innerHTML = `<strong>${feed.feed_date}</strong><div class="tooltip">${feed.food_type}</div>`;
+        calendarGrid.appendChild(day);
+      });
+    }
+
+    const gallery = container.querySelector(".media-gallery");
+    const emptyMsg = container.querySelector(".media-gallery + p");
+    if (gallery && Array.isArray(data.media)) {
+      gallery.innerHTML = "";
+      if (data.media.length) {
+        data.media.forEach(file => {
+          const item = document.createElement("div");
+          item.className = "media-item";
+          const ext = file.file_type.split("/")[0];
+
+          if (ext === "image") {
+            item.innerHTML = `<img src="${file.file_path}" alt="Pet Photo" style="max-width: 100%; border-radius: 10px;" />`;
+          } else if (ext === "video") {
+            item.innerHTML = `
+              <video controls style="max-width: 100%; border-radius: 10px;">
+                <source src="${file.file_path}" type="${file.file_type}">
+                Your browser does not support the video tag.
+              </video>`;
+          } else if (ext === "audio") {
+            item.innerHTML = `
+              <audio controls style="width: 100%;">
+                <source src="${file.file_path}" type="${file.file_type}">
+                Your browser does not support the audio tag.
+              </audio>`;
+          }
+
+          gallery.appendChild(item);
+        });
+
+        if (emptyMsg) emptyMsg.style.display = "none";
+      }
+    }
+
+    const uploadInput = container.querySelector('input[name="pet_id"]');
+    if (uploadInput) uploadInput.value = petId;
+
+  } catch (err) {
+    console.error("Error loading pet data:", err);
+    alert("Failed to load pet profile. Please try again.");
+  }
+});
