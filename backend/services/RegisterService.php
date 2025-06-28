@@ -53,19 +53,34 @@ class RegisterService
     }
 
     private function uploadFile(array $file, string $type): string
-    {
-        $uploadDir = __DIR__ . '/../../public/uploads/' . $type . '/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        $fileName = uniqid() . '_' . basename($file['name']);
-        $filePath = $uploadDir . $fileName;
-
-        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
-            throw new Exception('file_upload_error');
-        }
-
-        return '/uploads/' . $type . '/' . $fileName;
+{
+    if (!isset($file['tmp_name']) || $file['error'] !== UPLOAD_ERR_OK) {
+        throw new Exception("file_upload_error: No valid file uploaded.");
     }
+
+    $originalName = $file['name'];
+
+    $sanitizedOriginal = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', basename($originalName));
+
+    $uniqueName = uniqid() . '_' . $sanitizedOriginal;
+
+    $uploadDir = __DIR__ . '/../../public/uploads/' . $type . '/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    $filePath = $uploadDir . $uniqueName;
+
+    if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+        throw new Exception('file_upload_error: Unable to move file.');
+    }
+
+    return $uniqueName;
+
+}
+
+
+
+
+
 }

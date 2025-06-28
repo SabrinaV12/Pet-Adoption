@@ -2,27 +2,25 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>'s Profile</title>
-  <link rel="stylesheet" href="/assets/styles/petPage.css" />
-  <link rel="stylesheet" href="/assets/styles/header.css" />
-  <link rel="stylesheet" href="/assets/styles/footer.css" />
-  <link rel="stylesheet" href="/assets/styles/userProfile.css">
+  <link rel="stylesheet" href="../styles/petPage.css" />
+  <link rel="stylesheet" href="../styles/header.css" />
+  <link rel="stylesheet" href="../styles/footer.css" />
+  <link rel="stylesheet" href="../styles/userProfile.css" />
 </head>
 
 <body>
   <div id="header-placeholder"></div>
 
   <header class="profile-header">
-    <img class="banner" src="/assets/" alt="Banner Image" />
+    <img class="banner" src="" alt="Banner Image" />
     <div class="profile-image-container">
-      <img class="profile-image" src="/assets/" alt="Profile Picture" />
+      <img class="profile-image" src="" alt="Profile Picture" />
     </div>
     <h1 class="username"></h1>
-    <p class="location">
-       · 
-    </p>
+    <p class="location"> · </p>
   </header>
 
   <main class="profile-main">
@@ -42,23 +40,7 @@
 
     <section class="pet-listings">
       <h2>Pets that I have up for adoption:</h2>
-      <div class="pets-grid">
-        
-          
-            <div class="pet-card">
-              <img src="" alt="" />
-              <p><strong></strong></p>
-              <p>
-                 ·  · <br>
-                 years · 
-              </p>
-              <a href="/petPage.php?id=" class="more-info-button">More Info</a>
-            </div>
-          
-        
-          <p>No pets listed yet.</p>
-        
-      </div>
+      <div class="pets-grid"></div>
     </section>
   </main>
 
@@ -66,6 +48,79 @@
 
   <script src="../../controller/footerController.js"></script>
   <script src="../../controller/headerController.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const response = await fetch('/Pet_Adoption/backend/services/get_logged_user.php', {
+          credentials: 'include'
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Server error:", errorText);
+          throw new Error('Failed to fetch user');
+        }
+
+        const data = await response.json();
+        const user = data.user;
+        const pets = data.pets;
+
+        console.log('User:', user);
+        console.log('Pets:', pets);
+
+        document.title = `${user.first_name} ${user.last_name}'s Profile`;
+        document.querySelector('.username').textContent = user.username;
+        document.querySelector('.location').textContent = `${user.country} · ${user.county}`;
+        document.querySelector('.bio p').textContent = user.description || "No bio yet.";
+
+        document.querySelector('.contact a[href^="mailto:"]').textContent = user.email;
+        document.querySelector('.contact a[href^="mailto:"]').href = `mailto:${user.email}`;
+        document.querySelector('.contact li:nth-child(2)').textContent = `Phone: ${user.phone_number}`;
+        document.querySelector('.contact li:nth-child(3)').textContent = `Telegram: @${user.telegram_handle}`;
+
+        const bannerPath = user.banner_picture && user.banner_picture.endsWith('.jpg')
+  ? user.banner_picture
+  : '/Pet_Adoption/public/uploads/banner/default.jpg';
+
+const profilePath = user.profile_picture && user.profile_picture.endsWith('.jpg')
+  ? user.profile_picture
+  : '/Pet_Adoption/public/uploads/profile/default.jpg';
+
+document.querySelector('.profile-image').src = `/Pet_Adoption/public/uploads/profile/${user.profile_picture || 'default.jpg'}`;
+document.querySelector('.banner').src = `/Pet_Adoption/public/uploads/banner/${user.banner_picture || 'default.jpg'}`;
+
+
+
+
+
+        const petsGrid = document.querySelector('.pets-grid');
+        petsGrid.innerHTML = '';
+
+        if (!pets.length) {
+          petsGrid.innerHTML = '<p>No pets listed yet.</p>';
+        } else {
+          pets.forEach(pet => {
+            const petImage = pet.image_path ? `/Pet_Adoption${pet.image_path.replace('/public', '')}` : '/Pet_Adoption/public/uploads/profile/default-pet.jpg';
+
+            const card = document.createElement('div');
+            card.className = 'pet-card';
+            card.innerHTML = `
+              <img src="${petImage}" alt="${pet.name}" />
+              <p><strong>${pet.name}</strong></p>
+              <p>${pet.animal_type} · ${pet.breed} <br>${pet.age} years · ${pet.size}</p>
+              <a href="/petPage.php?id=${pet.id}" class="more-info-button">More Info</a>
+            `;
+            petsGrid.appendChild(card);
+          });
+        }
+
+      } catch (err) {
+        console.error(err);
+        alert("Failed to load user profile.");
+      }
+    });
+  </script>
 </body>
 
 </html>

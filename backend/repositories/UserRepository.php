@@ -125,31 +125,24 @@ class UserRepository
         );
     }
 
-    public function getPetsByUser($userId): array
-    {
-        $pets = [];
-        $stmt = $this->conn->prepare("SELECT * FROM pets WHERE user_id = ?");
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $stmt->store_result();
+ public function getPetsByUser($userId): array
+{
+    $stmt = $this->conn->prepare("SELECT id, name, age, animal_type, breed, size, image_path FROM pets WHERE user_id = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        if ($stmt->num_rows > 0) {
-            //De pus comenzile de luat animalele dupa stapan
-
-            while ($stmt->fetch()) {
-                //De a face un array cu toate detaliile despre animale
-                $pets[] = [
-                    // 'id' => $pet_id,
-                    // 'name' => $pet_name,
-                    // 'age' => $pet_age,
-                    // ...etc
-                ];
-            }
-        }
-
-        $stmt->close();
-        return $pets;
+    $pets = [];
+    while ($row = $result->fetch_assoc()) {
+        $pets[] = $row;
     }
+
+    $stmt->close();
+    return $pets;
+}
+
+
+
 
     public function getAllUsers(): array
     {

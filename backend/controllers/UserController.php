@@ -12,7 +12,7 @@ if (!$userId) {
 $repo = new UserRepository();
 
 $user = $repo->getUserById($userId);
-// $pets = $repo->getPetsByUser($userId);
+$pets = $repo->getPetsByUser($userId);
 
 if (!$user) {
     die("User not found.");
