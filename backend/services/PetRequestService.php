@@ -13,6 +13,23 @@ class PetRequestService
 
     public function submitRequest(array $data, int $userId): void
     {
+         $imagePath = null;
+    if (!empty($_FILES['pet_image']['tmp_name'])) {
+        $uploadDir = __DIR__ . '/../uploads/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $filename = uniqid() . '_' . basename($_FILES['pet_image']['name']);
+        $targetPath = $uploadDir . $filename;
+
+        if (move_uploaded_file($_FILES['pet_image']['tmp_name'], $targetPath)) {
+            $imagePath = 'uploads/' . $filename;
+        } else {
+            throw new Exception('Failed to upload image.');
+        }
+    }
+
         $basicData = [
             'name' => $data['name'],
             'gender' => $data['gender'],
@@ -26,12 +43,13 @@ class PetRequestService
             'description' => $data['description'],
             'restrictions' => $data['restrictions'],
             'recommended' => $data['recommended'],
-            'vaccinated' => isset($data['vaccinated']),
-            'house_trained' => isset($data['house_trained']),
-            'neutered' => isset($data['neutered']),
-            'microchipped' => isset($data['microchipped']),
-            'good_with_children' => isset($data['good_with_children']),
-            'shots_up_to_date' => isset($data['shots_up_to_date']),
+            'vaccinated' => (int) $data['vaccinated'],
+            'house_trained' => (int) $data['house_trained'],
+            'neutered' => (int) $data['neutered'],
+            'microchipped' => (int) $data['microchipped'],
+            'good_with_children' => (int) $data['good_with_children'],
+            'shots_up_to_date' => (int) $data['shots_up_to_date'],
+            'image_path' => $imagePath,
         ];
 
         $requestId = $this->repo->insertRequest($basicData, $userId);

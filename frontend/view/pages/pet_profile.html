@@ -2,172 +2,104 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>'s Profile</title>
-  <link rel="stylesheet" href="/assets/styles/petPage.css">
-  <link rel="stylesheet" href="/assets/styles/header.css">
-  <link rel="stylesheet" href="/assets/styles/footer.css">
-  <link rel="stylesheet" href="/assets/styles/searchMenu.css">
-  <link rel="stylesheet" href="/assets/styles/pet_profile_inline.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <link rel="stylesheet" href="../styles/petPage.css" />
+  <link rel="stylesheet" href="../styles/header.css" />
+  <link rel="stylesheet" href="../styles/footer.css" />
+  <link rel="stylesheet" href="../styles/searchMenu.css" />
+  <link rel="stylesheet" href="../styles/pet_profile_inline.css" />
 </head>
 
 <body>
   <div id="header-placeholder"></div>
 
-  <div class="banner" style="background-image: url('');"></div>
+  <div class="banner"></div>
   <div class="profile-container">
     <div class="profile-pic">
-      <img src="" alt="">
+      <img src="" alt="" />
     </div>
     <h2></h2>
-    <p class="location"> · </p>
+    <p class="location"></p>
 
-    
-      <div class="adopted">Adopted on </div>
-    
-      <div class="adopted">
-        <a href="/adoptionStart.php?pet_id=" class="adopt-button">Adopt</a>
-      </div>
-    
-
-    <div class="info-cards">
-      <div>Gender: </div>
-      <div>Breed: </div>
-      <div>Age:  years</div>
-      <div>Color: </div>
-      <div>Weight:  kg</div>
-      <div>Animal: </div>
+    <div class="adopted">Adopted on <span class="adoption-date"></span></div>
+    <div class="adopted">
+      <a href="#" class="adopt-button">Adopt</a>
     </div>
+
+    <div class="info-cards"></div>
 
     <div class="checks-description-wrapper">
       <div class="description-box">
-        <h3>'s Story</h3>
-        <p></p>
+        <h3 class="story-heading"></h3>
+        <p class="story-text"></p>
       </div>
 
-      <div class="checks-box">
-        <div>Can live with children: </div>
-        <div>Vaccinated: </div>
-        <div>House-Trained: </div>
-        <div>Neutered: </div>
-        <div>Shots up to date: </div>
-        <div>Microchipped: </div>
-      </div>
+      <div class="checks-box"></div>
     </div>
 
-    <div class="section">
+    <div class="section restrictions">
       <h3>Restrictions</h3>
-      <p></p>
+      <p class="restrictions-text"></p>
     </div>
 
-    <div class="section">
+    <div class="section recommended">
       <h3>Recommended</h3>
-      <p></p>
+      <p class="recommended-text"></p>
     </div>
 
-    <div class="section">
+    <div class="section vaccinations">
       <h3>Vaccination History</h3>
       <table>
-        <tr>
-          <th>Age (weeks)</th>
-          <th>Vaccine</th>
-        </tr>
-        
+        <thead>
           <tr>
-            <td></td>
-            <td></td>
+            <th>Age (weeks)</th>
+            <th>Vaccine</th>
           </tr>
-        
+        </thead>
+        <tbody class="vaccine-table-body">
+        </tbody>
       </table>
     </div>
 
-    <div class="section">
+    <div class="section calendar">
       <h3>Feeding Calendar</h3>
-      
       <div class="calendar">
         <div class="calendar-header"></div>
-        <div class="calendar-grid">
-          
-            <div class="day-name"></div>
-          
-          
-            <div class="day empty"></div>
-          
-          
-            
-              <div class="day feeding">
-                
-                <div class="tooltip"></div>
-              </div>
-            
-              <div class="day"></div>
-            
-          
-        </div>
+        <div class="calendar-grid"></div>
       </div>
     </div>
 
-    <div class="section">
-      <h3>Basic First Aid Tips for s</h3>
-      <p>
-        
-      </p>
+    <div class="section first-aid">
+      <h3>Basic First Aid Tips</h3>
+      <p class="first-aid-text"></p>
     </div>
 
     <div class="section">
       <h3>Media Gallery</h3>
-      
-        <div class="media-gallery">
-          
-            <div class="media-item">
-              
-                <img src="" alt="Pet Photo" style="max-width: 100%; border-radius: 10px;" />
-              
-                <video controls style="max-width: 100%; border-radius: 10px;">
-                  <source src="" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              
-                <audio controls style="width: 100%;">
-                  <source src="" type="audio/mpeg">
-                  Your browser does not support the audio tag.
-                </audio>
-              
-              
-                <form action="/delete_pet_media.php" method="POST" onsubmit="return confirm('Are you sure?');" style="margin-top: 10px;">
-                  <input type="hidden" name="file_path" value="">
-                  <input type="hidden" name="pet_id" value="">
-                  <button type="submit" style="background-color: #cc0000; color: white; border: none; padding: 6px 12px; border-radius: 6px;">Delete</button>
-                </form>
-              
-            </div>
-          
-        </div>
-      
-        <p>No media files available for this pet.</p>
-      
+      <div class="media-gallery"></div>
+      <p class="no-media-msg">No media files available for this pet.</p>
     </div>
 
-    
-      <div class="section">
-        <h3>Upload Media</h3>
-        <form action="/upload_pet_media.php" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="pet_id" value="">
-          <div class="form-group">
-            <label for="media">Choose file (image, video, or audio):</label>
-            <input type="file" name="media" accept="image/*,video/*,audio/*" required>
-          </div>
-          <button type="submit">Upload</button>
-        </form>
-      </div>
-    
+    <div class="section">
+      <h3>Upload Media</h3>
+      <form action="/upload_pet_media.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="pet_id" value="" />
+        <div class="form-group">
+          <label for="media">Choose file (image, video, or audio):</label>
+          <input type="file" id="media" name="media" accept="image/*,video/*,audio/*" required />
+        </div>
+        <button type="submit">Upload</button>
+      </form>
+    </div>
   </div>
 
   <div id="footer-placeholder"></div>
 
   <script src="../../controller/footerController.js"></script>
   <script src="../../controller/headerController.js"></script>
+  <script src="../../controller/petController.js"></script>
 </body>
 
 </html>

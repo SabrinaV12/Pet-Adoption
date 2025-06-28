@@ -134,7 +134,6 @@ class PetRepository
         $params = [];
         $types = "";
 
-        // Default condition for the RSS feed
         $conditions[] = "adopted = 0";
 
         if (!empty($filters['type'])) {

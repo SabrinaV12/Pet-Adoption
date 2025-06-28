@@ -17,9 +17,6 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../repositories/database/db.php';
 require_once __DIR__ . '/../repositories/SearchRepository.php';
 
-session_start();
-
-$conn = Database::getConnection();
 
 $repository = new SearchRepository($conn);
 

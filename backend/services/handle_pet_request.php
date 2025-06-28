@@ -1,53 +1,108 @@
 <?php
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 session_start();
-require_once 'database/db.php';
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
-    header('Location: login.php');
-    exit;
-}
+$jwt = $_COOKIE['jwt'] ?? null;
+$secret_key = $_ENV['JWT_SECRET'] ?? 'SECRET_KEY';
 
-$pet_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-$action = $_GET['action'] ?? '';
+if ($jwt) {
+    try {
+        $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+        $userId = $decoded->data->id ?? null;
 
-if (!$pet_id || !in_array($action, ['approve', 'reject'])) {
-    die("Invalid request.");
-}
+        if (!$userId) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Unauthorized - invalid token.']);
+            exit();
+        }
 
-$stmt = $conn->prepare("SELECT * FROM pet_requests WHERE id = ?");
-$stmt->bind_param("i", $pet_id);
-$stmt->execute();
-$request = $stmt->get_result()->fetch_assoc();
+        $_SESSION['user_id'] = $userId;
 
-if (!$request) {
-    die("Cererea nu a fost gasita.");
-}
-
-$user_id = $request['user_id'];
-$pet_name = $request['name'];
-
-if ($action === 'approve') {
-    $query = "INSERT INTO pets (
-        name, gender, breed, age, color, weight, height, animal_type, image_path, size,
-        vaccinated, house_trained, neutered, microchipped, good_with_children, shots_up_to_date,
-        restrictions, recommended, description, user_id
-    ) SELECT 
-        name, gender, breed, age, color, weight, height, animal_type, image_path, size,
-        vaccinated, house_trained, neutered, microchipped, good_with_children, shots_up_to_date,
-        restrictions, recommended, description, user_id
-    FROM pet_requests WHERE id = ?";
-
-    $stmt_insert = $conn->prepare($query);
-    $stmt_insert->bind_param("i", $pet_id);
-    $stmt_insert->execute();
+    } catch (Exception $e) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Unauthorized - token error.']);
+        exit();
+    }
 } else {
-
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized - token missing.']);
+    exit();
 }
 
-$delete = $conn->prepare("DELETE FROM pet_requests WHERE id = ?");
-$delete->bind_param("i", $pet_id);
-$delete->execute();
 
-header("Location: notification.php?status=$action");
-exit;
-?>
+header("Access-Control-Allow-Origin: http://localhost:5500");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+require_once __DIR__ . '/../repositories/database/db.php';
+require_once __DIR__ . '/../repositories/PetRequestRepository.php';
+
+$userId = $_SESSION['user_id'] ?? null;
+
+if (!$userId) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
+    exit();
+}
+
+$data = $_POST;
+
+$data['vaccinated'] = $data['vaccinated'] ?? 0;
+$data['house_trained'] = $data['house_trained'] ?? 0;
+$data['neutered'] = $data['neutered'] ?? 0;
+$data['microchipped'] = $data['microchipped'] ?? 0;
+$data['good_with_children'] = $data['good_with_children'] ?? 0;
+$data['shots_up_to_date'] = $data['shots_up_to_date'] ?? 0;
+
+$imagePath = null;
+if (isset($_FILES['pet_image']) && $_FILES['pet_image']['error'] === UPLOAD_ERR_OK) {
+    $uploadDir = __DIR__ . '/../public/PetUploads/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    $filename = uniqid('pet_') . '_' . basename($_FILES['pet_image']['name']);
+    $targetFile = $uploadDir . $filename;
+
+    if (move_uploaded_file($_FILES['pet_image']['tmp_name'], $targetFile)) {
+        $imagePath = '/Pet_Adoption/public/PetUploads/' . $filename;
+        $data['image_path'] = $imagePath;
+    }
+}
+
+$repo = new PetRequestRepository();
+$requestId = $repo->insertRequest($data, $userId);
+
+$feedDates = $_POST['feed_date'] ?? [];
+$foodTypes = $_POST['food_type'] ?? [];
+foreach ($feedDates as $i => $date) {
+    $food = $foodTypes[$i] ?? '';
+    if (!empty($date) && !empty($food)) {
+        $repo->insertFeeding($requestId, $date, $food);
+    }
+}
+
+$ages = $_POST['age_in_weeks'] ?? [];
+$vaccines = $_POST['vaccine_name'] ?? [];
+foreach ($ages as $i => $age) {
+    $name = $vaccines[$i] ?? '';
+    if (!empty($age) && !empty($name)) {
+        $repo->insertVaccination($requestId, (int)$age, $name);
+    }
+}
+
+foreach ($repo->getAdmins() as $admin) {
+    $repo->notifyAdmin($admin['id'], "New pet adoption request submitted", "/admin/view_request.php?id=$requestId");
+}
+
+echo json_encode(['success' => true, 'id' => $requestId]);

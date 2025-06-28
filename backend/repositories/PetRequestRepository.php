@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../database/db.php';
+require_once __DIR__ . '/database/db.php';
 
 class PetRequestRepository {
     private $conn;
@@ -14,15 +14,15 @@ class PetRequestRepository {
         $stmt = $this->conn->prepare("INSERT INTO pet_requests (
             name, gender, breed, age, color, weight, height, animal_type, size, user_id, description,
             restrictions, recommended, vaccinated, house_trained, neutered, microchipped,
-            good_with_children, shots_up_to_date
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            good_with_children, shots_up_to_date, image_path
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $stmt->bind_param("sssisdsssisssiiiiii",
+        $stmt->bind_param("sssisdsssisssiiiiiis",
             $data['name'], $data['gender'], $data['breed'], $data['age'], $data['color'],
             $data['weight'], $data['height'], $data['animal_type'], $data['size'], $userId,
             $data['description'], $data['restrictions'], $data['recommended'],
             $data['vaccinated'], $data['house_trained'], $data['neutered'], $data['microchipped'],
-            $data['good_with_children'], $data['shots_up_to_date']
+            $data['good_with_children'], $data['shots_up_to_date'], $data['image_path']
         );
 
         $stmt->execute();
