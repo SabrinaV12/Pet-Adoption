@@ -1,12 +1,3 @@
-<!-- <?php
-session_start();
-
-if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
-    header('location: ../../login.php');
-    exit;
-}
-?> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,11 +15,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
     </header>
 
     <main>
-        <form action="add_animal_script.html" method="POST" enctype="multipart/form-data">
+        <form action="../../../../../backend/controllers/AdminAddAnimalController.php" method="POST"
+            enctype="multipart/form-data" id="addPetForm" novalidate>
+
+            <div id="status-message" class="status-message" style="display:none;"></div>
 
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
+                <div class="error-message"></div>
             </div>
 
             <fieldset>
@@ -36,10 +31,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
                 <div class="form-group">
                     <label for="animal_type">Animal Type:</label>
                     <select id="animal_type" name="animal_type" required>
+                        <option value="">--Please choose an option--</option>
                         <option value="Dog">Dog</option>
                         <option value="Cat">Cat</option>
                         <option value="Capybara">Capybara</option>
                     </select>
+                    <div class="error-message"></div>
                 </div>
                 <div class="form-group">
                     <label for="breed">Breed:</label>
@@ -48,13 +45,16 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
                 <div class="form-group">
                     <label for="gender">Gender:</label>
                     <select id="gender" name="gender" required>
+                        <option value="">--Please choose an option--</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
+                    <div class="error-message"></div>
                 </div>
                 <div class="form-group">
-                    <label for="age">Age:</label>
-                    <input type="number" id="age" name="age" required>
+                    <label for="age">Age (Years):</label>
+                    <input type="number" id="age" name="age" required min="0">
+                    <div class="error-message"></div>
                 </div>
             </fieldset>
 
@@ -66,19 +66,21 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
                 </div>
                 <div class="form-group">
                     <label for="weight">Weight (kg):</label>
-                    <input type="number" step="0.01" id="weight" name="weight">
+                    <input type="number" step="0.01" id="weight" name="weight" min="0">
                 </div>
                 <div class="form-group">
                     <label for="height">Height (cm):</label>
-                    <input type="number" step="0.01" id="height" name="height">
+                    <input type="number" step="0.01" id="height" name="height" min="0">
                 </div>
                 <div class="form-group">
                     <label for="size">Size:</label>
                     <select id="size" name="size" required>
+                        <option value="">--Please choose an option--</option>
                         <option value="Small">Small</option>
                         <option value="Medium">Medium</option>
                         <option value="Large">Large</option>
                     </select>
+                    <div class="error-message"></div>
                 </div>
             </fieldset>
 
@@ -89,9 +91,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
                     <textarea id="description" name="description" rows="5"></textarea>
                 </div>
                 <div class="form-group"><label for="restrictions">Restrictions:</label><textarea name="restrictions"
-                        rows="3"></textarea></div>
+                        id="restrictions" rows="3"></textarea></div>
                 <div class="form-group"><label for="recommended">Recommendations:</label><textarea name="recommended"
-                        rows="3"></textarea></div>
+                        id="recommended" rows="3"></textarea></div>
             </fieldset>
 
             <fieldset>
@@ -114,7 +116,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
                 <legend>Adoption Details</legend>
                 <div class="checkbox-group"><input type="checkbox" id="adopted" name="adopted" value="1"><label
                         for="adopted">Adopted</label></div>
-                <div class="form-group">
+                <div class="form-group hidden" id="adoption_date_group">
                     <label for="adoption_date">Adoption Date:</label>
                     <input type="date" id="adoption_date" name="adoption_date">
                 </div>
@@ -124,52 +126,29 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
                 <legend>Pet Image</legend>
                 <div class="form-group">
                     <label for="image">Upload Image:</label>
-                    <input type="file" id="image" name="image">
+                    <input type="file" id="image" name="image" accept="image/*">
                 </div>
             </fieldset>
 
             <fieldset>
                 <legend>Feeding Calendar</legend>
-
-                <div class="form-group">
-                    <label>Feed Date 1: <input type="date" name="feed_date[]"></label>
-                    <label>Food Type 1: <input type="text" name="food_type[]"></label>
+                <div id="feeding-calendar-container">
                 </div>
-
-                <div class="form-group">
-                    <label>Feed Date 2: <input type="date" name="feed_date[]"></label>
-                    <label>Food Type 2: <input type="text" name="food_type[]"></label>
-                </div>
-
-                <div class="form-group">
-                    <label>Feed Date 3: <input type="date" name="feed_date[]"></label>
-                    <label>Food Type 3: <input type="text" name="food_type[]"></label>
-                </div>
+                <button type="button" class="add-btn" id="add-feeding-row">Add Feeding Entry</button>
             </fieldset>
 
             <fieldset>
                 <legend>Vaccinations</legend>
-
-                <div class="form-group">
-                    <label>Age in weeks 1: <input type="number" name="age_in_weeks[]"></label>
-                    <label>Vaccine Name 1: <input type="text" name="vaccine_name[]"></label>
+                <div id="vaccinations-container">
                 </div>
-
-                <div class="form-group">
-                    <label>Age in weeks 2: <input type="number" name="age_in_weeks[]"></label>
-                    <label>Vaccine Name 2: <input type="text" name="vaccine_name[]"></label>
-                </div>
-
-                <div class="form-group">
-                    <label>Age in weeks 3: <input type="number" name="age_in_weeks[]"></label>
-                    <label>Vaccine Name 3: <input type="text" name="vaccine_name[]"></label>
-                </div>
+                <button type="button" class="add-btn" id="add-vaccination-row">Add Vaccination</button>
             </fieldset>
 
 
             <button type="submit">Add Pet to Database</button>
         </form>
     </main>
+    <script src="../../../../controller/adminAddPetController.js"></script>
 </body>
 
 </html>

@@ -128,6 +128,44 @@ class PetRepository
         return $success;
     }
 
+    public function create(array $data, int $userId): int
+    {
+        $sql = "INSERT INTO pets (name, gender, breed, age, color, weight, height, animal_type, image_path, size, vaccinated, house_trained, neutered, microchipped, good_with_children, shots_up_to_date, restrictions, recommended, adopted, adoption_date, description, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param(
+            "sssisddsssiiiiiississi",
+            $data['name'],
+            $data['gender'],
+            $data['breed'],
+            $data['age'],
+            $data['color'],
+            $data['weight'],
+            $data['height'],
+            $data['animal_type'],
+            $data['image_path'],
+            $data['size'],
+            $data['vaccinated'],
+            $data['house_trained'],
+            $data['neutered'],
+            $data['microchipped'],
+            $data['good_with_children'],
+            $data['shots_up_to_date'],
+            $data['restrictions'],
+            $data['recommended'],
+            $data['adopted'],
+            $data['adoption_date'],
+            $data['description'],
+            $userId
+        );
+
+        $stmt->execute();
+        $newId = $this->conn->insert_id;
+        $stmt->close();
+
+        return $newId;
+    }
+
     public function findPetsByCriteria(array $filters): array
     {
         $conditions = [];

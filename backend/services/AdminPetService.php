@@ -1,14 +1,20 @@
 <?php
 
+require_once __DIR__ . '/../repositories/VaccinationRepository.php';
+require_once __DIR__ . '/../repositories/FeedingCalendarRepository.php';
 require_once __DIR__ . '/../repositories/PetRepository.php';
 
 class AdminPetService
 {
     private $petRepository;
+    private $vaccinationRepository;
+    private $feedingCalendarRepository;
 
     public function __construct()
     {
         $this->petRepository = new PetRepository();
+        $this->vaccinationRepository = new VaccinationRepository();
+        $this->feedingCalendarRepository = new FeedingCalendarRepository();
     }
 
     public function getAllPets()
@@ -22,6 +28,10 @@ class AdminPetService
             throw new InvalidArgumentException("Invalid Pet ID provided.");
         }
 
-        return $this->petRepository->delete($id);
+        $vaccinesDeleted = $this->vaccinationRepository->deleteByPetId($id);
+        $schedulesDeleted = $this->feedingCalendarRepository->deleteByPetId($id);
+        $petDeleted = $this->petRepository->delete($id);
+
+        return $vaccinesDeleted && $schedulesDeleted && $petDeleted;
     }
 }
