@@ -1,6 +1,6 @@
 <?php
 
-class Feeding_calendar
+class FeedingCalendar
 {
     public $id;
     public $pet_id;

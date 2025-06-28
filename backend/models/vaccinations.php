@@ -1,6 +1,6 @@
 <?php
 
-class Vaccinations
+class Vaccination
 {
     public $id;
     public $pet_id;
