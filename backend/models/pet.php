@@ -1,6 +1,6 @@
 <?php
 
-Class Pet
+class Pet
 {
     public $id;
     public $name;
@@ -465,5 +465,8 @@ Class Pet
         $this->created_at = $created_at;
     }
 
-
+    public function toArray(): array
+    {
+        return get_object_vars($this);
+    }
 }

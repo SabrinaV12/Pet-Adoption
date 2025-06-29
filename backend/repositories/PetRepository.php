@@ -185,7 +185,7 @@ class PetRepository
         }
 
         $stmt->bind_param(
-            "sssisddssssiiiiiiissisi",
+            "sssisddsssiiiiiississi",
             $pet->name,
             $pet->breed,
             $pet->gender,
