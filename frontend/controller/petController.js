@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (file.can_delete) {
           const delBtn = document.createElement("button");
-          delBtn.textContent = "🗑 Delete";
+          delBtn.textContent = "Delete";
           delBtn.style.cssText = "margin-top: 5px; padding: 5px 10px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer;";
           delBtn.addEventListener("click", async () => {
             if (!confirm("Are you sure you want to delete this media file?")) return;
