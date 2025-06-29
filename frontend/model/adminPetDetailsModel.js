@@ -9,7 +9,7 @@ export default class Pet {
         this.weight = petData.weight;
         this.height = petData.height;
         this.animal_type = petData.animal_type;
-        this.image_path = petData.image_path ? `http://localhost/Pet_Adoption/frontend/view/${petData.image_path}` : 'http://localhost/Pet_Adoption/images/placeholder.png'; //TEMPORARY!!!!!!
+        this.image_path = petData.image_path ? `http://localhost/Pet_Adoption/public/pet-uploads/${petData.image_path}` : 'http://localhost/Pet_Adoption/images/placeholder.png'; //TEMPORARY!!!!!!
         this.size = petData.size;
 
         this.vaccinated = Boolean(petData.vaccinated);
