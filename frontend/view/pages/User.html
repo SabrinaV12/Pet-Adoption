@@ -80,19 +80,15 @@
         document.querySelector('.contact li:nth-child(3)').textContent = `Telegram: @${user.telegram_handle}`;
 
         const bannerPath = user.banner_picture && user.banner_picture.endsWith('.jpg')
-  ? user.banner_picture
-  : '/Pet_Adoption/public/uploads/banner/default.jpg';
+          ? `/Pet_Adoption/public/uploads/banner/${user.banner_picture}`
+          : '/Pet_Adoption/public/uploads/banner/default.jpg';
 
-const profilePath = user.profile_picture && user.profile_picture.endsWith('.jpg')
-  ? user.profile_picture
-  : '/Pet_Adoption/public/uploads/profile/default.jpg';
+        const profilePath = user.profile_picture && user.profile_picture.endsWith('.jpg')
+          ? `/Pet_Adoption/public/uploads/profile/${user.profile_picture}`
+          : '/Pet_Adoption/public/uploads/profile/default.jpg';
 
-document.querySelector('.profile-image').src = `/Pet_Adoption/public/uploads/profile/${user.profile_picture || 'default.jpg'}`;
-document.querySelector('.banner').src = `/Pet_Adoption/public/uploads/banner/${user.banner_picture || 'default.jpg'}`;
-
-
-
-
+        document.querySelector('.profile-image').src = profilePath;
+        document.querySelector('.banner').src = bannerPath;
 
         const petsGrid = document.querySelector('.pets-grid');
         petsGrid.innerHTML = '';
@@ -101,7 +97,9 @@ document.querySelector('.banner').src = `/Pet_Adoption/public/uploads/banner/${u
           petsGrid.innerHTML = '<p>No pets listed yet.</p>';
         } else {
           pets.forEach(pet => {
-            const petImage = pet.image_path ? `/Pet_Adoption${pet.image_path.replace('/public', '')}` : '/Pet_Adoption/public/uploads/profile/default-pet.jpg';
+            const petImage = pet.image_path
+              ? `/Pet_Adoption/public/pet-uploads/${pet.image_path}`
+              : '/Pet_Adoption/public/uploads/profile/default-pet.jpg';
 
             const card = document.createElement('div');
             card.className = 'pet-card';
@@ -109,7 +107,7 @@ document.querySelector('.banner').src = `/Pet_Adoption/public/uploads/banner/${u
               <img src="${petImage}" alt="${pet.name}" />
               <p><strong>${pet.name}</strong></p>
               <p>${pet.animal_type} · ${pet.breed} <br>${pet.age} years · ${pet.size}</p>
-              <a href="/petPage.php?id=${pet.id}" class="more-info-button">More Info</a>
+              <a href="/Pet_Adoption/frontend/view/pages/pet_profile.html?pet_id=${pet.id}" class="more-info-button">More Info</a>
             `;
             petsGrid.appendChild(card);
           });
