@@ -1,29 +1,3 @@
-<!-- <?php
-session_start();
-require_once 'database/check_auth.php';
-require_once 'database/db.php';
-
-if (!isset($_SESSION['adoption']['pet_id'])) {
-    header('Location: adoptionStart.php?error=session_expired_or_invalid');
-    exit();
-}
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
-
-$application_id = $_GET['app_id'] ?? 0;
-
-if ($application_id > 0) {
-    $user_can_download = true;
-} else {
-    $user_can_download = false;
-}
-
-unset($_SESSION['adoption']);
-?> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,33 +15,99 @@ unset($_SESSION['adoption']);
     <div id="header-placeholder"></div>
 
     <section class="confirmation">
-
         <h1>Thanks For Submitting</h1>
         <p>The pet's current owner will be sent a link to your profile when your application has been approved by Furry
             Friends.</p>
-        <p>You can go back to your profile or download your adoption request.</p>
+        <p>You can go back to your profile or download your adoption request below.</p>
 
-        <!-- <?php if ($user_can_download): ?>
-        <div class="buttons">
+        <div id="download-section" class="buttons">
             <div class="download-buttons">
-                <a href="scripts/download_form.php?id=<?php echo $application_id; ?>&format=csv"
-                    class="download-button">
-                    <span>Download as Excel File</span>
+                <a id="download-csv" class="download-button">
+                    <span>Download as CSV</span>
                 </a>
-                <a href="scripts/download_form.php?id=<?php echo $application_id; ?>&format=json"
-                    class="download-button">
-                    <span>Download as JSON File</span>
+                <a id="download-json" class="download-button">
+                    <span>Download as JSON</span>
                 </a>
             </div>
-
             <a href="userProfile.php" class="profile-button">
                 <span>Go To My Profile</span>
             </a>
         </div>
-        <?php endif; ?> -->
+        <p id="download-error" style="color: red; margin-top: 15px; text-align: center; min-height: 1.2em;"></p>
     </section>
 
     <div id="footer-placeholder"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const downloadSection = document.getElementById('download-section');
+            const csvButton = document.getElementById('download-csv');
+            const jsonButton = document.getElementById('download-json');
+            const errorElement = document.getElementById('download-error');
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const applicationId = urlParams.get('app_id');
+
+            async function downloadFile(url, filename, buttonElement) {
+                const originalText = buttonElement.querySelector('span').textContent;
+
+                try {
+                    buttonElement.setAttribute('disabled', true);
+                    buttonElement.querySelector('span').textContent = 'Downloading...';
+                    errorElement.textContent = '';
+
+                    const response = await fetch(url);
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`API Error: ${response.statusText} (${errorText})`);
+                    }
+
+                    const blob = await response.blob();
+
+                    const objectUrl = URL.createObjectURL(blob);
+
+                    const tempAnchor = document.createElement('a');
+                    tempAnchor.href = objectUrl;
+                    tempAnchor.download = filename;
+                    document.body.appendChild(tempAnchor);
+                    tempAnchor.click();
+                    document.body.removeChild(tempAnchor);
+                    URL.revokeObjectURL(objectUrl);
+
+                } catch (error) {
+                    console.error('Download failed:', error);
+                    errorElement.textContent = 'Could not download the file. Please try again.';
+                } finally {
+                    buttonElement.removeAttribute('disabled');
+                    buttonElement.querySelector('span').textContent = originalText;
+                }
+            }
+
+            if (applicationId && !isNaN(applicationId) && Number(applicationId) > 0) {
+
+                const apiBaseUrl = 'http://localhost:80/Pet_Adoption/backend/controllers/download_form.php'; // Correct the path if necessary
+                const csvUrl = `${apiBaseUrl}?id=${applicationId}&format=csv`;
+                const jsonUrl = `${apiBaseUrl}?id=${applicationId}&format=json`;
+
+                csvButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const filename = `adoption_application_${applicationId}.csv`;
+                    downloadFile(csvUrl, filename, csvButton);
+                });
+
+                jsonButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const filename = `adoption_application_${applicationId}.json`;
+                    downloadFile(jsonUrl, filename, jsonButton);
+                });
+
+                downloadSection.style.display = 'flex';
+            } else {
+                console.log("No valid application ID found in URL; download links are not active.");
+            }
+        });
+    </script>
 
     <script src="../../controller/footerController.js"></script>
     <script src="../../controller/headerController.js"></script>

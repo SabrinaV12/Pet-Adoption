@@ -138,7 +138,7 @@ switch ($path2) {
             break;
         }
 
-        error_log("🔍 ROUTER PATH2: " . $path2);
+        error_log(" ROUTER PATH2: " . $path2);
 
     case 'request': {
             $subPath = explode("/request/", $path, 2)[1];

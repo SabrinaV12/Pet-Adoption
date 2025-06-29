@@ -49,12 +49,11 @@ class AdoptionService
         );
 
         $success = $this->applicationRepository->save($application);
-
         if (!$success) {
             return ['success' => false, 'errors' => ['database' => 'A server error occurred while saving the application.']];
         }
 
-        return ['success' => true];
+        return ['success' => $success];
     }
 
     private function validate(array $data): array

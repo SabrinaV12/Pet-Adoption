@@ -13,7 +13,7 @@ class ApplicationRepository
         $this->conn = $conn;
     }
 
-    public function save(Applications $app): bool
+    public function save(Applications $app): int
     {
         $this->conn->begin_transaction();
 
@@ -71,15 +71,17 @@ class ApplicationRepository
             );
 
             $stmt->execute();
+            $insertedId = $this->conn->insert_id;
             $stmt->close();
             $this->conn->commit();
-            return true;
+            // echo 'i am succes';
+            return $insertedId;
         } catch (Exception $e) {
             $this->conn->rollback();
             echo $app->num_adults;
             echo "ApplicationRepository::save() failed: " . $e->getMessage();
 
-            return false;
+            return 0;
         }
     }
 

@@ -38,7 +38,7 @@ class SubmitAdoptionController
 
         if ($result['success']) {
             http_response_code(201); // 201 Created
-            echo json_encode(['message' => 'Application submitted successfully!']);
+            echo json_encode(['message' => 'Application submitted successfully!', 'app_id' => $result['success']]);
         } else {
             $statusCode = isset($result['errors']['database']) ? 500 : 400;
             http_response_code($statusCode);

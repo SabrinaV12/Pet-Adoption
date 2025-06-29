@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             sessionStorage.removeItem('adoptionData'); // Clear the session data
-            window.location.href = 'adoptionConfirm.html'; // Redirect to a success page
+            window.location.href = `adoptionConfirm.html?app_id=${result['app_id']}`; // Redirect to a success page
 
         } catch (error) {
             console.error('Submission failed:', error);

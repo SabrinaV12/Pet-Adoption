@@ -1,28 +1,28 @@
 <?php
-session_start();
-require_once '../database/db.php';
+require_once __DIR__ . '/../repositories/database/db.php';
+require_once __DIR__ . '/../services/JwtService.php';
 
-if (!isset($_SESSION['user_id'])) {
-    die("Access Denied. Please log in.");
-}
+$jwtService = new JwtService();
+$token = $jwtService->getToken();
+$data = $jwtService->verifyToken($token);
 
 $application_id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $format = $_GET['format'] ?? '';
 $allowed_formats = ['csv', 'json'];
 
 if (!$application_id || !in_array($format, $allowed_formats)) {
-    die("Invalid request.");
+    http_response_code(400); // Bad Request
+    die("Invalid request. Please provide a valid application ID and format (csv or json).");
 }
 
-$sql = "SELECT * FROM applications WHERE id = ?";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("SELECT * FROM applications WHERE id = ?");
 $stmt->bind_param("i", $application_id);
-
 $stmt->execute();
 $result = $stmt->get_result();
 $application_data = $result->fetch_assoc();
 
 if (!$application_data) {
+    http_response_code(404); // Not Found
     die("Application not found or you do not have permission to view it.");
 }
 
@@ -57,7 +57,6 @@ function get_friendly_labels()
 $labels = get_friendly_labels();
 $filename = "adoption_application_" . $application_id;
 
-//We generate the correct file type
 if ($format === 'json') {
     $friendly_data = [];
     foreach ($labels as $key => $label) {
@@ -75,18 +74,17 @@ if ($format === 'json') {
 
     $output = fopen('php://output', 'w');
 
-    //We write the questions
     fputcsv($output, array_values($labels));
 
-    //We take the responses and write them
     $row_data = [];
-    foreach ($labels as $key => $label) {
+    foreach (array_keys($labels) as $key) {
         $row_data[] = $application_data[$key] ?? '';
     }
-
     fputcsv($output, $row_data);
 
     fclose($output);
 }
 
+$stmt->close();
+$conn->close();
 exit();
