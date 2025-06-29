@@ -23,7 +23,6 @@
     document.addEventListener('DOMContentLoaded', async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const requestId = urlParams.get('requestId');
-      console.log('🔍 Loaded with requestId:', requestId);
 
       const container = document.getElementById('pet-details');
       const message = document.getElementById('response-message');

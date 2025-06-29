@@ -38,30 +38,22 @@ class ApplicationRepository
                 $types,
                 $app->pet_id,
                 $app->applicant_id,
-
                 $app->address_line1,
                 $app->address_line2,
-
                 $app->postcode,
                 $app->city,
-
                 $app->phone_number,
-
                 $app->has_garden,
                 $app->living_situation,
-
                 $app->household_setting,
                 $app->activity_level,
                 $app->num_adults,
                 $app->num_children,
                 $app->youngest_child_age,
-
                 $app->visiting_children,
                 $app->visiting_children_ages,
-
                 $app->has_flatmates,
                 $app->has_allergies,
-
                 $app->has_other_animals,
                 $app->other_animals_info,
                 $app->neutered,
@@ -73,14 +65,34 @@ class ApplicationRepository
             $stmt->execute();
             $insertedId = $this->conn->insert_id;
             $stmt->close();
+
+            $ownerStmt = $this->conn->prepare("SELECT user_id FROM pets WHERE id = ?");
+            $ownerStmt->bind_param("i", $app->pet_id);
+            $ownerStmt->execute();
+            $ownerResult = $ownerStmt->get_result();
+            $owner = $ownerResult->fetch_assoc();
+            $ownerStmt->close();
+
+            if ($owner && isset($owner['user_id'])) {
+                $ownerId = $owner['user_id'];
+                $message = "You have a new request";
+                $link = "view_page.html?app_id=" . $insertedId;
+
+                $notifStmt = $this->conn->prepare("INSERT INTO notifications (user_id, message, link, is_read) VALUES (?, ?, ?, 0)");
+                if ($notifStmt === false) {
+                    throw new Exception('Prepare notification insert failed: ' . $this->conn->error);
+                }
+                $notifStmt->bind_param("iss", $ownerId, $message, $link);
+                $notifStmt->execute();
+                $notifStmt->close();
+            }
+
             $this->conn->commit();
-            // echo 'i am succes';
             return $insertedId;
+
         } catch (Exception $e) {
             $this->conn->rollback();
-            echo $app->num_adults;
-            echo "ApplicationRepository::save() failed: " . $e->getMessage();
-
+            error_log("ApplicationRepository::save() failed: " . $e->getMessage());
             return 0;
         }
     }
@@ -100,4 +112,50 @@ class ApplicationRepository
         $res = $stmt->get_result();
         return $res->fetch_assoc() ?: null;
     }
+
+    public function getApplicationDetails(int $appId): ?array
+{
+    $sql = "SELECT a.*, p.name as pet_name FROM applications a
+            JOIN pets p ON a.pet_id = p.id
+            WHERE a.id = ?";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("i", $appId);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    return $res->fetch_assoc() ?: null;
+}
+
+public function handleDecision(int $appId, string $action): bool
+{
+    $status = $action === 'approve' ? 'approved' : 'denied';
+
+    $this->conn->begin_transaction();
+    try {
+        $stmt = $this->conn->prepare("UPDATE applications SET status = ? WHERE id = ?");
+        $stmt->bind_param("si", $status, $appId);
+        $stmt->execute();
+        $stmt->close();
+
+        if ($action === 'approve') {
+            $stmt2 = $this->conn->prepare("
+                UPDATE pets
+                SET adopted = 1, adoption_date = NOW()
+                WHERE id = (SELECT pet_id FROM applications WHERE id = ?)
+            ");
+            $stmt2->bind_param("i", $appId);
+            $stmt2->execute();
+            $stmt2->close();
+        }
+
+        $this->conn->commit();
+        return true;
+    } catch (Exception $e) {
+        $this->conn->rollback();
+        error_log("Handle decision failed: " . $e->getMessage());
+        return false;
+    }
+}
+
+
 }

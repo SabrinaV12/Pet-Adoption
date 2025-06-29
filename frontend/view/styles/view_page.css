@@ -1,0 +1,72 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f3fb;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #5f56b3;
+    margin-top: 30px;
+}
+
+#app-details {
+    background-color: white;
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #9990DA;
+}
+
+#app-details p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+strong {
+    color: #5f56b3;
+}
+
+#actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+button {
+    background-color: #9990DA;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    margin: 0 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #867ac2;
+    transform: translateY(-2px);
+}
+
+button:active {
+    background-color: #7a6fbb;
+    transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    #app-details {
+        margin: 15px;
+        padding: 20px;
+    }
+
+    button {
+        display: block;
+        margin: 10px auto;
+        width: 80%;
+    }
+}
