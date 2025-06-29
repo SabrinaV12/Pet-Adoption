@@ -125,8 +125,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             item.innerHTML = `<img src="${mediaPath}" alt="Pet Photo" style="max-width: 100%; border-radius: 10px;" />`;
           } else if (ext === "video") {
             item.innerHTML = `
-              <video controls style="max-width: 100%; border-radius: 10px;">
-                <source src="${mediaPath}" type="${file.file_type}">
+             <video
+              controls
+              src="${mediaPath}"
+              style="max-width: 100%; border-radius: 10px;"
+             >
+  
                 Your browser does not support the video tag.
               </video>`;
           } else if (ext === "audio") {
