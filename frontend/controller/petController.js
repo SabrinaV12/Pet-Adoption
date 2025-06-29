@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const response = await fetch(`${window.location.origin}/Pet_Adoption/backend/services/get_pet_profile.php?pet_id=${petId}`);
     const data = await response.json();
-
     if (!response.ok) throw new Error(data.error || "Failed to load pet data");
 
     const container = document.querySelector(".profile-container");
@@ -21,12 +20,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const header = container.querySelector("h2");
     if (header) header.textContent = data.pet.name;
 
-    const location = container.querySelector(".location");
-    if (location) location.textContent = `${data.location.country ?? ''} · ${data.location.county ?? ''}`;
+    const locationEl = container.querySelector(".location");
+    if (locationEl) locationEl.textContent = `${data.location.country ?? ''} · ${data.location.county ?? ''}`;
 
     const banner = document.querySelector(".banner");
     const profileImg = container.querySelector(".profile-pic img");
-
     if (data.pet.image_path) {
       const imagePath = `${window.location.origin}/Pet_Adoption/public/pet-uploads/${data.pet.image_path}`;
       if (banner) banner.style.backgroundImage = `url('${imagePath}')`;
@@ -71,7 +69,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (storyBox) {
       const storyHeading = storyBox.querySelector("h3");
       const storyText = storyBox.querySelector("p");
-
       if (storyHeading) storyHeading.textContent = `${data.pet.name}'s Story`;
       if (storyText) storyText.textContent = data.pet.description;
     }
@@ -87,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (recommendedEl) recommendedEl.textContent = data.pet.recommended;
       if (firstAidEl) firstAidEl.textContent = data.pet.first_aid || "Always consult your vet for emergency advice.";
 
-      const vaccineTable = vaccineSection.querySelector("table");
+      const vaccineTable = vaccineSection.querySelector("tbody");
       if (vaccineTable && Array.isArray(data.vaccines)) {
         data.vaccines.forEach(vac => {
           const row = document.createElement("tr");
@@ -110,42 +107,71 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
 
+    const token = localStorage.getItem("jwt_token");
+    const mediaRes = await fetch(`${window.location.origin}/Pet_Adoption/backend/services/fetch_pet_media.php`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { "Authorization": `Bearer ${token}` })
+      },
+      body: JSON.stringify({ pet_id: petId })
+    });
+    const mediaData = await mediaRes.json();
+
     const gallery = container.querySelector(".media-gallery");
     const emptyMsg = container.querySelector(".media-gallery + p");
-    if (gallery && Array.isArray(data.media)) {
+    if (gallery && Array.isArray(mediaData.media)) {
       gallery.innerHTML = "";
-      if (data.media.length) {
-        data.media.forEach(file => {
-          const item = document.createElement("div");
-          item.className = "media-item";
-          const ext = file.file_type.split("/")[0];
-          const mediaPath = `${window.location.origin}/Pet_Adoption/public/pet-uploads/${file.file_path}`;
 
-          if (ext === "image") {
-            item.innerHTML = `<img src="${mediaPath}" alt="Pet Photo" style="max-width: 100%; border-radius: 10px;" />`;
-          } else if (ext === "video") {
-            item.innerHTML = `
-             <video
-              controls
-              src="${mediaPath}"
-              style="max-width: 100%; border-radius: 10px;"
-             >
-  
-                Your browser does not support the video tag.
-              </video>`;
-          } else if (ext === "audio") {
-            item.innerHTML = `
-              <audio controls style="width: 100%;">
-                <source src="${mediaPath}" type="${file.file_type}">
-                Your browser does not support the audio tag.
-              </audio>`;
-          }
+      mediaData.media.forEach(file => {
+        const item = document.createElement("div");
+        item.className = "media-item";
+        const ext = file.file_type.split("/")[0];
+        const mediaPath = `${window.location.origin}/Pet_Adoption/public/pet-uploads/${file.file_path}`;
 
-          gallery.appendChild(item);
-        });
+        if (ext === "image") {
+          item.innerHTML = `<img src="${mediaPath}" alt="Pet Photo" style="max-width: 100%; border-radius: 10px;" />`;
+        } else if (ext === "video") {
+          item.innerHTML = `<video controls src="${mediaPath}" style="max-width: 100%; border-radius: 10px;"></video>`;
+        } else if (ext === "audio") {
+          item.innerHTML = `<audio controls style="width: 100%;"><source src="${mediaPath}" type="${file.file_type}"></audio>`;
+        }
 
-        if (emptyMsg) emptyMsg.style.display = "none";
-      }
+        if (file.can_delete) {
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "🗑 Delete";
+          delBtn.style.cssText = "margin-top: 5px; padding: 5px 10px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer;";
+          delBtn.addEventListener("click", async () => {
+            if (!confirm("Are you sure you want to delete this media file?")) return;
+
+            try {
+              const res = await fetch(`${window.location.origin}/Pet_Adoption/backend/services/delete_pet_media.php`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  ...(token && { "Authorization": `Bearer ${token}` })
+                },
+                body: JSON.stringify({ file_path: file.file_path })
+              });
+
+              const result = await res.json();
+              if (res.ok && result.success) {
+                item.remove(); 
+              } else {
+                alert(result.error || "Failed to delete media");
+              }
+            } catch (err) {
+              console.error("Delete error:", err);
+              alert("Error deleting media");
+            }
+          });
+          item.appendChild(delBtn);
+        }
+
+        gallery.appendChild(item);
+      });
+
+      if (emptyMsg) emptyMsg.style.display = mediaData.media.length ? "none" : "block";
     }
 
     const uploadInput = container.querySelector('input[name="pet_id"]');
