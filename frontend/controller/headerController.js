@@ -46,9 +46,6 @@ const AuthAPI = {
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await fetch('../components/header.html')
-        .then(res => res.text())
-        .then(html => document.getElementById('header-placeholder').innerHTML = html);
     const authLinksDiv = document.getElementById("auth-links");
     console.log(authLinksDiv);
     const renderAuthLinks = (user) => {
