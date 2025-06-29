@@ -51,4 +51,6 @@ class PetRequestRepository {
         $stmt->bind_param("iss", $userId, $message, $link);
         $stmt->execute();
     }
+
+    
 }

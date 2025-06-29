@@ -81,6 +81,7 @@ if (isset($_FILES['pet_image']) && $_FILES['pet_image']['error'] === UPLOAD_ERR_
 }
 
 $repo = new PetRequestRepository();
+
 $requestId = $repo->insertRequest($data, $userId);
 
 $feedDates = $_POST['feed_date'] ?? [];

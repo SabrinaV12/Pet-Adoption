@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const adminPanelLink = document.createElement('a');
                 adminPanelLink.href = 'admin/admin.html';
                 adminPanelLink.textContent = 'Admin Panel';
-                adminPanelLink.style.color = '#9990DA';
+                adminPanelLink.style.color = '#8225BE';
                 adminPanelLink.style.fontWeight = 'bold';
                 authLinksDiv.appendChild(adminPanelLink);
             }

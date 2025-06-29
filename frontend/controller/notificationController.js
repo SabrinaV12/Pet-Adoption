@@ -38,15 +38,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         notifications.forEach(notification => {
-            const notifElement = document.createElement('a');
-            notifElement.href = notification.link || '#';
-            notifElement.className = `notification ${notification.is_read ? 'read' : 'unread'}`;
-            notifElement.innerHTML = `
-                <div class="notification-message">${notification.message}</div>
-                <span class="notification-time">${new Date(notification.created_at).toLocaleString()}</span>
-            `;
-            container.appendChild(notifElement);
-        });
+    const notifElement = document.createElement('a');
+
+    const isResolved = ['accepted', 'denied'].includes(
+        (notification.status ?? '').toLowerCase()
+    );
+
+    notifElement.className = `notification ${notification.is_read ? 'read' : 'unread'}`;
+
+    if (isResolved) {
+        notifElement.href = 'javascript:void(0);';
+        notifElement.classList.add('disabled');
+        notifElement.style.pointerEvents = 'none';
+        notifElement.style.opacity = '0.6';
+        notifElement.style.cursor = 'not-allowed';
+    } else {
+        notifElement.href = notification.link || '#';
+    }
+
+    notifElement.innerHTML = `
+        <div class="notification-message">
+          ${notification.message}
+          ${isResolved ? `<span class="status-label">${notification.status}</span>` : ''}
+        </div>
+        <span class="notification-time">${new Date(notification.created_at).toLocaleString()}</span>
+    `;
+
+    container.appendChild(notifElement);
+});
+
 
     } catch (error) {
         console.error('Error loading notifications:', error);

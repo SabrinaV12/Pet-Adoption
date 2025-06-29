@@ -26,13 +26,4 @@ class NotificationRepository {
         $stmt->bind_param('i', $userId);
         $stmt->execute();
     }
-
-    public function create(int $userId, string $message, ?string $link = null): void {
-    global $conn;
-
-    $stmt = $conn->prepare("INSERT INTO notifications (user_id, message, link) VALUES (?, ?, ?)");
-    $stmt->bind_param("iss", $userId, $message, $link);
-    $stmt->execute();
-}
-
 }

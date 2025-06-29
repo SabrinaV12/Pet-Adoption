@@ -245,17 +245,15 @@ ul {
   transform: translateY(-2px);
 }
 
-/* Reserve space to prevent CLS */
 #header-placeholder,
 #footer-placeholder {
-  min-height: 100px; /* Estimate your header/footer height */
+  min-height: 100px; 
 }
 
 #results {
-  min-height: 600px; /* Prevent shifting when content loads */
+  min-height: 600px; 
 }
 
-/* Ensure image dimensions are respected */
 .pet-card img {
   aspect-ratio: 250 / 160;
   width: 100%;
@@ -265,8 +263,9 @@ ul {
   margin-bottom: 10px;
 }
 
-/* Optional: Ensure card height consistency */
 .pet-card {
   height: 370px;
 }
+
+
 
