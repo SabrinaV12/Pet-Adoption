@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       if (adoptedBlocks[0]) adoptedBlocks[0].style.display = "none";
       const adoptLink = adoptedBlocks[1]?.querySelector("a");
-      if (adoptLink) adoptLink.href = `/adoptionStart.php?pet_id=${petId}`;
+      if (adoptLink) adoptLink.href = `/Pet_Adoption/frontend/view/pages/adoptionStart.html?pet_id=${petId}`;
     }
 
     const infoCards = container.querySelector(".info-cards");
