@@ -37,11 +37,13 @@ async function loadPets(filters = {}) {
                 <img src="${imageUrl}" alt="${pet.name}" style="width: 100%; height: auto;" />
                 <h4>${pet.name}</h4>
                 <p>
-                    Type: ${pet.animal_type} <br>
-                    Breed: ${pet.breed} <br>
-                    Age: ${pet.age} years<br>
-                    Size: ${pet.size}
-                </p>
+  Type: ${pet.animal_type} <br>
+  Breed: ${pet.breed} <br>
+  Age: ${pet.age} years<br>
+  Size: ${pet.size} <br>
+  Location: ${pet.owner_country ?? 'Unknown'}, ${pet.owner_county ?? 'Unknown'}
+</p>
+
                 <a href="/Pet_Adoption/frontend/view/pages/pet_profile.html?pet_id=${pet.id}">
   View ${pet.name}'s profile
 </a>
@@ -57,7 +59,38 @@ async function loadPets(filters = {}) {
     }
 }
 
+async function loadLocationFilters() {
+  try {
+    const response = await fetch('/Pet_Adoption/backend/services/get_locations.php');
+    const data = await response.json();
+
+    const countrySelect = document.querySelector('select[name="country"]');
+    const countySelect = document.querySelector('select[name="county"]');
+
+    countrySelect.innerHTML = `<option value="">Any</option>`;
+    countySelect.innerHTML = `<option value="">Any</option>`;
+
+    data.countries.forEach(country => {
+      const option = document.createElement('option');
+      option.value = country;
+      option.textContent = country;
+      countrySelect.appendChild(option);
+    });
+
+    data.counties.forEach(county => {
+      const option = document.createElement('option');
+      option.value = county;
+      option.textContent = county;
+      countySelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error("Failed to load country/county filters", err);
+  }
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
+    loadLocationFilters();
     loadPets();
 });
 

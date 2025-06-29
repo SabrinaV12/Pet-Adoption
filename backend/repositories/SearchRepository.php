@@ -71,7 +71,15 @@ class SearchRepository {
             $types .= 's';
         }
 
-        $sql = "SELECT pets.* FROM pets JOIN users ON pets.user_id = users.id";
+        $sql = "
+    SELECT 
+        pets.*, 
+        users.country AS owner_country, 
+        users.county AS owner_county 
+    FROM pets 
+    JOIN users ON pets.user_id = users.id
+";
+
         if (!empty($conditions)) {
             $sql .= " WHERE " . implode(" AND ", $conditions);
         }
