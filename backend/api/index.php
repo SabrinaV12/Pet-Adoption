@@ -45,11 +45,11 @@ require_once __DIR__ . '/../controllers/LoginController.php';
 require_once __DIR__ . '/../controllers/LogoutController.php';
 require_once __DIR__ . '/../controllers/AuthMeController.php';
 require_once __DIR__ . '/../controllers/AdminUserController.php';
+require_once __DIR__ . '/../controllers/AdminAddUserController.php';
 require_once __DIR__ . '/../controllers/AdminUserDetailsController.php';
+// require_once __DIR__ . '/../controllers/AdminEditUserController.php';
 
 $path2 = explode("/", $path, 3)[1];
-
-// echo $path2;
 
 switch ($path2) {
 
@@ -74,6 +74,7 @@ switch ($path2) {
                     }
                     $loginController = new LoginController();
                     $loginController->login();
+                    exit();
                     break;
 
                 case 'me':
@@ -112,6 +113,8 @@ switch ($path2) {
                     $path = explode("/admin/user/", $path, 2)[1];
                     if ($path === '') {
                         $adminUserController = new AdminUserController();
+                        // $adminEditUserController = new AdminEditUserController();
+                        $adminAddUserController = new AdminAddUserController();
                         switch ($method) {
                             case 'GET':
                                 $adminUserController->handleGet();
@@ -120,6 +123,9 @@ switch ($path2) {
                                 $adminUserController->handleDelete();
                                 break;
                             //TODO PUT UPDATE
+                            case 'POST':
+                                $adminAddUserController->addUser();
+                                break;
                             default:
                                 http_response_code(405);
                                 echo json_encode(['message' => "405 - Method not allowed"]);

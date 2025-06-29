@@ -166,6 +166,56 @@ class PetRepository
         return $newId;
     }
 
+    public function update(Pet $pet): bool
+    {
+        $sql = "UPDATE pets SET 
+                name = ?, breed = ?, gender = ?, age = ?, color = ?, 
+                weight = ?, height = ?, animal_type = ?, image_path = ?, 
+                size = ?, vaccinated = ?, house_trained = ?, neutered = ?, 
+                microchipped = ?, good_with_children = ?, shots_up_to_date = ?, 
+                restrictions = ?, recommended = ?, adopted = ?, adoption_date = ?, 
+                description = ?
+            WHERE id = ?";
+
+        $stmt = $this->conn->prepare($sql);
+
+        if ($stmt === false) {
+            error_log('Prepare failed: ' . $this->conn->error);
+            return false;
+        }
+
+        $stmt->bind_param(
+            "sssisddssssiiiiiiissisi",
+            $pet->name,
+            $pet->breed,
+            $pet->gender,
+            $pet->age,
+            $pet->color,
+            $pet->weight,
+            $pet->height,
+            $pet->animal_type,
+            $pet->image_path,
+            $pet->size,
+            $pet->vaccinated,
+            $pet->house_trained,
+            $pet->neutered,
+            $pet->microchipped,
+            $pet->good_with_children,
+            $pet->shots_up_to_date,
+            $pet->restrictions,
+            $pet->recommended,
+            $pet->adopted,
+            $pet->adoption_date,
+            $pet->description,
+            $pet->id
+        );
+
+        $success = $stmt->execute();
+        $stmt->close();
+
+        return $success;
+    }
+
     public function findPetsByCriteria(array $filters): array
     {
         $conditions = [];

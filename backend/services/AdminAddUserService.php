@@ -2,35 +2,36 @@
 
 require_once __DIR__ . '/../repositories/RegisterRepository.php';
 require_once __DIR__ . '/../models/user.php';
-class RegisterService
+
+class AdminAddUserService
 {
-    private $repo;
+    private $userRepository;
 
     public function __construct()
     {
-        $this->repo = new RegisterRepository();
+        $this->userRepository = new RegisterRepository();
     }
 
-    public function register(array $data, array $files): User
+    public function createUserByAdmin(array $data, array $files): User
     {
-
+        if (empty($data['username']) || empty($data['email'])) {
+            throw new Exception('Field is required', 400);
+        }
         if ($data['password'] !== $data['confirm_password']) {
-            throw new Exception('password_mismatch');
+            throw new Exception('password_mismatch', 400);
         }
-
-        if ($this->repo->emailExists($data['email'])) {
-            throw new Exception('email_exists');
+        if ($this->userRepository->emailExists($data['email'])) {
+            throw new Exception('email_exists', 409);
         }
-
-        if ($this->repo->usernameExists($data['username'])) {
-            throw new Exception('username_exists');
+        if ($this->userRepository->usernameExists($data['username'])) {
+            throw new Exception('username_exists', 409);
         }
 
         $profilePicPath = $this->uploadFile($files['profile_picture'], 'profile');
         $bannerPicPath = $this->uploadFile($files['banner_picture'], 'banner');
 
         $userData = new User(
-            0, // id ul este autogenerat de MySQL
+            0,
             $profilePicPath,
             $data['first_name'],
             $data['last_name'],
@@ -39,14 +40,14 @@ class RegisterService
             $data['phone'],
             password_hash($data['password'], PASSWORD_BCRYPT),
             $data['description'],
-            "user",
+            $data['role'],
             $data['county'],
             $data['country'],
             $data['telegram_handle'],
-            $bannerPicPath,
+            $bannerPicPath
         );
 
-        $this->repo->createUser($userData);
+        $this->userRepository->createUser($userData);
 
         return $userData;
     }
