@@ -19,11 +19,13 @@ registerForm.addEventListener('submit', async (event) => {
         const result = await response.json();
 
         if (response.ok) {
-            document.getElementById('success-message').textContent = result.message || 'Registration successful!';
-            document.getElementById('success-message').style.display = 'block';
-            registerForm.reset();
-            // window.location.href = 'login.html';
-        } else {
+    document.getElementById('success-message').textContent = 'Registration successful!';
+    document.getElementById('success-message').style.display = 'block';
+    setTimeout(() => {
+        window.location.href = 'login.html';
+    }, 2000);
+}
+ else {
             let errorMsg = result.message || 'Registration failed.';
 
             if (errorMsg === 'password_mismatch') errorMsg = 'Passwords do not match.';

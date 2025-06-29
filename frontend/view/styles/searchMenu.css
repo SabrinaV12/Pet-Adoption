@@ -104,4 +104,12 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+.visually-hidden {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 

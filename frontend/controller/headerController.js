@@ -1,7 +1,7 @@
 const AuthAPI = {
     getUser: async () => {
         try {
-            const response = await fetch('http://localhost/Pet_Adoption/backend/api/index.php/auth/me', { // Point to your backend /api/user/me
+            const response = await fetch('http://localhost/Pet_Adoption/backend/api/index.php/auth/me', {
                 method: 'GET',
                 credentials: 'include'
             });
@@ -24,7 +24,7 @@ const AuthAPI = {
 
     logout: async () => {
         try {
-            const response = await fetch('http://localhost/Pet_Adoption/backend/api/index.php/auth/logout', { // Point to your backend /api/logout
+            const response = await fetch('http://localhost/Pet_Adoption/backend/api/index.php/auth/logout', {
                 method: 'POST',
                 credentials: 'include'
             });
@@ -72,16 +72,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             authLinksDiv.appendChild(document.createTextNode(' | '));
             const logoutLink = document.createElement('a');
-            logoutLink.textContent = 'Logout';
-            logoutLink.addEventListener('click', async (e) => {
-                e.preventDefault();
-                const success = await AuthAPI.logout();
-                if (success) {
+logoutLink.textContent = 'Logout';
+logoutLink.href = '/logout';
+logoutLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const success = await AuthAPI.logout();
+    if (success) {
+        renderAuthLinks(null);
+        window.location.href = '../pages/login.html';
+    }
+});
 
-                    renderAuthLinks(null);
-                    window.location.href = '../pages/login.html';
-                }
-            });
             authLinksDiv.appendChild(logoutLink);
 
         } else {

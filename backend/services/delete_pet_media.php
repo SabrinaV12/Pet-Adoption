@@ -1,37 +1,48 @@
 <?php
 session_start();
-require_once 'database/db.php';
+require_once '../repositories/database/db.php';
 
-if (!isset($_SESSION['user_id'])) {
-    die("Unauthorized");
+header('Content-Type: application/json');
+
+$data = json_decode(file_get_contents("php://input"), true);
+$filePath = $data['file_path'] ?? '';
+
+if (!$filePath) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Missing file path']);
+    exit;
 }
 
-$petId = intval($_POST['pet_id'] ?? 0);
-$filePath = $_POST['file_path'] ?? '';
+$userId = $_SESSION['user_id'] ?? 0;
 
-if (!$petId || !$filePath) {
-    die("Invalid request");
+$stmt = $conn->prepare("
+  SELECT pm.id, pm.file_path
+  FROM pet_media pm
+  JOIN pets p ON pm.pet_id = p.id
+  WHERE pm.file_path = ? AND p.user_id = ?
+");
+$stmt->bind_param("si", $filePath, $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$media = $result->fetch_assoc();
+$stmt->close();
+
+if (!$media) {
+    http_response_code(403);
+    echo json_encode(['error' => 'Not authorized to delete this file']);
+    exit;
 }
 
-$ownerCheck = $conn->prepare("SELECT user_id FROM pets WHERE id = ?");
-$ownerCheck->bind_param("i", $petId);
-$ownerCheck->execute();
-$result = $ownerCheck->get_result();
-$pet = $result->fetch_assoc();
+$stmt = $conn->prepare("DELETE FROM pet_media WHERE file_path = ?");
+$stmt->bind_param("s", $filePath);
+$stmt->execute();
+$stmt->close();
 
-if (!$pet || $pet['user_id'] !== $_SESSION['user_id']) {
-    die("Unauthorized to delete this media");
-}
-
-$fullPath = __DIR__ . '/' . $filePath;
+$fullPath = __DIR__ . '/../../public/pet-uploads/' . $filePath;
 if (file_exists($fullPath)) {
     unlink($fullPath);
 }
 
-$deleteStmt = $conn->prepare("DELETE FROM pet_media WHERE pet_id = ? AND file_path = ?");
-$deleteStmt->bind_param("is", $petId, $filePath);
-$deleteStmt->execute();
-
-header("Location: petPage.php?id=" . $petId);
+echo json_encode(['success' => true]);
 exit;
 ?>

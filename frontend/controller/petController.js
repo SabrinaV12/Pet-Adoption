@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const response = await fetch(`http://localhost/Pet_Adoption/backend/services/get_pet_profile.php?pet_id=${petId}`);
+    const response = await fetch(`${window.location.origin}/Pet_Adoption/backend/services/get_pet_profile.php?pet_id=${petId}`);
     const data = await response.json();
 
     if (!response.ok) throw new Error(data.error || "Failed to load pet data");
@@ -28,8 +28,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const profileImg = container.querySelector(".profile-pic img");
 
     if (data.pet.image_path) {
-      if (banner) banner.style.backgroundImage = `url('${data.pet.image_path}')`;
-      if (profileImg) profileImg.src = data.pet.image_path;
+      const imagePath = `${window.location.origin}/Pet_Adoption/public/pet-uploads/${data.pet.image_path}`;
+      if (banner) banner.style.backgroundImage = `url('${imagePath}')`;
+      if (profileImg) profileImg.src = imagePath;
     }
 
     const adoptedBlocks = container.querySelectorAll(".adopted");
@@ -118,19 +119,20 @@ document.addEventListener("DOMContentLoaded", async () => {
           const item = document.createElement("div");
           item.className = "media-item";
           const ext = file.file_type.split("/")[0];
+          const mediaPath = `${window.location.origin}/Pet_Adoption/public/pet-uploads/${file.file_path}`;
 
           if (ext === "image") {
-            item.innerHTML = `<img src="${file.file_path}" alt="Pet Photo" style="max-width: 100%; border-radius: 10px;" />`;
+            item.innerHTML = `<img src="${mediaPath}" alt="Pet Photo" style="max-width: 100%; border-radius: 10px;" />`;
           } else if (ext === "video") {
             item.innerHTML = `
               <video controls style="max-width: 100%; border-radius: 10px;">
-                <source src="${file.file_path}" type="${file.file_type}">
+                <source src="${mediaPath}" type="${file.file_type}">
                 Your browser does not support the video tag.
               </video>`;
           } else if (ext === "audio") {
             item.innerHTML = `
               <audio controls style="width: 100%;">
-                <source src="${file.file_path}" type="${file.file_type}">
+                <source src="${mediaPath}" type="${file.file_type}">
                 Your browser does not support the audio tag.
               </audio>`;
           }

@@ -4,11 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Search and adopt pets by type, breed, color, gender, size, and age. Find your next furry friend near you.">
   <title>Search</title>
   <link rel="stylesheet" href="../styles/petPage.css" />
   <link rel="stylesheet" href="../styles/header.css" />
   <link rel="stylesheet" href="../styles/footer.css" />
   <link rel="stylesheet" href="../styles/searchMenu.css">
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      border: 0;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,15 +31,17 @@
     <aside class="sidebar">
       <h3>Filters</h3>
       <form method="GET" action="" class="search-form">
-        <legend>Choose a pet:</legend>
-        <label><input type="checkbox" name="type[]" value="Dog"> Dog</label><br>
-        <label><input type="checkbox" name="type[]" value="Cat"> Cat</label><br>
-        <label><input type="checkbox" name="type[]" value="Capybara"> Capybara</label><br>
+        <fieldset>
+          <legend>Choose a pet:</legend>
+          <label><input type="checkbox" name="type[]" value="Dog"> Dog</label><br>
+          <label><input type="checkbox" name="type[]" value="Cat"> Cat</label><br>
+          <label><input type="checkbox" name="type[]" value="Capybara"> Capybara</label><br>
         </fieldset>
 
         <fieldset>
           <legend>Breed:</legend>
-          <select name="breed">
+          <label for="breed-select" class="visually-hidden">Select breed</label>
+          <select name="breed" id="breed-select">
             <option value="">Any</option>
             <option value="Pit Bull">Pit Bull</option>
             <option value="Golden Retriever">Golden Retriever</option>
@@ -36,7 +51,8 @@
 
         <fieldset>
           <legend>Color:</legend>
-          <select name="color">
+          <label for="color-select" class="visually-hidden">Select color</label>
+          <select name="color" id="color-select">
             <option value="">Any</option>
             <option value="Brown">Brown</option>
             <option value="Black">Black</option>
@@ -63,45 +79,36 @@
         </fieldset>
 
         <fieldset>
+          <legend>Country:</legend>
+          <label for="country-select" class="visually-hidden">Select country</label>
+          <select name="country" id="country-select">
+            <option value="">Any</option>
+            <option value="">Country option</option>
+          </select>
+        </fieldset>
 
-          <fieldset>
-            <legend>Country:</legend>
-            <select name="country">
-              <option value="">Any</option>
-              
-                <option value="" >
-                  
-                </option>
-              
-            </select>
-          </fieldset>
+        <fieldset>
+          <legend>County:</legend>
+          <label for="county-select" class="visually-hidden">Select county</label>
+          <select name="county" id="county-select">
+            <option value="">Any</option>
+            <option value="">County option</option>
+          </select>
+        </fieldset>
 
-          <fieldset>
-            <legend>County:</legend>
-            <select name="county">
-              <option value="">Any</option>
-              
-                <option value="" >
-                  
-                </option>
-              
-            </select>
-          </fieldset>
+        <button type="submit">Apply Filter</button>
 
-          <button type="submit">Apply Filter</button>
-
-          <div class="rss-link-container" style="margin-bottom: 20px; text-align: right;">
-            
-            <a href="/rss.php?" target="_blank">
-              <img src="https://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg" alt="RSS Feed" style="width: 24px; height: 24px; vertical-align: middle;">
-              Subscribe to this search
-            </a>
-          </div>
+        <div class="rss-link-container" style="margin-bottom: 20px; text-align: right;">
+          <a href="/rss.php?" target="_blank">
+            <img src="../assets/Feed-icon.svg" alt="RSS Feed" width="24" height="24" style="vertical-align: middle;">
+            Subscribe to this search
+          </a>
+        </div>
       </form>
     </aside>
 
     <main class="pet-list" id="results">
-      
+      <!-- Results dynamically injected here -->
     </main>
   </div>
 

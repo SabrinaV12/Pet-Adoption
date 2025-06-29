@@ -42,7 +42,10 @@ async function loadPets(filters = {}) {
                     Age: ${pet.age} years<br>
                     Size: ${pet.size}
                 </p>
-                <a href="/Pet_Adoption/frontend/view/pages/pet_profile.html?pet_id=${pet.id}">More Info</a>
+                <a href="/Pet_Adoption/frontend/view/pages/pet_profile.html?pet_id=${pet.id}">
+  View ${pet.name}'s profile
+</a>
+
             `;
 
             resultsContainer.appendChild(petCard);

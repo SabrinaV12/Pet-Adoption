@@ -43,8 +43,8 @@
 }
 
 .auth-links a {
-    color: #41349D;
-    text-decoration: none;
+    color: #0e045c;
+    text-decoration: underline;
     padding-right: 0px;
 }
 
