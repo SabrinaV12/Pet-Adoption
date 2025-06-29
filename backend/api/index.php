@@ -4,41 +4,16 @@ header("Access-Control-Allow-Origin: http://localhost:5500");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
-// header("Content-Type: application/json");
 
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'OPTIONS') {
-    http_response_code(204); // No Content
+    http_response_code(204);
     exit();
 }
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = explode("/Pet_Adoption/backend/api/index.php", $uri, 2)[1];
-
-// echo $path;
-
-// http://localhost/Pet_Adoption/backend/api/index.php/
-
-// /auth/register - POST    x
-// /auth/login - POST       x
-// /auth/me - GET           x
-// /auth/logout - POST      x
-
-// /admin/user - GET lista cu toti                              x
-// /admin/user?id=USER_ID DELETE                                x
-// /admin/user?id=USER_ID PUT                                   trb
-// /admin/user/details?id=USER_ID - GET - AdminUserDetails      x
-
-
-// /admin/pet - GET 
-// /admin/pet?id=PET_ID DELETE
-// /admin/pet?id=PET_ID PUT
-
-// /admin/pet/details?id=PET_ID - GET
-
-
-//...
 
 require_once __DIR__ . '/../controllers/RegisterController.php';
 require_once __DIR__ . '/../controllers/LoginController.php';
@@ -47,12 +22,11 @@ require_once __DIR__ . '/../controllers/AuthMeController.php';
 require_once __DIR__ . '/../controllers/AdminUserController.php';
 require_once __DIR__ . '/../controllers/AdminAddUserController.php';
 require_once __DIR__ . '/../controllers/AdminUserDetailsController.php';
-// require_once __DIR__ . '/../controllers/AdminEditUserController.php';
+require_once __DIR__ . '/../controllers/NotificationController.php';
 
 $path2 = explode("/", $path, 3)[1];
 
 switch ($path2) {
-
     case 'auth': {
             $path = explode("/auth/", $path, 2)[1];
             switch ($path) {
@@ -75,7 +49,6 @@ switch ($path2) {
                     $loginController = new LoginController();
                     $loginController->login();
                     exit();
-                    break;
 
                 case 'me':
                     if ($method !== 'GET') {
@@ -104,16 +77,16 @@ switch ($path2) {
             }
             break;
         }
-    case 'admin': {
 
+    case 'admin': {
             $path2 = explode("/admin/", $path, 2)[1];
             $path3 = explode("/", $path2, 2)[0];
+
             switch ($path3) {
                 case 'user':
                     $path = explode("/admin/user/", $path, 2)[1];
                     if ($path === '') {
                         $adminUserController = new AdminUserController();
-                        // $adminEditUserController = new AdminEditUserController();
                         $adminAddUserController = new AdminAddUserController();
                         switch ($method) {
                             case 'GET':
@@ -122,7 +95,6 @@ switch ($path2) {
                             case 'DELETE':
                                 $adminUserController->handleDelete();
                                 break;
-                            //TODO PUT UPDATE
                             case 'POST':
                                 $adminAddUserController->addUser();
                                 break;
@@ -143,10 +115,9 @@ switch ($path2) {
                         }
                         $adminUserDetailsController = new AdminUserDetailsController();
                         $adminUserDetailsController->showUserDetailsAsApi();
-                        break;
                     }
-
                     break;
+
                 default:
                     http_response_code(404);
                     echo json_encode(['message' => "404 - Page not found"]);
@@ -154,6 +125,43 @@ switch ($path2) {
             }
             break;
         }
+
+    case 'notifications': {
+            if ($method !== 'GET') {
+                http_response_code(405);
+                echo json_encode(['message' => "405 - Method not allowed"]);
+                exit();
+            }
+
+            $notificationController = new NotificationController();
+            $notificationController->showUserNotifications();
+            break;
+        }
+
+        error_log("🔍 ROUTER PATH2: " . $path2);
+
+    case 'request': {
+            $subPath = explode("/request/", $path, 2)[1];
+            list($rid, $action) = array_pad(explode("/", $subPath), 2, null);
+
+            require_once __DIR__ . '/../controllers/RequestController.php';
+
+            $ctrl = new RequestController();
+
+            if ($action === null && $method === 'GET') {
+                $ctrl->getRequestDetails($rid);
+            } elseif ($action === 'accept' && $method === 'POST') {
+                $ctrl->accept($rid);
+            } elseif ($action === 'deny' && $method === 'POST') {
+                $ctrl->deny($rid);
+            } else {
+                http_response_code(404);
+                echo json_encode(['message' => 'Not found']);
+            }
+
+            break;
+        }
+
 
     default:
         http_response_code(404);

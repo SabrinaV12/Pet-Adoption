@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Request</title>
+  <link rel="stylesheet" href="../styles/view_request.css" />
+</head>
+<body>
+  <div class="request-wrapper">
+    <h2>Adoption Request</h2>
+    
+    <div id="pet-details"></div>
+    
+    <div id="response-message"></div>
+    
+    <div class="actions">
+      <button id="accept-btn" class="btn-confirm">Accept</button>
+      <button id="deny-btn" class="btn-deny">Deny</button>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestId = urlParams.get('requestId');
+      console.log('🔍 Loaded with requestId:', requestId);
+
+      const container = document.getElementById('pet-details');
+      const message = document.getElementById('response-message');
+
+      if (!requestId || !container) {
+        if (container) {
+          container.innerText = 'Invalid request. Please go back.';
+        }
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost/Pet_Adoption/backend/api/index.php/request/${requestId}`, {
+          method: 'GET',
+          credentials: 'include'
+        });
+
+        if (!res.ok) {
+          throw new Error(await res.text());
+        }
+
+        const req = await res.json();
+
+        container.innerHTML = `
+          <p><strong>Pet:</strong> ${req.pet_name || req.name || 'N/A'}</p>
+          <p><strong>Breed:</strong> ${req.breed || 'N/A'}</p>
+          <p><strong>Age:</strong> ${req.age != null ? req.age + ' weeks' : 'N/A'}</p>
+          <p><strong>Color:</strong> ${req.color || 'N/A'}</p>
+          <p><strong>Requested by:</strong> ${req.username || 'Unknown'}</p>
+          <p><strong>Date:</strong> ${(req.created_at || req.requested_at) ? new Date(req.created_at || req.requested_at).toLocaleString() : 'Unknown'}</p>
+        `;
+      } catch (e) {
+        container.innerText = 'Error loading request details.';
+        console.error('Fetch error:', e);
+      }
+
+      document.getElementById('accept-btn').addEventListener('click', () => handleDecision('accept'));
+      document.getElementById('deny-btn').addEventListener('click', () => handleDecision('deny'));
+
+      async function handleDecision(decision) {
+        message.style.display = 'none';
+
+        try {
+          const res = await fetch(`http://localhost/Pet_Adoption/backend/api/index.php/request/${requestId}/${decision}`, {
+            method: 'POST',
+            credentials: 'include'
+          });
+
+          const json = await res.json();
+          message.style.color = res.ok ? 'green' : 'red';
+          message.innerText = json.message || (res.ok ? `Request ${decision}ed.` : 'Error occurred.');
+          message.style.display = 'block';
+
+          document.getElementById('accept-btn').disabled = true;
+          document.getElementById('deny-btn').disabled = true;
+        } catch (e) {
+          message.style.color = 'red';
+          message.innerText = 'Network error.';
+          message.style.display = 'block';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

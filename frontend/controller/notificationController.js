@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const container = document.querySelector('.notifications-container');
 
     try {
-        const response = await fetch('http://localhost/Pet_Adoption/backend/public/index.php/notifications', {
+        const response = await fetch('http://localhost/Pet_Adoption/backend/api/index.php/notifications', {
+
             method: 'GET',
             credentials: 'include',
             headers: {

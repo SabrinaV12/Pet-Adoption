@@ -1,0 +1,90 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9fc;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.request-wrapper {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  border: 2px solid #9990DA;
+  box-shadow: 0 10px 25px rgba(153, 144, 218, 0.25);
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+h2 {
+  color: #9990DA;
+  margin-bottom: 25px;
+}
+
+#pet-details p {
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+
+#pet-details strong {
+  color: #9990DA;
+  font-weight: 600;
+}
+
+.actions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+button {
+  font-size: 16px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-confirm {
+  background-color: #9990DA;
+  color: white;
+}
+
+.btn-confirm:hover {
+  background-color: #857cc6;
+  transform: scale(1.05);
+}
+
+.btn-deny {
+  background-color: #e57373;
+  color: white;
+}
+
+.btn-deny:hover {
+  background-color: #d55c5c;
+  transform: scale(1.05);
+}
+
+#response-message {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  display: none;
+}
+
+#pet-details p {
+  font-size: 17px;
+  margin: 12px 0;
+}
+
+#pet-details strong::after {
+  content: ":";
+}

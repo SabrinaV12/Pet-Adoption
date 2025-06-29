@@ -102,7 +102,12 @@ foreach ($ages as $i => $age) {
 }
 
 foreach ($repo->getAdmins() as $admin) {
-    $repo->notifyAdmin($admin['id'], "New pet adoption request submitted", "/admin/view_request.php?id=$requestId");
+    $repo->notifyAdmin(
+    $admin['id'],
+    "New pet adoption request submitted",
+    "/Pet_Adoption/frontend/view/pages/view_request.html?requestId=$requestId"
+);
+
 }
 
 echo json_encode(['success' => true, 'id' => $requestId]);
