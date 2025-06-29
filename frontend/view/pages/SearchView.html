@@ -11,22 +11,31 @@
   <link rel="stylesheet" href="../styles/header.css" />
   <link rel="stylesheet" href="../styles/footer.css" />
   <link rel="stylesheet" href="../styles/searchMenu.css">
-  <style>
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      margin: -1px;
-      padding: 0;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      border: 0;
-    }
-  </style>
 </head>
 
 <body>
-  <div id="header-placeholder"></div>
+  <header class="header">
+    <nav class="nav">
+      <a href="../pages/home.html"><img src="../assets/logo.png" alt="Home" width="122" height="50" /></a>
+
+      <section class="main-buttons">
+        <a href="../pages/searchView.html">Adopt</a>
+        <a href="../pages/submit_pet_request.html">Rehome a Pet</a>
+        <a href="../pages/documentatie/documentatie.html">About</a>
+      </section>
+
+      <section class="information-buttons">
+        <a href="../pages/notifications.html"><img src="../assets/notifications.png" alt="Notifications" /></a>
+
+        <div class="auth-links" id="auth-links">
+        </div>
+      </section>
+    </nav>
+
+    <section class="mini-navigation">
+
+    </section>
+  </header>
 
   <div class="container">
     <aside class="sidebar">
@@ -100,7 +109,7 @@
         <button type="submit">Apply Filter</button>
 
         <div class="rss-link-container" style="margin-bottom: 20px; text-align: right;">
-          <a href="/rss.php?" target="_blank">
+          <a href="/rss.php?" target="_blank" id="rss-link">
             <img src="../assets/Feed-icon.svg" alt="RSS Feed" width="24" height="24" style="vertical-align: middle;">
             Subscribe to this search
           </a>
