@@ -64,27 +64,35 @@
       document.getElementById('deny-btn').addEventListener('click', () => handleDecision('deny'));
 
       async function handleDecision(decision) {
-        message.style.display = 'none';
+  message.style.display = 'none';
 
-        try {
-          const res = await fetch(`http://localhost/Pet_Adoption/backend/api/index.php/request/${requestId}/${decision}`, {
-            method: 'POST',
-            credentials: 'include'
-          });
+  try {
+    const res = await fetch(`http://localhost/Pet_Adoption/backend/api/index.php/request/${requestId}/${decision}`, {
+      method: 'POST',
+      credentials: 'include'
+    });
 
-          const json = await res.json();
-          message.style.color = res.ok ? 'green' : 'red';
-          message.innerText = json.message || (res.ok ? `Request ${decision}ed.` : 'Error occurred.');
-          message.style.display = 'block';
+    const json = await res.json();
+    message.style.color = res.ok ? 'green' : 'red';
+    message.innerText = json.message || (res.ok ? `Request ${decision}ed.` : 'Error occurred.');
+    message.style.display = 'block';
 
-          document.getElementById('accept-btn').disabled = true;
-          document.getElementById('deny-btn').disabled = true;
-        } catch (e) {
-          message.style.color = 'red';
-          message.innerText = 'Network error.';
-          message.style.display = 'block';
-        }
-      }
+    document.getElementById('accept-btn').disabled = true;
+    document.getElementById('deny-btn').disabled = true;
+
+    if (res.ok) {
+      setTimeout(() => {
+        window.location.href = 'notifications.html';
+      }, 1500);
+    }
+
+  } catch (e) {
+    message.style.color = 'red';
+    message.innerText = 'Network error.';
+    message.style.display = 'block';
+  }
+}
+
     });
   </script>
 </body>

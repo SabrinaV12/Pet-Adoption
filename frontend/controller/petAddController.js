@@ -43,32 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     try {
-  const response = await fetch('/Pet_Adoption/backend/services/handle_pet_request.php', {
-  method: 'POST',
-  body: formData,
-  credentials: 'include'
-});
+      const response = await fetch('/Pet_Adoption/backend/services/handle_pet_request.php', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include'
+      });
 
+      const text = await response.text();
+      console.log('Raw server response:', text);
 
-  const text = await response.text();
-  console.log('Raw server response:', text);
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (jsonError) {
+        throw new Error('Server did not return valid JSON:\n' + text);
+      }
 
-  let result;
-  try {
-    result = JSON.parse(text);
-  } catch (jsonError) {
-    throw new Error('Server did not return valid JSON:\n' + text);
-  }
+      if (!response.ok) throw new Error(result.message || 'Request failed');
 
-  if (!response.ok) throw new Error(result.message || 'Request failed');
+      window.location.href = 'confirmation.html'; 
 
-  alert('Pet request submitted successfully!');
-  form.reset();
-
-} catch (error) {
-  console.error('Error submitting pet request:', error);
-  alert('Failed to submit pet request. Please try again.');
-}
-
+    } catch (error) {
+      console.error('Error submitting pet request:', error);
+      alert('Failed to submit pet request. Please try again.');
+    }
   });
 });
