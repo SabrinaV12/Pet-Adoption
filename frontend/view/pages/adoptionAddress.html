@@ -1,19 +1,3 @@
-<!-- <?php
-session_start();
-require_once 'database/check_auth.php';
-
-if (!isset($_SESSION['adoption']['pet_id'])) {
-    header('Location: adoptionStart.php?error=session_expired_or_invalid');
-    exit();
-}
-
-$errors = $_SESSION['form_errors'] ?? [];
-$old_input = $_SESSION['old_input'] ?? [];
-
-unset($_SESSION['form_errors']);
-unset($_SESSION['old_input']);
-?> -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,66 +18,42 @@ unset($_SESSION['old_input']);
         <p class="important">Please note, all these details must be completed in order to apply for pet adoption.</p>
 
         <section class="address">
-            <form action="../../../backend/services/add_address.php" method="POST">
+            <form id="address-form" novalidate>
 
                 <div class="info-row">
                     <div class="field">
-                        <p class="text"> Adress line 1 *</p>
-                        <!-- <input type="text" name="adress_1" placeholder="Street Name and Number" required
-                            value="<?php echo htmlspecialchars($old_input['adress_1'] ?? ''); ?>" />
-                        <?php if (isset($errors['adress_1'])): ?>
-                        <p class="error-message">
-                            <?php echo $errors['adress_1']; ?>
-                        </p>
-                        <?php endif; ?> -->
+                        <p class="text"> Address line 1 *</p>
+                        <input type="text" id="address_1" name="address_1" placeholder="Street Name and Number"
+                            required />
+                        <p class="error-message" id="address_1-error"></p>
                     </div>
 
                     <div class="field">
-                        <p class="text"> Adress line 2 </p>
-                        <!-- <input type="text" name="adress_2" placeholder="Block and apartment number"
-                            value="<?php echo htmlspecialchars($old_input['adress_2'] ?? ''); ?>" />
-                        <?php if (isset($errors['adress_2'])): ?>
-                        <p class="error-message">
-                            <?php echo $errors['adress_2']; ?>
-                        </p>
-                        <?php endif; ?> -->
+                        <p class="text"> Address line 2 </p>
+                        <input type="text" id="address_2" name="address_2" placeholder="Block and apartment number" />
+                        <p class="error-message" id="address_2-error"></p>
                     </div>
                 </div>
 
                 <div class="info-row">
                     <div class="field">
                         <p class="text"> Postcode *</p>
-                        <!-- <input type="text" name="postcode" placeholder="Postcode" required
-                            value="<?php echo htmlspecialchars($old_input['postcode'] ?? ''); ?>" />
-                        <?php if (isset($errors['postcode'])): ?>
-                        <p class="error-message">
-                            <?php echo $errors['postcode']; ?>
-                        </p>
-                        <?php endif; ?> -->
+                        <input type="text" id="postcode" name="postcode" placeholder="Postcode" required />
+                        <p class="error-message" id="postcode-error"></p>
                     </div>
 
                     <div class="field">
                         <p class="text"> City *</p>
-                        <!-- <input type="text" name="city" placeholder="Town/City" required
-                            value="<?php echo htmlspecialchars($old_input['city'] ?? ''); ?>" />
-                        <?php if (isset($errors['city'])): ?>
-                        <p class="error-message">
-                            <?php echo $errors['city']; ?>
-                        </p>
-                        <?php endif; ?> -->
+                        <input type="text" id="city" name="city" placeholder="Town/City" required />
+                        <p class="error-message" id="city-error"></p>
                     </div>
                 </div>
 
                 <div class="info-row">
                     <div class="field">
                         <p class="text"> Phone Number *</p>
-                        <!-- <input type="tel" name="phone" placeholder="Phone Number" required
-                            value="<?php echo htmlspecialchars($old_input['phone'] ?? ''); ?>" />
-                        <?php if (isset($errors['phone'])): ?>
-                        <p class="error-message">
-                            <?php echo $errors['phone']; ?>
-                        </p>
-                        <?php endif; ?> -->
+                        <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
+                        <p class="error-message" id="phone-error"></p>
                     </div>
                 </div>
 
@@ -107,11 +67,13 @@ unset($_SESSION['old_input']);
 
         </section>
 
+
     </section>
 
     <div id="footer-placeholder"></div>
 
     <script src="../../controller/footerController.js"></script>
     <script src="../../controller/headerController.js"></script>
+    <script type="module" src="../../controller/adoptionAddressController.js"></script>
 
 </html>
