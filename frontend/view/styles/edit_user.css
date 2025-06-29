@@ -83,7 +83,7 @@ button[type="submit"]:hover {
   background-color: #7e72c3;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
   main {
     margin: 20px;
     padding: 15px;

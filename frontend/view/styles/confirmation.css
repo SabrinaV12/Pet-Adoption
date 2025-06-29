@@ -60,3 +60,23 @@ p {
 .button.secondary:hover {
     background-color: #f0f0ff;
 }
+
+@media (max-width: 780px) {
+    .container {
+        margin: 40px 20px;
+        padding: 30px 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .button {
+        width: 100%;
+        text-align: center;
+        padding: 14px;
+        font-size: 18px;
+    }
+}

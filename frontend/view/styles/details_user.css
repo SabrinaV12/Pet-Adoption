@@ -81,7 +81,7 @@ dd {
   font-size: 15px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
   main.user-details-container {
     margin: 20px;
     padding: 15px;

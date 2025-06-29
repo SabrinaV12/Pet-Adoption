@@ -102,7 +102,7 @@
     background-color: #352b80;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
     .profile-card {
         flex-direction: column;
         text-align: center;

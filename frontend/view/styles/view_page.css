@@ -58,7 +58,7 @@ button:active {
     transform: translateY(0);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
     #app-details {
         margin: 15px;
         padding: 20px;

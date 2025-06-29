@@ -68,7 +68,7 @@ button[type="submit"]:hover {
   background-color: #7c71c2;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
   main {
     margin: 20px;
     padding: 15px;
