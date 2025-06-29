@@ -100,32 +100,40 @@
     display: block;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 780px) {
+    .header {
+        align-items: center;
+        gap: 12px;
+    }
+
     .nav {
         flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
+        align-items: center;
+        padding: 10px 0;
+        gap: 8px;
     }
 
     .main-buttons {
-        margin: 10px 0;
-        padding-top: 0;
-        display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 10px;
+        padding-top: 10px;
     }
 
     .information-buttons {
-        margin-left: 0;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+        align-items: center;
+        gap: 10px;
+        margin-left: 0;
         padding-bottom: 10px;
     }
 
     .auth-links {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 6px;
         margin-top: 8px;
-        padding: 6px 10px;
     }
 
     .mini-navigation {
@@ -133,10 +141,20 @@
         height: auto;
         padding: 8px;
         gap: 6px;
+        align-items: center;
     }
 
     .search-bar {
         margin: 10px auto 0 auto;
         width: 90%;
+        justify-content: center;
+    }
+
+    .search-bar input[type="text"] {
+        width: 100%;
+    }
+
+    .search-bar button {
+        margin-left: 10px;
     }
 }

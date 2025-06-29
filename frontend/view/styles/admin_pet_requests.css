@@ -46,3 +46,21 @@ h2 {
 .reject {
     background: #dc3545;
 }
+
+@media (max-width: 780px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .approve,
+    .reject {
+        width: 100%;
+        text-align: center;
+    }
+}

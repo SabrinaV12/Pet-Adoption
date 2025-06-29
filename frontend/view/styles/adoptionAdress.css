@@ -92,7 +92,7 @@
     background-color: #352b80;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 780px) {
     .field {
         width: 100%;
     }

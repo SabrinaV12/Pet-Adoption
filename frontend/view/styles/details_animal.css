@@ -90,7 +90,7 @@ dl dd {
   margin: 5px 0 0 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 780px) {
   .pet-details-container {
     flex-direction: column;
     padding: 15px;

@@ -148,7 +148,7 @@ button[type="submit"]:hover {
   background-color: #7c71c2;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 780px) {
   form {
     padding: 20px;
   }

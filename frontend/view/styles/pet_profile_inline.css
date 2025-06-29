@@ -24,3 +24,19 @@
 .checks-box div {
   margin-bottom: 10px;
 }
+
+@media (max-width: 780px) {
+  .checks-description-wrapper {
+    flex-direction: column;
+  }
+
+  .description-box,
+  .checks-box {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .checks-description-wrapper {
+    gap: 20px;
+  }
+}

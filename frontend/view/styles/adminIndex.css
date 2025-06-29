@@ -68,7 +68,7 @@ nav ul li:hover a {
   color: white;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
   h1 {
     font-size: 1.6rem;
     padding: 18px;

@@ -88,3 +88,33 @@ button {
 #pet-details strong::after {
   content: ":";
 }
+
+@media (max-width: 780px) {
+  .request-wrapper {
+    padding: 30px 20px;
+    width: 95%;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 17px;
+    padding: 14px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  #pet-details p {
+    font-size: 16px;
+  }
+
+  #response-message {
+    font-size: 15px;
+  }
+}
