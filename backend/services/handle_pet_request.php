@@ -66,7 +66,7 @@ $data['shots_up_to_date'] = $data['shots_up_to_date'] ?? 0;
 
 $imagePath = null;
 if (isset($_FILES['pet_image']) && $_FILES['pet_image']['error'] === UPLOAD_ERR_OK) {
-    $uploadDir = __DIR__ . '/../public/pet-uploads/pet-profile/';
+    $uploadDir = __DIR__ . '/../../public/pet-uploads/pet-profile/';
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
@@ -75,7 +75,7 @@ if (isset($_FILES['pet_image']) && $_FILES['pet_image']['error'] === UPLOAD_ERR_
     $targetFile = $uploadDir . $filename;
 
     if (move_uploaded_file($_FILES['pet_image']['tmp_name'], $targetFile)) {
-        $imagePath = '/Pet_Adoption/public/pet-uploads/pet-profile/' . $filename;
+        $imagePath = 'pet-profile/' . $filename;
         $data['image_path'] = $imagePath;
     }
 }
