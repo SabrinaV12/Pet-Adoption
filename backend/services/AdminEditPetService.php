@@ -113,7 +113,7 @@ class AdminEditPetService
             return $currentPath;
         }
 
-        $uploadDir = __DIR__ . '/../../public/pet-profile/';
+        $uploadDir = __DIR__ . '/../../public/pet-uploads/pet-profile/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
@@ -128,7 +128,7 @@ class AdminEditPetService
         }
 
         if (move_uploaded_file($fileData['tmp_name'], $uploadPath)) {
-            return '/pet-profile/' . $uniqueFilename;
+            return 'pet-profile/' . $uniqueFilename;
         } else {
             throw new Exception("Failed to move uploaded file.");
         }
