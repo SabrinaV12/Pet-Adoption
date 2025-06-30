@@ -71,6 +71,9 @@ class SearchRepository {
             $types .= 's';
         }
 
+        error_log(print_r($filters, true));
+
+
         $sql = "
     SELECT 
         pets.*, 

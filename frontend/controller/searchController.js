@@ -1,9 +1,9 @@
 const filterForm = document.querySelector('.search-form');
 const resultsContainer = document.getElementById('results');
 
-async function loadPets(filters = {}) {
-    const queryParams = new URLSearchParams(filters).toString();
-    console.log("Loading pets with:", queryParams);
+async function loadPets(params = new URLSearchParams()) {
+  const queryParams = params.toString();
+  console.log("Loading pets with:", queryParams);
 
     try {
         const response = await fetch(`http://localhost/Pet_Adoption/backend/controllers/SearchController.php?${queryParams}`, {
@@ -95,13 +95,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 filterForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    const formData = new FormData(filterForm);
-    const filters = Object.fromEntries(formData.entries());
-    if (formData.getAll('type[]').length) {
-        filters['type[]'] = formData.getAll('type[]');
+  const formData = new FormData(filterForm);
+  const params = new URLSearchParams();
+
+  for (const [key, value] of formData.entries()) {
+    if (key === 'type[]') {
+      params.append('type[]', value);
+    } else if (value !== '') {
+      params.append(key, value);
     }
+  }
 
-    loadPets(filters);
+  const rssLink = document.getElementById('rss-link');
+  rssLink.href = `/Pet_Adoption/backend/services/rss.php?${params.toString()}`;
+
+  loadPets(params);
 });
+
+
