@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             <p><strong>Address:</strong> ${data.address_line1}, ${data.city}</p>
             <p><strong>Experience:</strong> ${data.experience}</p>
             <p><strong>Has other animals:</strong> ${data.has_other_animals}</p>
-            <!-- Add more fields as needed -->
         `;
 
         actions.style.display = 'block';

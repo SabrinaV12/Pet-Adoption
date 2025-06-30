@@ -41,7 +41,7 @@
       <img class="profile-image" src="" alt="Profile Picture" />
     </div>
     <h1 class="username"></h1>
-    <p class="location"> · </p>
+    <p class="location"> 路 </p>
   </header>
 
   <main class="profile-main">
@@ -92,7 +92,7 @@
 
         document.title = `${user.first_name} ${user.last_name}'s Profile`;
         document.querySelector('.username').textContent = user.username;
-        document.querySelector('.location').textContent = `${user.country} · ${user.county}`;
+        document.querySelector('.location').textContent = `${user.country} 路 ${user.county}`;
         document.querySelector('.bio p').textContent = user.description || "No bio yet.";
 
         document.querySelector('.contact a[href^="mailto:"]').textContent = user.email;
@@ -127,8 +127,14 @@
             card.innerHTML = `
               <img src="${petImage}" alt="${pet.name}" />
               <p><strong>${pet.name}</strong></p>
-              <p>${pet.animal_type} · ${pet.breed} <br>${pet.age} years · ${pet.size}</p>
-              <a href="/Pet_Adoption/frontend/view/pages/pet_profile.html?pet_id=${pet.id}" class="more-info-button">More Info</a>
+              <p>${pet.animal_type} 路 ${pet.breed} <br>${pet.age} years 路 ${pet.size}</p>
+              <a 
+  href="/Pet_Adoption/frontend/view/pages/pet_profile.html?pet_id=${pet.id}" 
+  class="more-info-button"
+  aria-label="View profile for ${pet.name}, a ${pet.age} year old ${pet.breed} ${pet.animal_type}">
+  View ${pet.name}'s Profile
+</a>
+
             `;
             petsGrid.appendChild(card);
           });

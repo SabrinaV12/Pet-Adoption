@@ -28,7 +28,7 @@
 .nav-list {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
     color: #41349D;
     text-decoration: none !important;
 }
@@ -36,6 +36,9 @@
 .nav-list a {
     text-decoration: none !important;
     color: #41349D;
+    padding: 10px 12px;
+    min-height: 44px;
+
 }
 
 .title-text {
