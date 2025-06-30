@@ -53,19 +53,29 @@ class AdminAddUserService
     }
 
     private function uploadFile(array $file, string $type): string
-    {
-        $uploadDir = __DIR__ . '/../../public/uploads/' . $type . '/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        $fileName = uniqid() . '_' . basename($file['name']);
-        $filePath = $uploadDir . $fileName;
-
-        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
-            throw new Exception('file_upload_error');
-        }
-
-        return '/uploads/' . $type . '/' . $fileName;
+{
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    
+    $uploadDir = __DIR__ . '/../../public/uploads/' . $type . '/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
     }
+
+    $originalName = $file['name'];
+    $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+
+    if (!in_array($extension, $allowedExtensions)) {
+        throw new Exception('Invalid file type.');
+    }
+
+    $fileName = uniqid() . '.' . $extension;
+    $filePath = $uploadDir . $fileName;
+
+    if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+        throw new Exception('file_upload_error');
+    }
+
+    return '/uploads/' . $type . '/' . $fileName;
+}
+
 }
