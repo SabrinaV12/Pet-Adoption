@@ -92,15 +92,24 @@ function renderPetDetails(pet) {
 
     const statusEl = document.getElementById('pet-adoption-status');
     if (statusEl) {
+        statusEl.innerHTML = '';
+
+        const strongEl = document.createElement('strong');
+
         if (pet.adopted) {
-            let adoptionText = '<strong style="color: green;">Adopted</strong>';
+            strongEl.textContent = 'Adopted';
+            strongEl.style.color = 'green';
+            statusEl.appendChild(strongEl);
+
             if (pet.adoption_date) {
                 const date = new Date(pet.adoption_date);
-                adoptionText += ` on ${date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                const dateText = ` on ${date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                statusEl.appendChild(document.createTextNode(dateText));
             }
-            statusEl.innerHTML = adoptionText;
         } else {
-            statusEl.innerHTML = '<strong style="color: blue;">Available for Adoption</strong>';
+            strongEl.textContent = 'Available for Adoption';
+            strongEl.style.color = 'blue';
+            statusEl.appendChild(strongEl);
         }
     }
 }

@@ -1,5 +1,19 @@
 import User from '../model/adminEditUserModel.js';
 
+//pt a preveni Cross-Site Scripting
+function escapeHtml(unsafe) {
+    if (typeof unsafe !== 'string') {
+        return unsafe;
+    }
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const editUserForm = document.getElementById('edit-user-form');
     const statusMessageDiv = document.getElementById('status-message');
@@ -44,17 +58,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function populateForm(user) {
         document.getElementById('username-header').textContent = user.username;
 
+        document.getElementById('username-header').textContent = escapeHtml(user.username);
+
         document.getElementById('id').value = user.id;
-        document.getElementById('first_name').value = user.firstName;
-        document.getElementById('last_name').value = user.lastName;
-        document.getElementById('username').value = user.username;
-        document.getElementById('email').value = user.email;
-        document.getElementById('phone_number').value = user.phoneNumber || '';
-        document.getElementById('role').value = user.role;
-        document.getElementById('description').value = user.description || '';
-        document.getElementById('country').value = user.country || '';
-        document.getElementById('county').value = user.county || '';
-        document.getElementById('telegram_handle').value = user.telegramHandle || '';
+        document.getElementById('first_name').value = escapeHtml(user.firstName);
+        document.getElementById('last_name').value = escapeHtml(user.lastName);
+        document.getElementById('username').value = escapeHtml(user.username);
+        document.getElementById('email').value = escapeHtml(user.email);
+        document.getElementById('phone_number').value = escapeHtml(user.phoneNumber || '');
+        document.getElementById('role').value = escapeHtml(user.role);
+        document.getElementById('description').value = escapeHtml(user.description || '');
+        document.getElementById('country').value = escapeHtml(user.country || '');
+        document.getElementById('county').value = escapeHtml(user.county || '');
+        document.getElementById('telegram_handle').value = escapeHtml(user.telegramHandle || '');
         document.getElementById('profile_picture').src = '/Pet_Adoption/public' + user.profilePicture || '';
         document.getElementById('banner_picture').src = '/Pet_Adoption/public' + user.bannerPicture || '';
 
@@ -91,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayMessage(type, message) {
         statusMessageDiv.className = type;
-        statusMessageDiv.textContent = message;
+        statusMessageDiv.textContent = escapeHtml(message);
         statusMessageDiv.style.display = 'block';
     }
 });

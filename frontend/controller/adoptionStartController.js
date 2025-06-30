@@ -1,5 +1,18 @@
 import { User } from '../model/adoptionStartModel.js';
 
+//pt a preveni Cross-Site Scripting
+function escapeHtml(unsafe) {
+    if (typeof unsafe !== 'string') {
+        return unsafe;
+    }
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     try {
         const response = await fetch('/Pet_Adoption/backend/controllers/UserDetailsController.php');
@@ -29,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     } catch (error) {
         console.error('Error:', error);
-        alert('Could not load user information: ' + error.message);
+        alert('Could not load user information: ' + escapeHtml(error.message));
     }
 });
 
@@ -39,7 +52,7 @@ function populateUserData(user) {
 
     const profileImage = profileCard.querySelector('.image-card img');
     if (user.profilePicture) {
-        profileImage.src = `/Pet_Adoption/public${user.profilePicture}`;
+        profileImage.src = `/Pet_Adoption/public/${user.profilePicture}`;
     } else {
         profileImage.src = '/frontend/view/assets/profile_head.png';
     }

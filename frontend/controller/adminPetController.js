@@ -133,5 +133,3 @@ document.addEventListener('DOMContentLoaded', () => {
     displayStatusMessage();
     fetchAndPopulatePets();
 });
-
-//TO DO: DESPARTE MODEL DE VIEWER !!!!!

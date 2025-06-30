@@ -130,5 +130,3 @@ document.addEventListener('DOMContentLoaded', () => {
     displayStatusMessage();
     fetchAndPopulateUsers();
 });
-
-//TO DO: SA DESPART CONTROLLER DE MODEL!!!!
