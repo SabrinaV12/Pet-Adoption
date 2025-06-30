@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function handleFormSubmit(event) {
         event.preventDefault();
-        const serviceUrl = 'http://localhost/Pet_Adoption/backend/controllers/AdminEditUserController.php';
+        const serviceUrl = 'http://localhost/Pet_Adoption/backend/api/index.php/admin/user/edit';
         const formData = new FormData(editUserForm);
 
         try {

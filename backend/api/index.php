@@ -1,6 +1,6 @@
 <?php
 
-header("Access-Control-Allow-Origin: http://localhost:5500");
+header("Access-Control-Allow-Origin: http://localhost:80");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Access-Control-Allow-Credentials: true");
@@ -22,7 +22,11 @@ require_once __DIR__ . '/../controllers/AuthMeController.php';
 require_once __DIR__ . '/../controllers/AdminUserController.php';
 require_once __DIR__ . '/../controllers/AdminAddUserController.php';
 require_once __DIR__ . '/../controllers/AdminUserDetailsController.php';
+require_once __DIR__ . '/../controllers/AdminEditUserController.php';
+
 require_once __DIR__ . '/../controllers/NotificationController.php';
+
+
 
 $path2 = explode("/", $path, 3)[1];
 
@@ -83,44 +87,66 @@ switch ($path2) {
             $path3 = explode("/", $path2, 2)[0];
 
             switch ($path3) {
-                case 'user':
-                    $path = explode("/admin/user/", $path, 2)[1];
-                    if ($path === '') {
-                        $adminUserController = new AdminUserController();
-                        $adminAddUserController = new AdminAddUserController();
-                        switch ($method) {
-                            case 'GET':
-                                $adminUserController->handleGet();
+                case 'user': {
+                        $userActionPath = explode("/admin/user/", $path, 2)[1];
+
+                        switch ($userActionPath) {
+                            case '':
+                                $adminUserController = new AdminUserController();
+                                $adminAddUserController = new AdminAddUserController();
+                                switch ($method) {
+                                    case 'GET':
+                                        $adminUserController->handleGet();
+                                        break;
+                                    case 'DELETE':
+                                        $adminUserController->handleDelete();
+                                        break;
+                                    case 'POST':
+                                        $adminAddUserController->addUser();
+                                        break;
+                                    default:
+                                        http_response_code(405);
+                                        echo json_encode(['message' => "405 - Method not allowed"]);
+                                        break;
+                                }
                                 break;
-                            case 'DELETE':
-                                $adminUserController->handleDelete();
+
+                            case 'edit':
+                                if ($method !== 'POST') {
+                                    http_response_code(405);
+                                    echo json_encode(['message' => "405 - Method not allowed for this endpoint"]);
+                                    break;
+                                }
+
+                                $userRepo = new UserRepository();
+                                $userService = new UserService($userRepo);
+                                $jwtService = new JwtService();
+
+                                $controller = new AdminEditUserController($userService, $jwtService);
+                                $controller->updateUser();
                                 break;
-                            case 'POST':
-                                $adminAddUserController->addUser();
+
+                            case 'details':
+                                if ($method !== 'GET') {
+                                    http_response_code(405);
+                                    echo json_encode(['message' => "405 - Method not allowed"]);
+                                    break;
+                                }
+                                $adminUserDetailsController = new AdminUserDetailsController();
+                                $adminUserDetailsController->showUserDetailsAsApi();
                                 break;
+
                             default:
-                                http_response_code(405);
-                                echo json_encode(['message' => "405 - Method not allowed"]);
-                                exit();
+                                http_response_code(404);
+                                echo json_encode(['message' => "404 - Admin user route not found"]);
+                                break;
                         }
-                    } else if ($path !== 'details') {
-                        http_response_code(404);
-                        echo json_encode(['message' => "404 - Page not found"]);
-                        exit();
-                    } else {
-                        if ($method !== 'GET') {
-                            http_response_code(405);
-                            echo json_encode(['message' => "405 - Method not allowed"]);
-                            exit();
-                        }
-                        $adminUserDetailsController = new AdminUserDetailsController();
-                        $adminUserDetailsController->showUserDetailsAsApi();
+                        break;
                     }
-                    break;
 
                 default:
                     http_response_code(404);
-                    echo json_encode(['message' => "404 - Page not found"]);
+                    echo json_encode(['message' => "404 - Admin route not found"]);
                     break;
             }
             break;
