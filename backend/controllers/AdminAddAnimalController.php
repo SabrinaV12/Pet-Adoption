@@ -3,6 +3,8 @@
 header('Content-Type: application/json');
 
 require_once __DIR__ . '/../services/AdminPetAddService.php';
+require_once __DIR__ . '/../services/JwtService.php';
+
 
 function json_response($status, $message = '', $data = [])
 {
@@ -17,6 +19,15 @@ function json_response($status, $message = '', $data = [])
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405); // Method Not Allowed
     json_response('error', 'Invalid request method.');
+}
+
+try {
+    $jwtService = new JwtService();
+    $token = $jwtService->getToken();
+    $jwtService->verifyAdminToken($token);
+} catch (Exception $e) {
+    http_response_code(401); // 401 Unauthorized
+    json_response('error', $e->getMessage());
 }
 
 try {

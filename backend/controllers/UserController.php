@@ -1,12 +1,20 @@
 <?php
 
 require_once __DIR__ . '/../repositories/UserRepository.php';
-session_start();
+require_once __DIR__ . '/../services/JwtService.php';
 
-$userId = $_SESSION['user_id'] ?? null;
+$jwtService = new JwtService();
+$userId = null;
 
-if (!$userId) {
-    die("Not logged in.");
+try {
+    $token = $jwtService->getToken();
+
+    $decodedPayload = $jwtService->verifyToken($token);
+
+    $userId = $decodedPayload->data->user_id;
+} catch (Exception $e) {
+    header('HTTP/1.1 401 Unauthorized');
+    die('Authentication required: ' . $e->getMessage());
 }
 
 $repo = new UserRepository();

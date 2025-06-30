@@ -4,6 +4,7 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 
 require_once __DIR__ . '/../services/AdminPetService.php';
+require_once __DIR__ . '/../services/JwtService.php';
 
 function json_response(int $statusCode, $data)
 {
@@ -14,6 +15,15 @@ function json_response(int $statusCode, $data)
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     json_response(400, ['error' => 'Bad Request: A valid pet ID must be provided.']);
+}
+
+try {
+    $jwtService = new JwtService();
+    $token = $jwtService->getToken();
+    $jwtService->verifyAdminToken($token);
+} catch (Exception $e) {
+    http_response_code(401); // 401 Unauthorized
+    json_response('error', $e->getMessage());
 }
 
 $petId = (int)$_GET['id'];

@@ -1,15 +1,23 @@
 <?php
 
 require_once __DIR__ . '/../repositories/ApplicationRepository.php';
-session_start();
+require_once __DIR__ . '/../services/JwtService.php';
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: /login.php');
-    exit();
+$jwtService = new JwtService();
+$userId = null;
+
+try {
+    $token = $jwtService->getToken();
+    $decodedPayload = $jwtService->verifyToken($token);
+    $userId = $decodedPayload->data->user_id;
+} catch (Exception $e) {
+    header('HTTP/1.1 401 Unauthorized');
+    die($e->getMessage());
 }
 
+
 $applicationId = isset($_GET['id']) ? intval($_GET['id']) : 0;
-$userId = $_SESSION['user_id'];
+
 
 $repo = new ApplicationRepository();
 $application = $repo->getApplicationForUser($applicationId, $userId);

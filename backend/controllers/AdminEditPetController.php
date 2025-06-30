@@ -1,9 +1,19 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../services/adminEditPetService.php';
+require_once __DIR__ . '/../services/JwtService.php';
 
 $service = new AdminEditPetService();
 $method = $_SERVER['REQUEST_METHOD'];
+
+try {
+    $jwtService = new JwtService();
+    $token = $jwtService->getToken();
+    $jwtService->verifyAdminToken($token);
+} catch (Exception $e) {
+    http_response_code(401); // 401 Unauthorized
+    json_response('error', $e->getMessage());
+}
 
 switch ($method) {
     case 'GET':
