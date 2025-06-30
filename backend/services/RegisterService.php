@@ -65,6 +65,6 @@ class RegisterService
             throw new Exception('file_upload_error');
         }
 
-        return '/uploads/' . $type . '/' . $fileName;
+        return 'uploads/' . $type . '/' . $fileName;
     }
 }
