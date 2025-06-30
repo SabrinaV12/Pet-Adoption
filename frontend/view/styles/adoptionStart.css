@@ -1,0 +1,135 @@
+.container {
+    font-family: 'Medium', 'Inter';
+    background-color: #FFFFFF;
+
+}
+
+.user-information {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 20px;
+    gap: 30px;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: white;
+    padding: 24px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    gap: 36px;
+    flex-wrap: wrap;
+}
+
+.image-card {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-card img {
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 4px solid #9990DA;
+    object-fit: cover;
+}
+
+.info-card {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 4px 0;
+}
+
+.info-row h1 {
+    flex: 1;
+    font-size: 1em;
+    margin: 0;
+    color: #000000;
+    text-align: left;
+    font-weight: 500;
+}
+
+.info-row p {
+    flex: 1;
+    font-size: 1em;
+    margin: 0;
+    color: #0A453A;
+    font-weight: 600;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.start-button {
+    background-color: #41349D;
+    font-size: 18px;
+    font-weight: medium;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.start-button:hover {
+    background-color: #352b80;
+}
+
+@media (max-width: 780px) {
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .image-card {
+        margin-right: 0;
+    }
+
+    .info-card h1 {
+        font-size: 1em;
+    }
+
+    .start-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

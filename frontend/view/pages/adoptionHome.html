@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Home</title>
+    <link rel="stylesheet" href="../styles/header.css" />
+    <link rel="stylesheet" href="../styles/adoptionHome.css" />
+    <link rel="stylesheet" href="../styles/footer.css" />
+</head>
+
+<body class="container">
+
+    <header class="header">
+    <nav class="nav">
+        <a href="../pages/home.html"><img src="../assets/logo.png" alt="Home" width="122" height="50" /></a>
+
+        <section class="main-buttons">
+            <a href="../pages/searchView.html">Adopt</a>
+            <a href="../pages/submit_pet_request.html">Rehome a Pet</a>
+            <a href="../pages/documentatie/documentatie.html">About</a>
+        </section>
+
+        <section class="information-buttons">
+            <a href="../pages/notifications.html"><img src="../assets/notifications.png" alt="Notifications" /></a>
+
+            <div class="auth-links" id="auth-links">
+            </div>
+        </section>
+    </nav>
+
+    <section class="mini-navigation">
+
+    </section>
+</header>
+
+    <section class="add-house">
+        <p class="important">Please note, all these details must be completed in order to apply for pet adoption.</p>
+
+        <section class="house">
+            <form id="home-form" novalidate>
+
+                <div class="field">
+                    <p class="text">Do you have a garden? *</p>
+                    <div class="choice">
+                        <div class="option">
+                            <input type="radio" id="choiceYes" name="has_garden" value="yes" required>
+                            <label for="choiceYes">Yes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="choiceNo" name="has_garden" value="no">
+                            <label for="choiceNo">No</label>
+                        </div>
+                    </div>
+                    <p class="error-message" id="has_garden-error"></p>
+                </div>
+
+                <div class="field">
+                    <p class="text"> Please describe your living/home situation *</p>
+                    <input type="text" id="situation" name="situation" placeholder="e.g., House, apartment, farm..."
+                        required />
+                    <p class="error-message" id="situation-error"></p>
+                </div>
+
+                <div class="field">
+                    <p class="text"> Can you describe your household setting *</p>
+                    <input type="text" id="setting" name="setting" placeholder="e.g., Quiet, busy, with children..."
+                        required />
+                    <p class="error-message" id="setting-error"></p>
+                </div>
+
+                <div class="field">
+                    <label for="activity-level" class="text">Can you describe the household's typical activity level?
+                        *</label>
+                    <select name="level" id="activity-level" required>
+                        <option value="" disabled selected>Choose a level from 1 to 10</option>
+                        <option value="1">1 - Very Low</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Moderate</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10 - Very High</option>
+                    </select>
+                    <p class="error-message" id="level-error"></p>
+                </div>
+
+                <div class="buttons">
+                    <a href="adoptionAddress.html" class="back-button">
+                        <span>Back</span>
+                    </a>
+                    <button type="submit" class="continue-button">Continue</button>
+                </div>
+            </form>
+        </section>
+
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../../controller/footerController.js"></script>
+    <script src="../../controller/headerController.js"></script>
+    <script type="module" src="../../controller/adoptionHomeController.js"></script>
+
+</body>
+
+</html>

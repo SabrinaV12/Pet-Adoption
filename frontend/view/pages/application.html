@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Application Details</title>
+  <link rel="stylesheet" href="/assets/styles/view_application.css">
+</head>
+
+<body>
+  <header class="header">
+    <nav class="nav">
+        <a href="../pages/home.html"><img src="../assets/logo.png" alt="Home" width="122" height="50" /></a>
+
+        <section class="main-buttons">
+            <a href="../pages/searchView.html">Adopt</a>
+            <a href="../pages/submit_pet_request.html">Rehome a Pet</a>
+            <a href="../pages/documentatie/documentatie.html">About</a>
+        </section>
+
+        <section class="information-buttons">
+            <a href="../pages/notifications.html"><img src="../assets/notifications.png" alt="Notifications" /></a>
+
+            <div class="auth-links" id="auth-links">
+            </div>
+        </section>
+    </nav>
+
+    <section class="mini-navigation">
+
+    </section>
+</header>
+
+  <h1>Application for </h1>
+
+  <div class="download-buttons">
+    <a href="/scripts/download_form.php?id=&format=csv">Download as CSV</a>
+    <a href="/scripts/download_form.php?id=&format=json">Download as JSON</a>
+  </div>
+
+  
+    <form action="/scripts/decision.php" method="POST">
+      <input type="hidden" name="application_id" value="">
+      <button type="submit" name="decision" value="approve">Approve</button>
+      <button type="submit" name="decision" value="deny">Deny</button>
+    </form>
+  
+    <h3>Final decision: </h3>
+  
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../../controller/footerController.js"></script>
+  <script src="../../controller/headerController.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+.login {
+    width: 90%;
+    max-width: 250px;
+    aspect-ratio: 1 / 1;
+    margin: 50px auto;
+    border: 2px solid #5D4FC4;
+    padding: 20px;
+    border-radius: 16px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Medium', 'Inter';
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.login input[type="text"],
+.login input[type="password"] {
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.login button {
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #5D4FC4;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login button:hover {
+    background-color: #41349D;
+}
+
+.login a {
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #41349D;
+}
+
+.help-buttons {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text {
+    margin-bottom: 0px;
+    text-decoration: none;
+    color: #41349D;
+}
+
+@media (max-width: 780px) {
+    .login {
+        width: 90%;
+        max-width: none;
+        aspect-ratio: unset;
+        padding: 16px;
+        margin: 30px auto;
+    }
+
+    .login button {
+        width: 100%;
+        font-size: 15px;
+    }
+
+    .login input[type="text"],
+    .login input[type="password"] {
+        font-size: 15px;
+    }
+
+    .help-buttons {
+        margin-top: 20px;
+    }
+
+    .text {
+        font-size: 14px;
+        text-align: center;
+    }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

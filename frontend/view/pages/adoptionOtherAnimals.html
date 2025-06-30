@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Other Animals</title>
+    <link rel="stylesheet" href="../styles/header.css" />
+    <link rel="stylesheet" href="../styles/adoptionOtherAnimals.css" />
+    <link rel="stylesheet" href="../styles/footer.css" />
+</head>
+
+<body class="container">
+
+    <header class="header">
+    <nav class="nav">
+        <a href="../pages/home.html"><img src="../assets/logo.png" alt="Home" width="122" height="50" /></a>
+
+        <section class="main-buttons">
+            <a href="../pages/searchView.html">Adopt</a>
+            <a href="../pages/submit_pet_request.html">Rehome a Pet</a>
+            <a href="../pages/documentatie/documentatie.html">About</a>
+        </section>
+
+        <section class="information-buttons">
+            <a href="../pages/notifications.html"><img src="../assets/notifications.png" alt="Notifications" /></a>
+
+            <div class="auth-links" id="auth-links">
+            </div>
+        </section>
+    </nav>
+
+    <section class="mini-navigation">
+
+    </section>
+</header>
+
+    <section class="animal">
+
+        <p class="important">Please note, all these details must be completed in order to apply for pet adoption.</p>
+
+        <form id="pets-form" novalidate>
+            <div class="field">
+                <p class="text">Does anyone in the household have any allergies to pets? *</p>
+                <input type="text" id="allergies" name="allergies"
+                    placeholder="e.g., No known allergies / Mild dander allergy" required />
+                <p class="error-message" id="allergies-error"></p>
+            </div>
+
+            <div class="field">
+                <p class="text">Are there any other animals at your home? *</p>
+                <div class="choice">
+                    <div class="option">
+                        <input type="radio" id="choiceYesAnimal" name="has_animals" value="yes" required>
+                        <label for="choiceYesAnimal">Yes</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="choiceNoAnimal" name="has_animals" value="no" checked>
+                        <label for="choiceNoAnimal">No</label>
+                    </div>
+                </div>
+                <p class="error-message" id="has_animals-error"></p>
+            </div>
+
+            <div id="conditional-animal-fields" style="display: none;">
+                <div class="field">
+                    <p class="text">If yes, please state their species, age and gender</p>
+                    <input type="text" id="other_animals_info" name="other_animals_info"
+                        placeholder="e.g., Dog, 5, male; Cat, 2, female" />
+                    <p class="error-message" id="other_animals_info-error"></p>
+                </div>
+                <div class="field">
+                    <p class="text">If yes, are they neutered? *</p>
+                    <div class="choice">
+                        <div class="option"><input type="radio" id="choiceYesNeutered" name="neutered"
+                                value="Yes"><label for="choiceYesNeutered">Yes</label></div>
+                        <div class="option"><input type="radio" id="choiceNoNeutered" name="neutered" value="No"><label
+                                for="choiceNoNeutered">No</label></div>
+                        <div class="option"><input type="radio" id="choiceNotApplicableNeutered" name="neutered"
+                                value="Not Applicable"><label for="choiceNotApplicableNeutered">Not Applicable</label>
+                        </div>
+                    </div>
+                    <p class="error-message" id="neutered-error"></p>
+                </div>
+                <div class="field">
+                    <p class="text">If yes, have they been vaccinated in the last 12 months? *</p>
+                    <div class="choice">
+                        <div class="option"><input type="radio" id="choiceYesVaccinated" name="vaccinated"
+                                value="Yes"><label for="choiceYesVaccinated">Yes</label></div>
+                        <div class="option"><input type="radio" id="choiceNoVaccinated" name="vaccinated"
+                                value="No"><label for="choiceNoVaccinated">No</label></div>
+                        <div class="option"><input type="radio" id="choiceNotApplicableVaccinated" name="vaccinated"
+                                value="Not Applicable"><label for="choiceNotApplicableVaccinated">Not Applicable</label>
+                        </div>
+                    </div>
+                    <p class="error-message" id="vaccinated-error"></p>
+                </div>
+            </div>
+
+            <div class="field">
+                <p class="text">Please describe your experience of any previous pet ownership and the type of home you
+                    plan to offer *</p>
+                <textarea id="experience" name="experience" placeholder="Please be as detailed as possible..." rows="4"
+                    required></textarea>
+                <p class="error-message" id="experience-error"></p>
+            </div>
+
+            <div class="buttons">
+                <a href="adoptionRoomate.html" class="back-button"><span>Back</span></a>
+                <button type="submit" class="continue-button">Submit Application</button>
+            </div>
+        </form>
+
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../../controller/footerController.js"></script>
+    <script src="../../controller/headerController.js"></script>
+    <script type="module" src="../../controller/adoptionOtherAnimalsController.js"></script>
+
+</body>
+
+</html>

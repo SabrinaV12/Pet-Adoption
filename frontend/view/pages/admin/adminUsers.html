@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="../../styles/adminUsers.css">
+</head>
+
+<body>
+    <header>
+        <h1>Manage Users</h1>
+        <nav>
+            <a href="admin.html">Back to Admin's Main Menu</a>
+            <a href="user_pages/add_user.html" class="add-button">+ Add a New User</a>
+        </nav>
+    </header>
+
+    <main>
+        <div id="status-message" class="status-message" style="display:none;"></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="user-table-body">
+                <tr>
+                    <td colspan="5">Loading users...</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script src="../../../controller/adminUserController.js"></script>
+</body>
+
+</html>

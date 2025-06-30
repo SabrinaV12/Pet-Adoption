@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="../styles/header.css" />
+  <link rel="stylesheet" href="../styles/footer.css" />
+  <link rel="stylesheet" href="../styles/login.css" />
+</head>
+
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="../pages/home.html"><img src="../assets/logo.png" alt="Home" width="122" height="50" /></a>
+
+      <div class="main-buttons">
+        <a href="../pages/searchView.html">Adopt</a>
+        <a href="../pages/submit_pet_request.html">Rehome a Pet</a>
+        <a href="../pages/documentatie/documentatie.html">About</a>
+      </div>
+
+      <div class="information-buttons">
+        <a href="../pages/notifications.html"><img src="../assets/notifications.png" alt="Notifications" /></a>
+        <div class="auth-links" id="auth-links"></div>
+      </div>
+    </nav>
+
+    <div class="mini-navigation"></div>
+  </header>
+  <div id="success-message" class="success-message" style="display:none;">
+    Account was successfully created! You can now login.
+  </div>
+
+  <section class="login">
+  <h2 class="visually-hidden">Login Form</h2>
+  <form>
+      <div id="error-message" class="error-message" style="display:none;">
+        Username or Password are incorrect!
+      </div>
+
+      <p class="text"> Username </p>
+      <input type="text" name="username" placeholder="Enter your username" required />
+
+      <p class="text"> Password </p>
+      <input type="password" name="password" placeholder="Enter your password" required />
+
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+   <footer class="footer">
+  <section class="information">
+    <h2 class="visually-hidden"></h2>
+
+    <section class="information-block">
+      <h3 class="visually-hidden">Help Section</h3>
+      <p class="title-text">How Can We Help?</p>
+      <nav class="nav-list">
+        <a href="#">Adopt a pet</a>
+        <a href="#">Rehome a pet</a>
+        <a href="#">Adopt FAQ's</a>
+        <a href="#">Rehome FAQ's</a>
+      </nav>
+    </section>
+
+    <section class="information-block">
+      <h3 class="visually-hidden">Contact Info</h3>
+      <p class="title-text">Contact Us</p>
+      <nav class="nav-list">
+        <a href="#">Strada General Henri Mathias Berthelot 16, Iași</a>
+        <a href="#">+40 712 345 678</a>
+      </nav>
+    </section>
+
+    <section class="information-block">
+      <h3 class="visually-hidden">Newsletter</h3>
+      <p class="title-text">Keep In Touch With Us</p>
+      <div class="nav-list">
+        <p>Join the FurryFriends magazine and be first to hear about news</p>
+      </div>
+    </section>
+  </section>
+
+  <section class="socials">
+    <h2 class="visually-hidden">Social Media Links</h2>
+    <p class="socials-text">@2025 FurryFriends</p>
+  </section>
+</footer>
+  <script src="../../controller/loginController.js"></script>
+  <script src="../../controller/footerController.js"></script>
+  <script src="../../controller/headerController.js"></script>
+
+</body>
+
+</html>

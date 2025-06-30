@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create a new account</title>
+  <link rel="stylesheet" href="../styles/header.css" />
+  <link rel="stylesheet" href="../styles/footer.css" />
+  <link rel="stylesheet" href="../styles/register.css" />
+</head>
+
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="../pages/home.html"><img src="../assets/logo.png" alt="Home" width="122" height="50" /></a>
+
+      <div class="main-buttons">
+        <a href="../pages/searchView.html">Adopt</a>
+        <a href="../pages/submit_pet_request.html">Rehome a Pet</a>
+        <a href="../pages/documentatie/documentatie.html">About</a>
+      </div>
+
+      <div class="information-buttons">
+        <a href="../pages/notifications.html"><img src="../assets/notifications.png" alt="Notifications" /></a>
+        <div class="auth-links" id="auth-links"></div>
+      </div>
+    </nav>
+
+    <div class="mini-navigation"></div>
+  </header>
+
+  <section class="register">
+    <h2 class="visually-hidden">Create Account Form</h2>
+
+    <form id="register_form" enctype="multipart/form-data" method="post">
+      <p class="error-message" id="error-message" style="display: none;"></p>
+      <p class="success-message" id="success-message" style="display: none;"></p>
+
+      <p class="text"> First Name </p>
+      <input type="text" name="first_name" placeholder="Enter your first name" required />
+
+      <p class="text"> Last Name </p>
+      <input type="text" name="last_name" placeholder="Enter your last name" required />
+
+      <p class="text"> Username </p>
+      <input type="text" name="username" placeholder="Enter your username" required />
+
+      <p class="text"> Email </p>
+      <input type="text" name="email" placeholder="Enter your email address" required />
+
+      <p class="text"> Phone Number </p>
+      <input type="tel" name="phone" placeholder="Enter your phone number" required />
+
+      <p class="text"> Bio </p>
+      <textarea name="description" placeholder="Tell us something about yourself" rows="5" required></textarea>
+
+      <p class="text"> Country </p>
+      <input type="text" name="country" placeholder="Enter your country" required />
+
+      <p class="text"> County </p>
+      <input type="text" name="county" placeholder="Enter your county" required />
+
+      <p class="text"> Telegram Handle </p>
+      <input type="text" name="telegram_handle" placeholder="Enter your Telegram @handle" required />
+
+      <p class="text"> Profile Picture </p>
+      <input type="file" name="profile_picture" accept="image/*" required />
+
+      <p class="text"> Banner Picture </p>
+      <input type="file" name="banner_picture" accept="image/*" required />
+
+      <p class="text"> Password </p>
+      <input type="password" name="password" placeholder="Enter your password" required />
+
+      <p class="text"> Confirm Password </p>
+      <input type="password" name="confirm_password" placeholder="Reenter your password" required />
+
+      <button type="submit">Create a new Account</button>
+    </form>
+
+    <div class="help-buttons">
+      <a href="/login">Already have an account?</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <section class="information">
+      <h2 class="visually-hidden">Footer Information</h2>
+
+      <section class="information-block">
+        <h3 class="visually-hidden">Help Section</h3>
+        <p class="title-text">How Can We Help?</p>
+        <nav class="nav-list">
+          <a href="#">Adopt a pet</a>
+          <a href="#">Rehome a pet</a>
+          <a href="#">Adopt FAQ's</a>
+          <a href="#">Rehome FAQ's</a>
+        </nav>
+      </section>
+
+      <section class="information-block">
+        <h3 class="visually-hidden">Contact Info</h3>
+        <p class="title-text">Contact Us</p>
+        <nav class="nav-list">
+          <a href="#">Strada General Henri Mathias Berthelot 16, Iași</a>
+          <a href="#">+40 712 345 678</a>
+        </nav>
+      </section>
+
+      <section class="information-block">
+        <h3 class="visually-hidden">Newsletter</h3>
+        <p class="title-text">Keep In Touch With Us</p>
+        <div class="nav-list">
+          <p>Join the FurryFriends magazine and be first to hear about news</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="socials">
+      <h2 class="visually-hidden">Social Media Links</h2>
+      <p class="socials-text">@2025 FurryFriends</p>
+    </section>
+  </footer>
+
+  <script src="../../controller/registerController.js"></script>
+  <script src="../../controller/footerController.js"></script>
+  <script src="../../controller/headerController.js"></script>
+</body>
+
+</html>

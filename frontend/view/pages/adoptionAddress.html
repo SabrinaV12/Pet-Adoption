@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Adress</title>
+    <link rel="stylesheet" href="../styles/header.css" />
+    <link rel="stylesheet" href="../styles/footer.css" />
+    <link rel="stylesheet" href="../styles/adoptionAdress.css" />
+</head>
+
+<body class="container">
+
+    <header class="header">
+    <nav class="nav">
+        <a href="../pages/home.html"><img src="../assets/logo.png" alt="Home" width="122" height="50" /></a>
+
+        <section class="main-buttons">
+            <a href="../pages/searchView.html">Adopt</a>
+            <a href="../pages/submit_pet_request.html">Rehome a Pet</a>
+            <a href="../pages/documentatie/documentatie.html">About</a>
+        </section>
+
+        <section class="information-buttons">
+            <a href="../pages/notifications.html"><img src="../assets/notifications.png" alt="Notifications" /></a>
+
+            <div class="auth-links" id="auth-links">
+            </div>
+        </section>
+    </nav>
+
+    <section class="mini-navigation">
+
+    </section>
+</header>
+
+    <section class="add-adress">
+        <p class="important">Please note, all these details must be completed in order to apply for pet adoption.</p>
+
+        <section class="address">
+            <form id="address-form" novalidate>
+
+                <div class="info-row">
+                    <div class="field">
+                        <p class="text"> Address line 1 *</p>
+                        <input type="text" id="address_1" name="address_1" placeholder="Street Name and Number"
+                            required />
+                        <p class="error-message" id="address_1-error"></p>
+                    </div>
+
+                    <div class="field">
+                        <p class="text"> Address line 2 </p>
+                        <input type="text" id="address_2" name="address_2" placeholder="Block and apartment number" />
+                        <p class="error-message" id="address_2-error"></p>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="field">
+                        <p class="text"> Postcode *</p>
+                        <input type="text" id="postcode" name="postcode" placeholder="Postcode" required />
+                        <p class="error-message" id="postcode-error"></p>
+                    </div>
+
+                    <div class="field">
+                        <p class="text"> City *</p>
+                        <input type="text" id="city" name="city" placeholder="Town/City" required />
+                        <p class="error-message" id="city-error"></p>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <div class="field">
+                        <p class="text"> Phone Number *</p>
+                        <input type="tel" id="phone" name="phone" placeholder="Phone Number" required />
+                        <p class="error-message" id="phone-error"></p>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <a href="adoptionStart.html" class="back-button">
+                        <span>Back</span>
+                    </a>
+                    <button type="submit" class="continue-button">Continue</button>
+                </div>
+            </form>
+
+        </section>
+
+
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../../controller/footerController.js"></script>
+    <script src="../../controller/headerController.js"></script>
+    <script type="module" src="../../controller/adoptionAddressController.js"></script>
+
+</html>

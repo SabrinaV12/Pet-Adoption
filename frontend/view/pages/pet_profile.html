@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <link rel="stylesheet" href="../styles/petPage.css" />
+  <link rel="stylesheet" href="../styles/header.css" />
+  <link rel="stylesheet" href="../styles/footer.css" />
+  <link rel="stylesheet" href="../styles/searchMenu.css" />
+  <link rel="stylesheet" href="../styles/pet_profile_inline.css" />
+  <style>
+    .visually-hidden {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="../pages/home.html">
+        <img src="../assets/logo.png" alt="Home" width="122" height="50" />
+      </a>
+
+      <div class="main-buttons">
+        <a href="../pages/searchView.html">Adopt</a>
+        <a href="../pages/submit_pet_request.html">Rehome a Pet</a>
+        <a href="../pages/documentatie/documentatie.html">About</a>
+      </div>
+
+      <div class="information-buttons">
+        <a href="../pages/notifications.html">
+          <img src="../assets/notifications.png" alt="Notifications" />
+        </a>
+        <div class="auth-links" id="auth-links"></div>
+      </div>
+    </nav>
+
+    <div class="mini-navigation"></div>
+  </header>
+
+  <div class="banner"></div>
+
+  <div class="profile-container">
+    <div class="profile-pic">
+      <img src="" alt="" />
+    </div>
+    <h2></h2>
+    <p class="location"></p>
+
+    <div class="adopted">Adopted on <span class="adoption-date"></span></div>
+    <div class="adopted">
+      <a href="#" class="adopt-button">Adopt</a>
+    </div>
+
+    <div class="info-cards"></div>
+
+    <div class="checks-description-wrapper">
+      <div class="description-box">
+        <h3 class="story-heading"></h3>
+        <p class="story-text"></p>
+      </div>
+
+      <div class="checks-box"></div>
+    </div>
+
+    <section class="section restrictions">
+      <h3>Restrictions</h3>
+      <p class="restrictions-text"></p>
+    </section>
+
+    <section class="section recommended">
+      <h3>Recommended</h3>
+      <p class="recommended-text"></p>
+    </section>
+
+    <section class="section vaccinations">
+      <h3>Vaccination History</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Age (weeks)</th>
+            <th>Vaccine</th>
+          </tr>
+        </thead>
+        <tbody class="vaccine-table-body"></tbody>
+      </table>
+    </section>
+
+    <section class="section calendar">
+      <h3>Feeding Calendar</h3>
+      <div class="calendar">
+        <div class="calendar-header"></div>
+        <div class="calendar-grid"></div>
+      </div>
+    </section>
+
+    <section class="section first-aid">
+      <h3>Basic First Aid Tips</h3>
+      <p class="first-aid-text"></p>
+    </section>
+
+    <section class="section">
+      <h3>Media Gallery</h3>
+      <div class="media-gallery"></div>
+      <p class="no-media-msg">No media files available for this pet.</p>
+    </section>
+
+    <section class="section">
+      <h3>Upload Media</h3>
+      <form action="../../../backend/services/upload_pet_media.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="pet_id" value="" />
+        <div class="form-group">
+          <label for="media">Choose file (image, video, or audio):</label>
+          <input type="file" id="media" name="media" accept="image/*,video/*,audio/*" required />
+        </div>
+        <button type="submit">Upload</button>
+      </form>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <section class="information">
+      <h2 class="visually-hidden">Footer Information</h2>
+
+      <section class="information-block">
+        <h3 class="visually-hidden">Help Section</h3>
+        <p class="title-text">How Can We Help?</p>
+        <nav class="nav-list">
+          <a href="#">Adopt a pet</a>
+          <a href="#">Rehome a pet</a>
+          <a href="#">Adopt FAQ's</a>
+          <a href="#">Rehome FAQ's</a>
+        </nav>
+      </section>
+
+      <section class="information-block">
+        <h3 class="visually-hidden">Contact Section</h3>
+        <p class="title-text">Contact Us</p>
+        <nav class="nav-list">
+          <a href="#">Strada General Henri Mathias Berthelot 16, Iași</a>
+          <a href="#">+40 712 345 678</a>
+        </nav>
+      </section>
+
+      <section class="information-block">
+        <h3 class="visually-hidden">Newsletter Section</h3>
+        <p class="title-text">Keep In Touch With Us</p>
+        <div class="nav-list">
+          <p>Join the FurryFriends magazine and be first to hear about news</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="socials">
+      <h2 class="visually-hidden">Social Media Links</h2>
+      <p class="socials-text">@2025 FurryFriends</p>
+    </section>
+  </footer>
+
+  <script src="../../controller/footerController.js"></script>
+  <script src="../../controller/headerController.js"></script>
+  <script src="../../controller/petController.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roomates</title>
+    <link rel="stylesheet" href="../styles/header.css" />
+    <link rel="stylesheet" href="../styles/adoptionRoomate.css" />
+    <link rel="stylesheet" href="../styles/footer.css" />
+</head>
+
+<body class="container">
+
+    <header class="header">
+    <nav class="nav">
+        <a href="../pages/home.html"><img src="../assets/logo.png" alt="Home" width="122" height="50" /></a>
+
+        <section class="main-buttons">
+            <a href="../pages/searchView.html">Adopt</a>
+            <a href="../pages/submit_pet_request.html">Rehome a Pet</a>
+            <a href="../pages/documentatie/documentatie.html">About</a>
+        </section>
+
+        <section class="information-buttons">
+            <a href="../pages/notifications.html"><img src="../assets/notifications.png" alt="Notifications" /></a>
+
+            <div class="auth-links" id="auth-links">
+            </div>
+        </section>
+    </nav>
+
+    <section class="mini-navigation">
+
+    </section>
+</header>
+
+    <section class="add-roomate">
+        <p class="important">Please note, all these details must be completed in order to apply for pet adoption.</p>
+
+        <section class="roomate">
+            <form id="roommate-form" novalidate>
+                <div class="info-row">
+                    <div class="field-column">
+                        <label for="adults-number">Number of adults (minimum 1) *</label>
+                        <input type="number" id="adults-number" name="num_adults" min="1" step="1" placeholder="Ex: 1"
+                            required value="1">
+                        <p class="error-message" id="num_adults-error"></p>
+                    </div>
+
+                    <div class="field-column">
+                        <label for="childrens-number">Number of children *</label>
+                        <input type="number" id="childrens-number" name="num_children" min="0" step="1"
+                            placeholder="Ex: 0" required value="0">
+                        <p class="error-message" id="num_children-error"></p>
+                    </div>
+
+                    <div class="field-column">
+                        <label for="age-home" class="text">Age of youngest child</label>
+                        <select name="youngest_age" id="age-home" disabled>
+                            <option value="" selected>Please Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                        </select>
+                        <p class="error-message" id="youngest_age-error"></p>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <p class="text">Any visiting children? *</p>
+                    <div class="choice">
+                        <div class="option">
+                            <input type="radio" id="choiceYesVisiting" name="visiting_children" value="yes" required>
+                            <label for="choiceYesVisiting">Yes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="choiceNoVisiting" name="visiting_children" value="no" checked>
+                            <label for="choiceNoVisiting">No</label>
+                        </div>
+                    </div>
+                    <p class="error-message" id="visiting_children-error"></p>
+                </div>
+
+                <div class="field">
+                    <label for="age-visiting" class="text">General age of visiting children</label>
+                    <select name="visiting_ages" id="age-visiting" disabled>
+                        <option value="" selected>Please Select</option>
+                        <option value="0-3">Toddlers (0-3)</option>
+                        <option value="4-7">Young Children (4-7)</option>
+                        <option value="8-12">Older Children (8-12)</option>
+                        <option value="13-17">Teenagers (13-17)</option>
+                    </select>
+                    <p class="error-message" id="visiting_ages-error"></p>
+                </div>
+
+                <div class="field">
+                    <p class="text">Do you have any flatmates or lodgers? *</p>
+                    <div class="choice">
+                        <div class="option">
+                            <input type="radio" id="choiceYesRoomate" name="has_flatmates" value="yes" required>
+                            <label for="choiceYesRoomate">Yes</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="choiceNoRoomate" name="has_flatmates" value="no" checked>
+                            <label for="choiceNoRoomate">No</label>
+                        </div>
+                    </div>
+                    <p class="error-message" id="has_flatmates-error"></p>
+                </div>
+
+                <div class="buttons">
+                    <a href="adoptionHome.html" class="back-button">
+                        <span>Back</span>
+                    </a>
+                    <button type="submit" class="continue-button">Continue</button>
+                </div>
+            </form>
+        </section>
+
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../../controller/footerController.js"></script>
+    <script src="../../controller/headerController.js"></script>
+    <script type="module" src="../../controller/adoptionRoomateController.js"></script>
+
+</body>
+
+</html>

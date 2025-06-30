@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Details</title>
+    <link rel="stylesheet" href="../../../styles/details_animal.css">
+</head>
+
+<body>
+    <header>
+        <h1 id="header-pet-name">Loading Pet Details...</h1>
+        </h1>
+        <nav>
+            <a href="../adminAnimals.html">Back to Animals List</a>
+            <a href="#" id="edit-pet-link" class="edit-button">Edit This Pet</a>
+        </nav>
+    </header>
+
+    <main class="pet-details-container">
+        <div id="status-message"></div>
+        <div class="pet-image">
+            <img id="pet-image-main" src="" alt="Loading image...">
+        </div>
+
+        <div class="pet-info">
+            <h2>Core Information</h2>
+            <dl>
+                <dt>Name</dt>
+                <dd id="pet-name"></dd>
+
+                <dt>Animal Type</dt>
+                <dd id="pet-animal-type"></dd>
+
+                <dt>Breed</dt>
+                <dd id="pet-breed"></dd>
+
+                <dt>Gender</dt>
+                <dd id="pet-gender"></dd>
+
+                <dt>Age</dt>
+                <dd id="pet-age"></dd>
+
+                <dt>Size</dt>
+                <dd id="pet-size"></dd>
+
+                <dt>Color</dt>
+                <dd id="pet-color"></dd>
+
+                <dt>Weight</dt>
+                <dd id="pet-weight"></dd>
+
+                <dt>Height</dt>
+                <dd id="pet-height"></dd>
+            </dl>
+
+            <h2>Health & Behavior</h2>
+            <dl>
+                <dt>Vaccinated</dt>
+                <dd id="pet-vaccinated"></dd>
+
+                <dt>Neutered</dt>
+                <dd id="pet-neutered"></dd>
+
+                <dt>House Trained</dt>
+                <dd id="pet-house-trained"></dd>
+
+                <dt>Microchipped</dt>
+                <dd id="pet-microchipped"></dd>
+
+                <dt>Good with Children</dt>
+                <dd id="pet-good-with-children"></dd>
+
+                <dt>Shots Up-to-Date</dt>
+                <dd id="pet-shots-up-to-date"></dd>
+            </dl>
+
+            <h2>Description & Notes</h2>
+            <div class="description-box">
+                <strong>Description:</strong>
+                <p id="pet-description"></p>
+            </div>
+            <div class="description-box">
+                <strong>Restrictions:</strong>
+                <p id="pet-restrictions"></p>
+            </div>
+            <div class="description-box">
+                <strong>Recommendations:</strong>
+                <p id="pet-recommendations"></p>
+            </div>
+
+            <h2>Adoption Status</h2>
+            <dl>
+                <dt>Status</dt>
+                <dd id="pet-adoption-status"></dd>
+            </dl>
+        </div>
+    </main>
+    <script type="module" src="../../../../controller/adminPetDetailsController.js"></script>
+</body>
+
+</html>

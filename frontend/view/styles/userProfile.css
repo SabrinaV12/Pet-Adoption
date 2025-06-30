@@ -1,0 +1,189 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.profile-header {
+  position: relative;
+  text-align: center;
+}
+
+.banner {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-image-container {
+  position: absolute;
+  top: 170px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid white;
+  object-fit: cover;
+}
+
+.username {
+  margin-top: 70px;
+  font-size: 26px;
+}
+
+.location {
+  font-size: 14px;
+  color: #444;
+  margin-top: 5px;
+}
+
+.flag {
+  width: 20px;
+  vertical-align: middle;
+}
+
+.profile-main {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.bio-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.contact ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.contact li {
+  margin-bottom: 8px;
+}
+
+.pet-listings h2 {
+  margin-bottom: 15px;
+}
+
+.pets-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.pet-card {
+  flex: 1 1 250px;
+  max-width: 300px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.pet-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #eee;
+  margin-top: 40px;
+}
+
+@media (max-width: 780px) {
+  .bio-contact {
+    flex-direction: column;
+  }
+
+  .pets-grid {
+    flex-direction: column;
+  }
+
+  .profile-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .username {
+    font-size: 22px;
+  }
+}
+
+.bio {
+  flex: 2;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bio p {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+.contact {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.pet-listings {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.more-info-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background-color: #746bb8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.more-info-button:hover {
+  background-color: #7f76be;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

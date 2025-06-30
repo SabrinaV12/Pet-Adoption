@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Animals</title>
+    <link rel="stylesheet" href="../../styles/adminAnimals.css">
+</head>
+
+<body>
+    <header>
+        <h1>Manage Animals</h1>
+        <nav>
+            <a href="admin.html">Go Back to Admin's Main Menu</a>
+            <a href="animal_pages/add_animal.html" class="add-button">+ Add a New Animal</a>
+        </nav>
+    </header>
+
+    <main>
+        <div id="status-message" class="status-message" style="display:none;"></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Animal Type</th>
+                    <th>Breed</th>
+                    <th>Gender</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="pet-table-body">
+            </tbody>
+        </table>
+    </main>
+
+    <script src="../../../controller/adminPetController.js"></script>
+</body>
+
+</html>
