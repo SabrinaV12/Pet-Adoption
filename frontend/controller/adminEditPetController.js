@@ -1,5 +1,19 @@
 import { Pet } from '../model/adminEditPetModel.js';
 
+//pt a preveni Cross-Site Scripting
+function escapeHtml(unsafe) {
+    if (typeof unsafe !== 'string') {
+        return unsafe;
+    }
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const petNameHeader = document.getElementById('pet_name');
     const addPetForm = document.getElementById('addPetForm');
@@ -33,21 +47,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const populateForm = (pet) => {
-        petNameHeader.textContent = `Edit ${pet.name}`;
+        petNameHeader.textContent = `Edit ${escapeHtml(pet.name)}`;
 
-        document.getElementById('name').value = pet.name;
-        document.getElementById('animal_type').value = pet.animalType;
-        document.getElementById('breed').value = pet.breed;
-        document.getElementById('gender').value = pet.gender;
+        document.getElementById('name').value = escapeHtml(pet.name);
+        document.getElementById('animal_type').value = escapeHtml(pet.animalType);
+        document.getElementById('breed').value = escapeHtml(pet.breed);
+        document.getElementById('gender').value = escapeHtml(pet.gender);
         document.getElementById('age').value = pet.age;
-        document.getElementById('color').value = pet.color;
+        document.getElementById('color').value = escapeHtml(pet.color);
         document.getElementById('weight').value = pet.weight;
         document.getElementById('height').value = pet.height;
-        document.getElementById('size').value = pet.size;
+        document.getElementById('size').value = escapeHtml(pet.size);
 
-        document.getElementById('description').value = pet.description;
-        document.getElementById('restrictions').value = pet.restrictions;
-        document.getElementById('recommended').value = pet.recommended;
+        document.getElementById('description').value = escapeHtml(pet.description);
+        document.getElementById('restrictions').value = escapeHtml(pet.restrictions);
+        document.getElementById('recommended').value = escapeHtml(pet.recommended);
+
 
         document.getElementById('vaccinated').checked = pet.vaccinated;
         document.getElementById('neutered').checked = pet.neutered;
@@ -59,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         adoptedCheckbox.checked = pet.adopted;
         if (pet.adopted) {
             adoptionDateGroup.classList.remove('hidden');
-            document.getElementById('adoption_date').value = pet.adoptionDate;
+            document.getElementById('adoption_date').value = escapeHtml(pet.adoptionDate);
         }
 
         pet.vaccinations.forEach(v => addVaccinationRow(v));
