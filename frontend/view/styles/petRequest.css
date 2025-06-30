@@ -8,7 +8,7 @@ body {
 
 h1 {
   text-align: center;
-  background-color: #9990DA;
+  background-color: #4f41ba;
   color: white;
   padding: 20px;
   margin: 0;
@@ -53,14 +53,14 @@ textarea {
 }
 
 fieldset {
-  border: 2px solid #9990DA;
+  border: 2px solid #4f41ba;
   border-radius: 10px;
   padding: 20px;
 }
 
 legend {
   font-weight: bold;
-  color: #9990DA;
+  color: #4f41ba;
 }
 
 fieldset label {
@@ -71,7 +71,7 @@ fieldset label {
 }
 
 h3 {
-  color: #9990DA;
+  color: #4f41ba;
   margin-bottom: 10px;
 }
 
@@ -99,7 +99,7 @@ h3 {
 button#add-feeding,
 button#add-vaccination {
   align-self: flex-start;
-  background-color: #9990DA;
+  background-color: #4f41ba;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -117,7 +117,7 @@ button#add-vaccination:hover {
 }
 
 .remove-entry {
-  background-color: #b67fd9;
+  background-color: #5c1787;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -129,12 +129,12 @@ button#add-vaccination:hover {
 }
 
 .remove-entry:hover {
-  background-color: #a45ccf;
+  background-color: #2a0440;
   transform: translateY(-1px);
 }
 
 button[type="submit"] {
-  background-color: #9990DA;
+  background-color: #4f41ba;
   color: white;
   padding: 12px 20px;
   font-size: 16px;
@@ -166,4 +166,17 @@ button[type="submit"]:hover {
   .remove-entry {
     width: 100%;
   }
+}
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+fieldset label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
 }
